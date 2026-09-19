@@ -1,26 +1,252 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ============================================================
+   Design Tokens (design-system §2.1)
+   Base layer: light theme; dark theme via prefers-color-scheme
+   ============================================================ */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  /* light */
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --border: #e4e4e7;
+  --text: #18181b;
+  --text-muted: #52525b;
+  --text-faint: #a1a1aa;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --on-accent: #ffffff;
+  --glow: rgb(37 99 235 / 0.18);
+
+  /* Liquid Glass (design-system §2.7) */
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-blur: saturate(180%) blur(28px);
+  --glass-highlight: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  --glass-border: rgba(255, 255, 255, 0.28);
+  --glass-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  --glass-indicator: rgba(255, 255, 255, 0.85);
+
+  /* Gemini Animated Border Colors */
+  --gemini-1: #00f2fe;
+  --gemini-2: #4facfe;
+  --gemini-3: #8a2387;
+  --gemini-4: #e94057;
+  --gemini-5: #f27121;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* dark */
+    --bg: #09090b;
+    --surface: #18181b;
+    --border: #27272a;
+    --text: #fafafa;
+    --text-muted: #a1a1aa;
+    --text-faint: #71717a;
+    --accent: #60a5fa;
+    --accent-hover: #93c5fd;
+    --on-accent: #0f172a;
+    --glow: rgb(96 165 250 / 0.3);
+
+    /* Liquid Glass dark: keep translucency, dim edges */
+    --glass-bg: rgba(24, 24, 27, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.14);
+    --glass-shadow:
+      0 12px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    --glass-indicator: rgba(255, 255, 255, 0.15);
+
+    /* Gemini Colors in Dark Mode (slightly more vibrant neon) */
+    --gemini-1: #38ef7d;
+    --gemini-2: #11998e;
+    --gemini-3: #f77062;
+    --gemini-4: #fe5196;
+    --gemini-5: #8a2387;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Map CSS vars to Tailwind v4 utilities:
+   --color-{name} -> bg-{name} / text-{name} / border-{name} */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-on-accent: var(--on-accent);
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+
+  --font-sans:
+    var(--font-inter), system-ui, -apple-system, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono:
+    var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, Consolas,
+    monospace;
+
+  --shadow-glow-sm: 0 12px 40px -12px var(--glow);
+  --shadow-glow-lg: 0 20px 56px -16px var(--glow);
+}
+
+/* ============================================================
+   Gemini Animated Gradient Border (Border-Only Spec)
+   ============================================================ */
+@keyframes gemini-border-spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* 最外层：裁剪、边框厚度、卡片定位 */
+.gemini-border-container {
+  position: relative;
+  border-radius: 1rem;
+  padding: 1.5px; /* 这就是 1.5px 的精细边框粗细！ */
+  overflow: hidden;
+  background: var(--border); /* 静态兜底边框 */
+  isolation: isolate; /* 建立层叠，保护内盒 */
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+}
+
+/* 中间旋转流光盘：隐藏在内盒之下，只有 1.5px 外边缘可见 */
+.gemini-border-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%; /* 足够大，旋转时不露四个空白角 */
+  height: 300%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    var(--gemini-1) 45deg,
+    var(--gemini-2) 90deg,
+    transparent 135deg,
+    var(--gemini-3) 180deg,
+    var(--gemini-4) 225deg,
+    transparent 270deg,
+    var(--gemini-5) 315deg,
+    transparent 360deg
+  );
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: gemini-border-spin 8s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.65;
+  transition: opacity 0.3s ease;
+}
+
+/* 内层：不透明纯色静止盒，承载所有内容，防止漏光 */
+.gemini-border-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--surface); /* 纯色不透明覆盖板 */
+  border-radius: calc(1rem - 1.5px); /* 完美的圆角补偿公式 */
+  z-index: 2;
+  transition: background-color 0.3s ease;
+}
+
+/* 4. hover 底层彩色氛围灯 (::after) */
+.gemini-border-container::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: calc(1rem + 8px);
+  background: linear-gradient(
+    135deg,
+    var(--gemini-1),
+    var(--gemini-3),
+    var(--gemini-5)
+  );
+  filter: blur(20px);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Hover 物理响应：微上浮、流速加快、背光氛围灯亮起 */
+.gemini-border-container:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow-sm);
+}
+
+.gemini-border-container:hover .gemini-border-orbit {
+  animation-duration: 4s; /* 旋转加快 */
+  opacity: 1;
+}
+
+.gemini-border-container:hover::after {
+  opacity: 0.35; /* 氛围灯亮起 */
+}
+
+/* ============================================================
+   Liquid Glass panel (design-system §3.1.1)
+   Reusable glass capsule: translucent bg + blur + top highlight edge
+   ============================================================ */
+.liquid-glass {
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--glass-border) 60%, transparent);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+/* specular top edge (refraction light) */
+.liquid-glass::before {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  border-radius: 9999px;
+  background: var(--glass-highlight);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  html {
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+}
+
+/* ============================================================
+   Motion safety (design-system §2.6 / §5)
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
