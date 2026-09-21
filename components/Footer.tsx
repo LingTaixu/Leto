@@ -11,7 +11,7 @@ export function Footer() {
         <p>© {new Date().getFullYear()} Leto · Built with Next.js</p>
         <div className="flex items-center gap-4">
           <Link
-            href="https://github.com"
+            href="https://github.com/LingTaixu"
             target="_blank"
             rel="noreferrer"
             className="transition-colors duration-150 hover:text-accent"

@@ -6,7 +6,7 @@ import type { SVGProps } from "react";
 
 const TABS = [
   { href: "/", label: "首页", Icon: HomeIcon },
-  { href: "/tags", label: "标签", Icon: TagIcon },
+  { href: "/notary", label: "存证", Icon: NotaryIcon },
   { href: "/about", label: "关于", Icon: UserIcon },
 ] as const;
 
@@ -82,7 +82,7 @@ function HomeIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-function TagIcon(props: SVGProps<SVGSVGElement>) {
+function NotaryIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -93,8 +93,8 @@ function TagIcon(props: SVGProps<SVGSVGElement>) {
       strokeLinejoin="round"
       {...props}
     >
-      <path d="M20.6 13.4 12 22l-9-9V4a1 1 0 0 1 1-1h9l8.6 8.6a1 1 0 0 1 0 1.4Z" />
-      <circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none" />
+      <path d="M12 3 4.5 7v10L12 21l7.5-4V7L12 3Z" />
+      <path d="M12 12 4.5 8M12 12l7.5-4M12 12v9" />
     </svg>
   );
 }

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Tag } from "@/components/Tag";
 
 /* ---------- 数据 ---------- */
 const contact = {
@@ -95,6 +96,39 @@ const jobs = [
 ];
 
 const projects = [
+  {
+    name: "IP Strategy Web",
+    range: "2026.09",
+    href: "/blog/ip-strategy-web-tanstack-router",
+    points: [
+      "Vite 7 + TanStack Router 文件式路由，从 Next.js 迁移至纯客户端 DApp",
+      "Tailwind CSS 4 + Vite 插件链路，构建手动分包优化首屏",
+      "RainbowKit / wagmi 与 Solana Wallet Adapter 双链钱包并存",
+      "集成 TradingView Charting Library 实现 IP 策略 K 线",
+    ],
+  },
+  {
+    name: "Cooking.City",
+    range: "2026.09",
+    href: "/blog/cooking-city-solana-fair-launch",
+    points: [
+      "Next.js 15 App Router + next-intl 构建 Solana 公平发射平台",
+      "Reown AppKit 钱包接入，Anchor 程序与 Meteora DLMM 流动性集成",
+      "Conviction Pool 价格保护与 Referral 推荐机制的前端落地",
+      "rewrites 收口多后端域名，规避 CORS 与密钥外泄",
+    ],
+  },
+  {
+    name: "IP Strategy Base Service",
+    range: "2026.09",
+    href: "/blog/ip-strategy-base-service",
+    points: [
+      "Express 5 + Sequelize + PostgreSQL 搭建策略铸造后端服务",
+      "JWT 鉴权 / 参数校验 / 统一错误处理三段式中间件链",
+      "策略生命周期管理：先落库后链上验证，异步补偿确认",
+      "NFT 交易历史完整 CRUD，decimal.js 保障资产精度",
+    ],
+  },
   {
     name: "宁德时代安全系统中台",
     range: "2025.07 - 2026.09",
@@ -225,12 +259,7 @@ export default function AboutPage() {
       <Section id="skills" title="相关技能">
         <div className="flex flex-wrap gap-2">
           {skills.map((skill) => (
-            <span
-              key={skill}
-              className="rounded-full border border-border px-3 py-1.5 font-mono text-sm text-muted"
-            >
-              {skill}
-            </span>
+            <Tag key={skill} name={skill} className="px-3 py-1.5 text-sm" />
           ))}
         </div>
       </Section>

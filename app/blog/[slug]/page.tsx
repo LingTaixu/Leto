@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Prose } from "@/components/Prose";
+import { Tag } from "@/components/Tag";
 import { formatDate, getPostBySlug, getPosts } from "@/lib/posts";
 import type { Article } from "@/lib/posts";
 
@@ -60,13 +61,7 @@ export default async function BlogPostPage({ params }: PostProps) {
       <header>
         <div className="mb-3 flex flex-wrap items-center gap-2">
           {post.tags.map((tag) => (
-            <Link
-              key={tag}
-              href={`/tags/${tag}`}
-              className="rounded-full border border-border px-2.5 py-1 font-mono text-xs text-muted transition-colors duration-150 hover:border-accent hover:text-accent"
-            >
-              {tag}
-            </Link>
+            <Tag key={tag} name={tag} />
           ))}
         </div>
         <h1 className="text-3xl font-bold tracking-tight text-text lg:text-4xl">

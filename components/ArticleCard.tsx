@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import type { Article } from "@/lib/posts";
 import { formatDate } from "@/lib/posts";
+import { Tag } from "@/components/Tag";
 
 export type { Article };
 
@@ -26,13 +27,7 @@ export function ArticleCard({ article }: { article: Article }) {
           {/* 标签行 */}
           <div className="mb-3 flex flex-wrap items-center gap-2">
             {article.tags.map((tag) => (
-              <Link
-                key={tag}
-                href={`/tags/${tag}`}
-                className="relative z-20 rounded-full border border-border/80 bg-surface/80 px-2.5 py-1 font-mono text-xs text-muted backdrop-blur transition-colors duration-150 hover:border-accent hover:text-accent"
-              >
-                #{tag}
-              </Link>
+              <Tag key={tag} name={tag} className="relative z-20" />
             ))}
             {article.pinned && (
               <span className="relative z-20 rounded-full bg-accent/10 px-2.5 py-1 font-mono text-xs font-semibold text-accent">

@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 const LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/blog", label: "Blog" },
-  { href: "/tags", label: "Tags" },
-  { href: "/about", label: "About" },
+  { href: "/", label: "首页" },
+  { href: "/blog", label: "博客" },
+  { href: "/notary", label: "存证" },
+  { href: "/about", label: "关于" },
 ] as const;
 
 /**

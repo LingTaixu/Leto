@@ -163,6 +163,251 @@ async function verifyUserNFT(address, collectionSlug) {
 <p>未来 Web3 项目的流量入口不再仅仅是推特或官网，<strong>基于 Farcaster/Lens 等协议的社交小应用 (Mini App / Frames)</strong>，由于其即时交互和钱包免密签名的特性，将成为主流。尽早布局此类上层应用集成，能够为平台带来降维打击式的用户转化。</p>
 `,
   },
+  {
+    slug: "ip-strategy-base-service",
+    title: "IP Strategy 后端服务：Express 5 + Sequelize 构建策略铸造 API",
+    summary:
+      "为 IP 资产代币化平台从零搭建后端：Express 5 + Sequelize + PostgreSQL 数据层、JWT 鉴权与校验中间件链、Solana 链上策略与 NFT 历史记录的完整 CRUD 设计。",
+    date: "2026-09-16",
+    readMin: 10,
+    tags: ["node", "web3", "后端"],
+    content: `
+<h2>项目定位</h2>
+<p><code>ip-strategy-base-service</code> 是 IP Strategy 平台的后端基础服务。它承担三件事：<strong>用户鉴权</strong>、<strong>策略（Strategy）的生命周期管理</strong>，以及 <strong>IP/NFT 交易历史</strong>的记录与查询。</p>
+<p>技术选型偏向「稳」而非「新」——用最成熟的 Express + Sequelize 组合，把链上交互的复杂性收敛在服务端。</p>
+
+<h2>技术栈一览</h2>
+<table>
+<thead><tr><th>层次</th><th>选型</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>运行时</td><td>Bun + TypeScript</td><td>直接执行 <code>.ts</code>，开发期免编译</td></tr>
+<tr><td>Web 框架</td><td>Express 5</td><td>原生支持 async 错误冒泡，不再需要 try/catch 包装</td></tr>
+<tr><td>ORM</td><td>Sequelize 6</td><td>配合 <code>pg</code> / <code>pg-hstore</code> 连接 PostgreSQL</td></tr>
+<tr><td>链上 SDK</td><td>@coral-xyz/anchor</td><td>Solana 程序交互</td></tr>
+<tr><td>资产查询</td><td>opensea-js + viem</td><td>NFT 归属查询与 EVM 读链</td></tr>
+<tr><td>日志</td><td>winston + morgan</td><td>结构化日志 + HTTP 访问日志</td></tr>
+</tbody>
+</table>
+
+<h2>路由设计：按资源域拆分</h2>
+<p>入口 <code>src/app.ts</code> 只做装配，业务路由按资源维度挂载，保持每个 controller 的职责单一：</p>
+<pre><code>app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/upload", uploadRouter);
+
+// strategy
+app.post("/api/v1/strategy", jwtChecker, validate(parseCreateStrategyTxReqValidators), strategyController.createStrategy);
+app.get("/api/v1/strategy/:id", validate(findStrategyByIdParamValidators), strategyController.findStrategyById);
+app.post("/api/v1/strategy/:id/verify", jwtChecker, validate(verifyStrategyValidators), strategyController.verifyStrategy);
+app.get("/api/v1/strategies", strategyController.listStrategies);
+app.get("/api/v1/self_strategies", jwtChecker, strategyController.listSelfStrategies);</code></pre>
+<p>注意 <code>strategies</code>（公开列表）与 <code>self_strategies</code>（我的策略）被拆成两个端点，而不是靠 query 参数区分——这样鉴权中间件可以精确挂载，避免「公开接口里混入私有逻辑」的常见坑。</p>
+
+<h2>中间件链：鉴权与校验分离</h2>
+<p>我们把横切关注点拆成三个独立中间件，按需组合：</p>
+<pre><code>// 1. JWT 鉴权 —— 解析并挂载 req.user
+jwtChecker
+
+// 2. 参数校验 —— express-validator，校验失败直接 400
+validate(parseCreateStrategyTxReqValidators)
+
+// 3. 统一错误处理 —— 挂在路由最后
+app.use(customErrorMiddleware);</code></pre>
+<p>这种「鉴权 → 校验 → 业务」的线性链条，让 controller 内部可以假定输入一定合法，大幅减少防御性代码。</p>
+
+<h2>链上交互：求解耦</h2>
+<p>策略创建的本质是「记录一笔链上交易」：前端在钱包签名后提交交易哈希，后端落库并异步验证。因此数据模型围绕 <code>txHash</code> 建立，验证通过后才把策略标记为有效。</p>
+<blockquote><p>关键设计：<strong>先落库、后验证</strong>。链上确认存在不确定性，同步等待会拖垮接口响应；把验证做成独立端点（<code>/strategy/:id/verify</code>）后，前端可以轮询或由定时任务补偿。</p></blockquote>
+
+<h2>NFT 历史记录 CRUD</h2>
+<p>交易历史是高频读写场景，提供增删改查四个动作，其中变更操作全部要求鉴权：</p>
+<pre><code>POST /api/v1/nft_history            // 新增
+POST /api/v1/nft_history/:id/update // 更新
+POST /api/v1/nft_history/:id/delete // 删除
+GET  /api/v1/nft_histories          // 列表（分页）</code></pre>
+<p>变更类操作使用 <code>POST</code> 而非 <code>PATCH/DELETE</code>，是为了兼容部分网关与客户端对非幂等方法的限制——这是实际部署中很常见的妥协。</p>
+
+<h2>工程化小结</h2>
+<ul>
+<li><strong>上传</strong>用 multer 独立成 <code>/upload</code> 路由，与业务解耦；</li>
+<li><strong>数值处理</strong>用 <code>decimal.js</code> + <code>bn.js</code>，避免浮点误差侵蚀资产计算；</li>
+<li><strong>地址编码</strong>用 <code>bs58</code>，兼容 Solana 的 Base58 格式；</li>
+<li><strong>环境配置</strong>集中在 <code>src/config.ts</code>，杜绝散落的 <code>process.env</code>。</li>
+</ul>
+<p>后端服务的价值不在于用了多少新框架，而在于<strong>把不确定性（链上、网络、第三方 API）收敛在可控的边界内</strong>。这套服务的分层，就是围绕这个目标设计的。</p>
+`,
+  },
+  {
+    slug: "cooking-city-solana-fair-launch",
+    title: "Cooking.City：Solana 公平发射平台的 Next.js 15 全栈实践",
+    summary:
+      "拆解 Solana 公平发射平台 Cooking.City：Next.js 15 App Router + next-intl 多语言、Reown AppKit 钱包接入、Anchor 程序与 Meteora DLMM 流动性集成，以及防狙击与 Conviction Pool 的工程实现。",
+    date: "2026-09-12",
+    readMin: 11,
+    tags: ["nextjs", "solana", "web3"],
+    content: `
+<h2>平台要解决什么问题</h2>
+<p>Cooking.City 是一个建立在 Solana 上的<strong>公平发射（Fair Launch）平台</strong>。它要对抗的是代币发行中最常见的两类不公：<strong>狙击（Sniper）</strong>与<strong>不公平的筹码分配</strong>。</p>
+<p>为此平台引入了两个核心机制：<strong>Conviction Pool</strong>（信念池，提供价格保护）与 <strong>Referral Mechanism</strong>（推荐机制，让分发更均衡）。</p>
+
+<h2>技术栈</h2>
+<table>
+<thead><tr><th>维度</th><th>选型</th></tr></thead>
+<tbody>
+<tr><td>框架</td><td>Next.js 15.1 App Router + React 19</td></tr>
+<tr><td>UI 层</td><td>HeroUI + Tailwind CSS 3.4</td></tr>
+<tr><td>国际化</td><td>next-intl（<code>[locale]</code> 动态段）</td></tr>
+<tr><td>钱包</td><td>Reown AppKit + Solana Adapter</td></tr>
+<tr><td>链上</td><td>@coral-xyz/anchor、SPL Token、Metaplex</td></tr>
+<tr><td>流动性</td><td>Meteora DLMM / Dynamic Bonding Curve</td></tr>
+<tr><td>行情</td><td>@jup-ag/api、klinecharts、echarts</td></tr>
+<tr><td>动效</td><td>framer-motion / motion、lottie-react</td></tr>
+</tbody>
+</table>
+
+<h2>Provider 分层：上下文不能乱套</h2>
+<p>根布局里 Provider 的嵌套顺序是经过设计的，<code>AuthProvider</code> 依赖钱包状态，而 <code>PriceProvider</code> 依赖网络请求上下文：</p>
+<pre><code>&lt;ContextProvider&gt;
+  &lt;HeroUIProvider&gt;
+    &lt;ToastProvider /&gt;
+    &lt;PriceProvider&gt;
+      &lt;AuthProvider&gt;{children}&lt;/AuthProvider&gt;
+    &lt;/PriceProvider&gt;
+  &lt;/HeroUIProvider&gt;
+&lt;/ContextProvider&gt;</code></pre>
+<blockquote><p>顺序原则：<strong>被依赖者在外层</strong>。钱包连接在 <code>ContextProvider</code>，登录态在 <code>AuthProvider</code>——所以 Auth 必须能读到钱包，反之则不行。</p></blockquote>
+
+<h2>国际化：App Router 下的 <code>[locale]</code></h2>
+<p>通过 <code>next-intl</code> 插件接管路由，页面组件以 Promise 形式接收 <code>params</code>：</p>
+<pre><code>export default async function RootLayout({
+  children,
+  params,
+}: Readonly&lt;{ children: React.ReactNode; params: { locale: string } }&gt;) {
+  return &lt;html lang={params.locale} className="dark"&gt;{children}&lt;/html&gt;;
+}</code></pre>
+<p>注意 <code>&lt;html lang&gt;</code> 直接吃 locale，这对 SEO 与无障碍朗读都是必要的。</p>
+
+<h2>接口代理：rewrites 收口</h2>
+<p>前端不直连多个后端域名，而是在 <code>next.config.ts</code> 里用 rewrites 统一代理，避免 CORS 与密钥外泄：</p>
+<pre><code>async rewrites() {
+  const apiBaseUrl = process.env.API_BASE_URL || "https://api.cooking.city";
+  const v2BaseUrl  = process.env.V2_BASE_URL  || "https://dexapi.gemsgun.com";
+  return {
+    beforeFiles: [
+      { source: "/api/:path*",    destination: \`\${apiBaseUrl}/api/:path*\` },
+      { source: "/twitter/:path*", destination: \`\${apiBaseUrl}/twitter/:path*\` },
+      { source: "/v2/:path*",     destination: \`\${v2BaseUrl}/v2/:path*\` },
+    ],
+  };
+}</code></pre>
+
+<h2>防狙击：双 Config 设计</h2>
+<p>平台为普通发射与防狙击发射准备了两套链上配置 ID，通过环境变量注入：</p>
+<pre><code>NEXT_PUBLIC_CONFIG_ID: "ALEKAF3Q48Vp6NV1uFEKSopAfFUpGEixJgEdTEdCcHvx"
+NEXT_PUBLIC_ANTI_SNIPER_CONFIG_ID: "FQYWAQd6JgLgpbhq1zo4VoCPwLyAwB2uNZqceGPTrvMe"</code></pre>
+<p>把「策略」做成配置而非代码分支，好处是新增发射模式时无需改动前端逻辑。</p>
+
+<h2>稳定性与性能取舍</h2>
+<ul>
+<li><strong>关闭图片优化</strong>（<code>images.unoptimized = true</code>）：官方注释写明是为规避内存泄漏，代价是牺牲自动压缩；</li>
+<li><strong>生产构建移除 console</strong>：用 Terser 的 <code>drop_console</code>，减少线上噪音日志；</li>
+<li><strong>外部依赖白名单</strong>：把 <code>pino-pretty</code>、<code>lokijs</code>、<code>encoding</code> 排除出打包，解决 WalletConnect 系依赖在 Node 端的兼容问题；</li>
+<li><strong>全局 CORS 头</strong>：在 <code>headers()</code> 中统一放开，便于 DApp 嵌入与第三方集成。</li>
+</ul>
+
+<h2>复盘</h2>
+<p>Solana 生态的前端复杂度，主要来自<strong>钱包标准碎片化</strong>与<strong>链上程序版本演进</strong>。这个项目的应对方式是把这些都收敛到 <code>next.config.ts</code> 与 Provider 层——业务组件只消费 hook，不感知底层差异。</p>
+`,
+  },
+  {
+    slug: "ip-strategy-web-tanstack-router",
+    title: "IP Strategy Web：Vite 7 + TanStack Router 的 Web3 前端重构",
+    summary:
+      "从 Next.js 迁移到 Vite + TanStack Router 的完整实践：文件式路由自动生成、useRouter→useNavigate 与 lodash→es-toolkit 的迁移经验、多链钱包接入与 TradingView 图表集成。",
+    date: "2026-09-05",
+    readMin: 9,
+    tags: ["react", "vite", "web3"],
+    content: `
+<h2>为什么从 Next.js 迁到 Vite</h2>
+<p>IP Strategy 是一个<strong>纯客户端 DApp</strong>：没有 SEO 需求，没有服务端数据获取，所有状态都来自钱包与链上 RPC。在这种场景下，Next.js 的 SSR 能力不仅用不上，还会带来额外的构建复杂度。</p>
+<p>迁移后的技术栈是 <strong>Vite 7 + TanStack Router + Tailwind CSS 4</strong>——更轻、更快、更贴近 SPA 的本质。</p>
+
+<h2>文件式路由：目录即路由</h2>
+<p>路由由 <code>@tanstack/router-plugin</code> 自动扫描 <code>src/pages</code> 生成：</p>
+<pre><code>tanstackRouter({
+  target: 'react',
+  routesDirectory: './src/pages',
+})</code></pre>
+<p>每个页面导出一个 <code>Route</code> 对象，约定清晰：</p>
+<pre><code>export const Route = createFileRoute('/home/')({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
+  return &lt;div&gt;...&lt;/div&gt;;
+}</code></pre>
+<p>动态参数用 <code>$</code> 前缀（如 <code>/user/$id</code>），以 <code>-</code> 开头的目录会被忽略（如 <code>-components</code>），非常适合把页面私有组件就近放置。</p>
+
+<h2>迁移中的三个高频改动</h2>
+<h3>1. 路由跳转：useRouter → useNavigate</h3>
+<pre><code>// 迁移前
+import { useRouter } from "next/navigation";
+const router = useRouter();
+router.push('/launch/create');
+
+// 迁移后
+import { useNavigate } from "@tanstack/react-router";
+const navigate = useNavigate();
+navigate({ to: '/launch/create' });</code></pre>
+
+<h3>2. 工具库：lodash → es-toolkit</h3>
+<pre><code>// 迁移前
+import { includes, reject } from "lodash";
+// 迁移后
+import { includes, reject } from "es-toolkit/compat";</code></pre>
+<p>迁移成本极低，收益是<strong>体积与 Tree-shaking 表现显著更好</strong>（lodash 的 CJS 形态对现代打包器并不友好）。</p>
+
+<h3>3. 目录约定：page.tsx → index.tsx</h3>
+<p>App Router 的 <code>page.tsx</code> 统一改为 <code>index.tsx</code>，与 TanStack Router 的「目录即路由」模型对齐。</p>
+
+<h2>多链钱包接入</h2>
+<p>项目同时支持 EVM 与 Solana，两套适配器并存：</p>
+<ul>
+<li><strong>EVM</strong>：RainbowKit + wagmi + viem；</li>
+<li><strong>Solana</strong>：<code>@solana/wallet-adapter-*</code> + Reown AppKit Solana Adapter；</li>
+<li><strong>统一入口</strong>：通过 <code>SelectChainModal</code> 让用户选择目标链。</li>
+</ul>
+
+<h2>图表：TradingView Charting Library</h2>
+<p>K 线使用 TradingView 官方库。由于它不通过 npm 分发，迁移时需额外处理：</p>
+<pre><code># 拷贝静态资源到 src（Vite 需要可控的资源路径）
+./copy_charting_library_files.sh</code></pre>
+<p>这一步在 Next.js 下可以靠 <code>public</code> 目录兜底，但在 Vite 中必须显式拷贝，否则构建产物会缺文件。</p>
+
+<h2>Tailwind CSS 4 的插件变化</h2>
+<p>v4 用 Vite 插件替代了 PostCSS 链路：</p>
+<pre><code>import tailwindcss from '@tailwindcss/vite';
+// vite.config.ts
+plugins: [tailwindcss(), react(), tsconfigPaths(), nodePolyfills()]</code></pre>
+<blockquote><p>踩坑提示：升级到 v4 后，IDE 的类名提示需要在每个项目的 <code>global.css</code> 中显式引入 Tailwind，不能只依赖全局配置。</p></blockquote>
+
+<h2>构建配置的两个关键点</h2>
+<h3>Node Polyfill</h3>
+<p>Web3 依赖链大量使用 Node 内置模块（<code>buffer</code>、<code>stream</code>、<code>crypto</code>），必须挂 <code>vite-plugin-node-polyfills</code> 才能在浏览器运行。</p>
+<h3>手动分包</h3>
+<pre><code>manualChunks: {
+  vendor: ['react', 'react-dom', 'wagmi'],
+}</code></pre>
+<p>把体积大且更新频率低的依赖单独成 chunk，避免业务代码一改就让用户重新下载整个 vendor 包。</p>
+
+<h2>子路径部署</h2>
+<pre><code>base: '/ipstrategy/',
+</code></pre>
+<p>设置 <code>base</code> 后，产物可直接部署到域名子路径下，无需额外改写资源引用。</p>
+
+<h2>复盘</h2>
+<p>技术选型的第一原则是<strong>匹配场景</strong>。当项目不需要 SSR 时，Vite + TanStack Router 提供的类型安全路由、极快的 HMR 与更简单的构建链路，是比「默认选 Next.js」更理性的答案。</p>
+`,
+  },
 ];
 
 /** 按日期倒序返回文章 */
@@ -173,22 +418,6 @@ export function getPosts(): Article[] {
 /** 通过 slug 查询单篇 */
 export function getPostBySlug(slug: string): Article | undefined {
   return posts.find((p) => p.slug === slug);
-}
-
-/** 通过标签查询文章 */
-export function getPostsByTag(tag: string): Article[] {
-  return posts.filter((p) => p.tags.includes(tag));
-}
-
-/** 所有标签（去重，按出现频次排序） */
-export function getAllTags(): string[] {
-  const map = new Map<string, number>();
-  for (const p of posts) {
-    for (const t of p.tags) {
-      map.set(t, (map.get(t) ?? 0) + 1);
-    }
-  }
-  return [...map.entries()].sort((a, b) => b[1] - a[1]).map(([tag]) => tag);
 }
 
 /** 格式化日期为中文短格式 */

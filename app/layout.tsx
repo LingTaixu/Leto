@@ -2,6 +2,7 @@ import { Navigate } from "@/components/Navigate";
 import { TabBar } from "@/components/TabBar";
 import { Footer } from "@/components/Footer";
 import { BackToTop } from "@/components/BackToTop";
+import { Providers } from "@/app/providers";
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
@@ -29,11 +30,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <Navigate />
-        {children}
-        <Footer />
-        <BackToTop />
-        <TabBar />
+        <Providers>
+          <Navigate />
+          {children}
+          <Footer />
+          <BackToTop />
+          <TabBar />
+        </Providers>
       </body>
     </html>
   );
