@@ -16,6 +16,31 @@ const storedEvent = parseAbiItem(
   "event Stored(uint256 indexed timestamp, bytes data)",
 );
 
+const MAX_LOG_RANGE = BigInt(40000);
+const LOOKBACK_BLOCKS = BigInt(49000);
+const CONCURRENCY = 4;
+
+async function mapLimit<T, R>(
+  items: T[],
+  limit: number,
+  mapper: (item: T) => Promise<R>,
+): Promise<R[]> {
+  const results = new Array<R>(items.length);
+  let cursor = 0;
+  const worker = async () => {
+    while (cursor < items.length) {
+      const index = cursor++;
+      results[index] = await mapper(items[index]!);
+    }
+  };
+  const workers = Array.from(
+    { length: Math.min(limit, Math.max(items.length, 1)) },
+    worker,
+  );
+  await Promise.all(workers);
+  return results;
+}
+
 function decodeData(hex: `0x${string}`): string {
   const s = hex.slice(2);
   const len = parseInt(s.slice(64, 128), 16);
@@ -44,18 +69,38 @@ export function Records() {
 
   useEffect(() => {
     if (!publicClient) return;
+    const client = publicClient;
     let cancelled = false;
 
-    publicClient
-      .getLogs({
-        address: CONTRACT_ADDRESS,
-        event: storedEvent,
-        fromBlock: BigInt(DEPLOY_BLOCK),
-        toBlock: "latest",
-      })
-      .then((logs) => {
+    async function load() {
+      try {
+        const latest = await client.getBlockNumber();
         if (cancelled) return;
-        const list: StoredRecord[] = logs
+
+        // 免费公共 RPC 只保留最近约 5 万块历史，更早的日志会被剪枝。
+        // 因此查询窗口取 [max(DEPLOY_BLOCK, latest - LOOKBACK), latest]。
+        const deploy = BigInt(DEPLOY_BLOCK);
+        const lookbackStart = latest - LOOKBACK_BLOCKS + BigInt(1);
+        const start = lookbackStart > deploy ? lookbackStart : deploy;
+
+        const ranges: { from: bigint; to: bigint }[] = [];
+        for (let from = start; from <= latest; from += MAX_LOG_RANGE) {
+          const end = from + MAX_LOG_RANGE - BigInt(1);
+          ranges.push({ from, to: end < latest ? end : latest });
+        }
+
+        const batches = await mapLimit(ranges, CONCURRENCY, ({ from, to }) =>
+          client.getLogs({
+            address: CONTRACT_ADDRESS,
+            event: storedEvent,
+            fromBlock: from,
+            toBlock: to,
+          }),
+        );
+
+        if (cancelled) return;
+        const list: StoredRecord[] = batches
+          .flat()
           .filter(
             (l) =>
               l.address.toLowerCase() === CONTRACT_ADDRESS.toLowerCase() &&
@@ -72,13 +117,14 @@ export function Records() {
           }))
           .sort((a, b) => (a.blockNumber < b.blockNumber ? 1 : -1));
         setRecords(list);
-      })
-      .catch((e) => {
+      } catch (e) {
         if (!cancelled) setError(e instanceof Error ? e.message : String(e));
-      })
-      .finally(() => {
+      } finally {
         if (!cancelled) setLoading(false);
-      });
+      }
+    }
+
+    load();
 
     return () => {
       cancelled = true;
@@ -133,6 +179,10 @@ export function Records() {
           </span>
         )}
       </div>
+
+      <p className="mb-3 font-mono text-[11px] leading-relaxed text-faint">
+        仅显示最近 49,000 个区块内的存证（公共 RPC 历史保留限制）
+      </p>
 
       {loading && (
         <p className="py-8 text-center font-mono text-sm text-faint">

@@ -7,7 +7,7 @@ import { CONTRACT_ADDRESS } from "@/components/notary/contract";
 
 export default function NotaryPage() {
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10 pb-28 lg:pb-10">
+    <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
       <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <div>
           <p className="font-mono text-sm text-accent">{"// PROOF-OF-EXISTENCE"}</p>

@@ -3,7 +3,7 @@ import Link from "next/link";
 const LINKS = [
   { href: "/", label: "首页" },
   { href: "/blog", label: "博客" },
-  { href: "/notary", label: "存证" },
+  { href: "/web3", label: "Web3" },
   { href: "/about", label: "关于" },
 ] as const;
 
@@ -14,7 +14,7 @@ const LINKS = [
 export function Navigate() {
   return (
     <header className="sticky top-0 z-40 h-14 border-b border-border bg-bg/80 backdrop-blur-md">
-      <div className="mx-auto flex h-full w-full max-w-3xl items-center justify-between px-6">
+      <div className="mx-auto flex h-full w-full max-w-[62.5rem] items-center justify-between px-6">
         <Link
           href="/"
           className="text-sm font-semibold tracking-tight text-text hover:text-accent transition-colors duration-150"

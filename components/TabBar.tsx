@@ -6,7 +6,7 @@ import type { SVGProps } from "react";
 
 const TABS = [
   { href: "/", label: "首页", Icon: HomeIcon },
-  { href: "/notary", label: "存证", Icon: NotaryIcon },
+  { href: "/web3", label: "Web3", Icon: NotaryIcon },
   { href: "/about", label: "关于", Icon: UserIcon },
 ] as const;
 

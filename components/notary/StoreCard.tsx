@@ -27,7 +27,7 @@ export function StoreCard() {
   const [input, setInput] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const { writeContractAsync, data: txHash, isPending } = useWriteContract();
+  const { mutateAsync, data: txHash, isPending } = useWriteContract();
   const { data: receipt, isError: txFailed } = useWaitForTransactionReceipt({
     hash: txHash,
     confirmations: 1,
@@ -49,7 +49,7 @@ export function StoreCard() {
       return;
     }
     try {
-      await writeContractAsync({
+      await mutateAsync({
         address: CONTRACT_ADDRESS,
         abi,
         functionName: "store",
@@ -100,7 +100,8 @@ export function StoreCard() {
           />
           <div className="mb-3 mt-2 flex justify-between font-mono text-xs text-faint">
             <span>
-              钱包: {address ? `${address.slice(0, 6)}…${address.slice(-4)}` : "-"}
+              钱包:{" "}
+              {address ? `${address.slice(0, 6)}…${address.slice(-4)}` : "-"}
             </span>
             <span>
               字节: {byteLength}/{MAX_DATA_LENGTH}
@@ -147,7 +148,8 @@ export function StoreCard() {
                 ? (() => {
                     const log = receipt.logs.find(
                       (l) =>
-                        l.address.toLowerCase() === CONTRACT_ADDRESS.toLowerCase(),
+                        l.address.toLowerCase() ===
+                        CONTRACT_ADDRESS.toLowerCase(),
                     );
                     return log ? bytesToUtf8(log.data) : "";
                   })()
