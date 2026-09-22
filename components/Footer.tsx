@@ -7,7 +7,7 @@ import Link from "next/link";
 export function Footer() {
   return (
     <footer className="mt-16 border-t border-border">
-      <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-2 px-6 py-8 text-sm text-faint md:flex-row md:justify-between">
+      <div className="mx-auto flex w-full max-w-[62.5rem] flex-col items-center gap-2 px-6 py-8 text-sm text-faint md:flex-row md:justify-between">
         <p>© {new Date().getFullYear()} Leto · Built with Next.js</p>
         <div className="flex items-center gap-4">
           <Link

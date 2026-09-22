@@ -36,7 +36,7 @@ export default async function BlogPostPage({ params }: PostProps) {
   const next = index < posts.length - 1 ? posts[index + 1] : undefined;
 
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10 pb-28 lg:pb-10">
+    <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
       <nav
         aria-label="面包屑"
         className="mb-8 text-sm text-faint"

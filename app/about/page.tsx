@@ -225,7 +225,7 @@ function Section({
 
 export default function AboutPage() {
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10 pb-32 lg:pb-10">
+    <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-32 lg:pb-10">
       {/* 个人头部 */}
       <header>
         <h1 className="text-4xl font-bold tracking-tight text-text">

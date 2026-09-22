@@ -6,7 +6,7 @@ export default function Home() {
   const articles = getPosts();
 
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10 pb-28 lg:pb-10">
+    <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
       {/* 个人简介 Hero */}
       <section className="mb-12">
         <p className="font-mono text-sm text-accent">hello, 我是 Leto</p>

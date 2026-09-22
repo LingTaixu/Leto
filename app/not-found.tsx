@@ -6,7 +6,7 @@ import Link from "next/link";
  */
 export default function NotFound() {
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-6 py-24 pb-28 text-center lg:pb-10">
+    <main className="mx-auto flex w-full max-w-[62.5rem] flex-1 flex-col items-center justify-center px-6 py-24 pb-28 text-center lg:pb-10">
       <p
         aria-hidden="true"
         className="font-mono text-5xl font-bold tracking-tight text-faint"
