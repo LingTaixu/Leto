@@ -9,7 +9,7 @@ export default function Loading() {
     <main
       aria-busy="true"
       aria-label="加载中"
-      className="mx-auto w-full max-w-3xl flex-1 px-6 py-10 pb-28 lg:pb-10"
+      className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10"
     >
       <div className="mb-10">
         <span className="block h-9 w-56 animate-pulse rounded-md bg-border/70" />

@@ -2,6 +2,7 @@ import { Navigate } from "@/components/Navigate";
 import { TabBar } from "@/components/TabBar";
 import { Footer } from "@/components/Footer";
 import { BackToTop } from "@/components/BackToTop";
+import { BootSplash } from "@/components/boot/BootSplash";
 import { Providers } from "@/app/providers";
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col">
         <Providers>
+          <BootSplash />
           <Navigate />
           {children}
           <Footer />
