@@ -1,0 +1,343 @@
+{
+  "nav": {
+    "main": "Main navigation",
+    "home": "Home",
+    "blog": "Blog",
+    "web3": "Web3",
+    "about": "About"
+  },
+  "common": {
+    "backToTop": "Back to top",
+    "connected": "Connected",
+    "disconnected": "Not connected",
+    "empty": "No content yet"
+  },
+  "footer": {
+    "copyright": "Built with Next.js",
+    "github": "GitHub",
+    "rss": "RSS"
+  },
+  "loading": {
+    "label": "Loading"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "desc": "The page you are looking for does not exist.",
+    "home": "Back to home"
+  },
+  "home": {
+    "hello": "hello, I'm Leto",
+    "title": "Web3 Blockchain Frontend Engineer",
+    "desc": "6 years of frontend experience, deep in the Web3 ecosystem and mainstream EVM. Skilled in building decentralized exchanges, Hyperliquid / Polymarket copy-trading platforms, NFT ecosystems, and complex B2B console products.",
+    "viewResume": "View my resume",
+    "caseStudies": "Project Reviews",
+    "all": "View all"
+  },
+  "blog": {
+    "title": "Articles",
+    "subtitle": "All articles",
+    "pinned": "Pinned",
+    "readMin": "min read",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "web3": {
+    "kicker": "WEB3 LAB",
+    "title": "Web3 Feature Lab",
+    "desc": "A series of interactive on-chain features. Each card is a standalone experiment - just connect a browser wallet to try it.",
+    "features": {
+      "notaryTitle": "Data Notary",
+      "notaryDesc": "Connect a wallet to write up to 64 bytes into BSC Testnet event logs - hash as proof, permanently queryable and tamper-proof.",
+      "transferTitle": "Native Token Transfer",
+      "transferDesc": "Query the BNB balance of any address on BSC Testnet, and send native token transfers with your wallet."
+    }
+  },
+  "notary": {
+    "kicker": "PROOF-OF-EXISTENCE",
+    "title": "DataNotary Notary Terminal",
+    "desc": "Data only enters event logs, never on-chain storage. Every notarization maps to a txHash - permanently queryable and tamper-proof.",
+    "contract": "Contract {addr} · BSC Testnet #97",
+    "store": {
+      "kicker": "Notarize",
+      "label": "IP / data (≤ 64 bytes)",
+      "placeholder": "e.g. 192.168.1.1 or 2001:db8::1",
+      "wallet": "Wallet: {addr}",
+      "bytes": "{n}/{max} bytes",
+      "submit": "Notarize on-chain",
+      "signing": "Awaiting signature…",
+      "connect": "Connect a wallet to notarize",
+      "switchChain": "Switch to BSC Testnet (#97) in RainbowKit",
+      "empty": "Input cannot be empty",
+      "tooLarge": "Data exceeds the 64-byte limit",
+      "waiting": "Waiting for transaction…",
+      "success": "Notarized. Data: {data}",
+      "failed": "Transaction failed - see block explorer"
+    },
+    "records": {
+      "label": "Notary records",
+      "notice": "Showing entries from the latest 49,000 blocks (public RPC history retention limit)",
+      "scanning": "Scanning on-chain events…",
+      "empty": "No notary records yet",
+      "stats": "{count} entries · latest #{block}",
+      "colIndex": "#",
+      "colData": "Data",
+      "colTimestamp": "Timestamp",
+      "colBlock": "Block",
+      "colTxHash": "txHash"
+    }
+  },
+  "transfer": {
+    "kicker": "VALUE TRANSFER",
+    "title": "BSC Native Token Transfer",
+    "desc": "Connect a wallet to query any address's BNB balance on BSC Testnet and send native token transfers.",
+    "balance": {
+      "label": "Balance query",
+      "addressLabel": "Wallet address",
+      "placeholder": "0x...",
+      "queried": "Query: {addr}",
+      "inputHint": "Input or paste an address",
+      "useCurrent": "Use current",
+      "query": "Query balance",
+      "querying": "Querying…",
+      "prompt": "Enter an address to query",
+      "walletLabel": "Balance",
+      "connect": "Connect a wallet to send",
+      "switchChain": "Switch to BSC Testnet (#97) in RainbowKit"
+    },
+    "send": {
+      "label": "Send transfer",
+      "toLabel": "Recipient address",
+      "toPlaceholder": "0x...",
+      "amountLabel": "Amount (BNB)",
+      "amountPlaceholder": "0.01",
+      "current": "Current: {balance}",
+      "approximate": "≈ {amount} BNB",
+      "amountHint": "Enter amount",
+      "submit": "Send transfer",
+      "signing": "Awaiting signature…",
+      "mining": "Waiting on-chain…",
+      "invalidAddress": "Invalid recipient address",
+      "invalidAmount": "Amount must be greater than 0",
+      "insufficient": "Insufficient balance",
+      "signFailed": "Transaction failed - see block explorer",
+      "success": "Transfer sent",
+      "waiting": "Waiting for wallet signature…",
+      "confirming": "Waiting for transaction…"
+    }
+  },
+  "about": {
+    "subtitle": "Web3 / Blockchain Frontend Engineer",
+    "title": "About",
+    "contact": {
+      "labels": {
+        "email": "Email",
+        "gender": "Gender",
+        "age": "Age"
+      },
+      "genderValue": "Male"
+    },
+    "skills": {
+      "title": "Skills",
+      "list": [
+        "React ecosystem",
+        "Vue3 ecosystem",
+        "Next.js",
+        "React Hooks",
+        "Web3 Frontend Development",
+        "TypeScript",
+        "Uniapp",
+        "Web3.js",
+        "Solidity",
+        "ECharts.js",
+        "Zustand",
+        "Node.js"
+      ]
+    },
+    "advantages": {
+      "title": "Strengths",
+      "list": [
+        {
+          "title": "Project experience",
+          "desc": "SaaS platforms, blockchain frontends, decentralized exchanges, mini-programs, apps, SEO, H5, Node backends, and Linux operations"
+        },
+        {
+          "title": "6 years of frontend",
+          "desc": "Able to cover frontend, backend, and ops automation solo. Deep in the Web3 ecosystem, familiar with mainstream EVM ecosystems and development"
+        },
+        {
+          "title": "Management & architecture",
+          "desc": "Efficient team collaboration, project management, tech selection, high-difficulty technical validation, project structure design, tooling, and team efficiency standards"
+        }
+      ]
+    },
+    "experience": {
+      "title": "Experience",
+      "jobs": [
+        {
+          "company": "CATL",
+          "range": "2026.07 - 2026.09",
+          "role": "Frontend Developer · Reliability & Safety",
+          "points": [
+            "Built from 0 to 1: piping data from production-line machines into a Web dashboard",
+            "Developed core risk-level features with React + Umi + ECharts",
+            "Coordinated shared UI components across teams for reuse",
+            "Maintained production projects and fixed live bugs"
+          ]
+        },
+        {
+          "company": "Sichuan Jielian Technology",
+          "range": "2025.05 - 2026.03",
+          "role": "Frontend Developer · Blockchain",
+          "points": [
+            "Built from 0 to 1: Hyperliquid copy-trading platform (React + Next)",
+            "Built from 0 to 1: NFT ecosystem for Solana / BSC / ETH (cityprotocol.co)",
+            "Hyperliquid ecosystem launchpad leveraging UNI V2 / V3",
+            "Polymarket prediction-market copy trading with Zustand state management"
+          ]
+        },
+        {
+          "company": "Zhengzhou Lanyu Rongxin Network Technology",
+          "range": "2024.03 - 2024.11",
+          "role": "Frontend Developer · Blockchain",
+          "points": [
+            "Upgraded the decentralized TOX ecosystem H5 client (dapp.tox.mobi)",
+            "Built the decentralized Meme site Match Banana (match-banana.com)"
+          ]
+        },
+        {
+          "company": "Hash Xingtu",
+          "range": "2022.06 - 2023.12",
+          "role": "Frontend Developer · Blockchain",
+          "points": [
+            "Iterated from product prototypes and Figma designs with pixel-perfect fidelity",
+            "Developed admin console systems and DeFi dApps",
+            "Built with the latest Vue3 setup + TypeScript",
+            "Built an IM chat app with the Easemob SDK, including group chat and red packets"
+          ]
+        },
+        {
+          "company": "Sichuan Qianfeng Group",
+          "range": "2020.10 - 2022.06",
+          "role": "Frontend Developer · Software",
+          "points": [
+            "Owned frontend for a gas utility SaaS, SaaS admin console, and payment mini-program",
+            "Built SaaS with jQuery + embedded Vue2",
+            "Rebuilt the SaaS admin console with React16 + UMI, managing operators",
+            "Optimized SaaS IoT data visualization"
+          ]
+        }
+      ]
+    },
+    "projects": {
+      "title": "Projects",
+      "list": [
+        {
+          "name": "IP Strategy Web",
+          "range": "2026.09",
+          "points": [
+            "Vite 7 + TanStack Router file-based routing, migrated from Next.js to a pure client DApp",
+            "Tailwind CSS 4 + Vite plugin chain with manual code splitting for LCP",
+            "Dual-chain wallets: RainbowKit / wagmi alongside the Solana Wallet Adapter",
+            "Integrated the TradingView Charting Library for IP strategy candlesticks"
+          ]
+        },
+        {
+          "name": "Cooking.City",
+          "range": "2026.09",
+          "points": [
+            "Built a Solana fair-launch platform with Next.js 15 App Router + next-intl",
+            "Reown AppKit wallet integration, Anchor programs with Meteora DLMM liquidity",
+            "Frontend implementation of Conviction Pool price protection and Referral mechanics",
+            "rewrites to consolidate multiple backend domains, avoiding CORS and key leakage"
+          ]
+        },
+        {
+          "name": "IP Strategy Base Service",
+          "range": "2026.09",
+          "points": [
+            "Strategy casting backend with Express 5 + Sequelize + PostgreSQL",
+            "Three-stage middleware chain: JWT auth / parameter validation / unified error handling",
+            "Strategy lifecycle management: persist first, verify on-chain, async compensation",
+            "Full CRUD for NFT trade history with decimal.js precision"
+          ]
+        },
+        {
+          "name": "CATL Safety System Console",
+          "range": "2025.07 - 2026.09",
+          "points": [
+            "B2B platform built with React + Umi",
+            "Complex forms with 200+ interlinked fields",
+            "Worked with business owners on requirements and milestones"
+          ]
+        },
+        {
+          "name": "ECHOSYNC",
+          "range": "2025.08 - 2026.03",
+          "points": [
+            "Decentralized exchange with React + Next.js, Zustand, and next-intl multilingual support",
+            "Hyperliquid SDK for market/limit orders and take-profit / stop-loss trading",
+            "Privy SDK for built-in custodial wallet signing and verification",
+            "TradingView + ws-powered candlestick charts",
+            "Custom hooks to monitor the user's multi-wallet switching",
+            "Displays holdings, trade history, PnL, and funding rates for target addresses",
+            "ERC20 for Hyper L2 internal transfers and Arb on-chain transfers"
+          ]
+        },
+        {
+          "name": "EC-ASTER",
+          "range": "2025.10 - 2026.03",
+          "points": [
+            "Full DEX trading flow with the Aster SDK, in partnership with Aster official",
+            "Compatible with HP's Privy wallet-switching flow, trading from the same address",
+            "Integrated Aster Phase-1 human vs AI, rendering user data via API"
+          ]
+        },
+        {
+          "name": "EC-Polymarket",
+          "range": "2025.12 - 2026.03",
+          "points": [
+            "Fetched Polymarket markets via the SDK and rendered them in the frontend",
+            "Privy SDK to enable Polymarket trading",
+            "TradingView + ws candlesticks for coin price and up/down markets",
+            "CLOB SDK for order placement and trading"
+          ]
+        },
+        {
+          "name": "Hyper-Launch",
+          "range": "2025.12 - 2026.03",
+          "points": [
+            "launchpad on Hyper EVM built on liquidlaunch.app",
+            "UNI v2 / v3 for trading",
+            "TradingView candlesticks"
+          ]
+        },
+        {
+          "name": "Cityprotocol",
+          "range": "2025.12 - 2026.03",
+          "points": [
+            "NFT-bonded tokens on BSC / ETH / SOL",
+            "OpenSea API to query held NFTs, embedded CoinGecko for token trading and charts",
+            "Crowdfund NFT purchases à la punkstrategy.fun with 1.5x sell targets",
+            "mini App integrating Base and Farcaster"
+          ]
+        },
+        {
+          "name": "Hash Admin Console (B2B)",
+          "range": "2022.06 - 2023.12",
+          "points": [
+            "Vue3 + TypeScript adaptive console with media-query mobile support",
+            "Wallet backend management: hot/cold wallets, airdrops, chains and keys; reusable form/table/search/upload components",
+            "nginx setup, docker container management, Aliyun OSS; low-coupling components for rapid client builds",
+            "Google Authenticator wallet login, route guards, and cache bootstrap",
+            "~600 APIs, frontend interactions fully built in-house"
+          ]
+        }
+      ]
+    }
+  }
+}

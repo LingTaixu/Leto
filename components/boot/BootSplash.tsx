@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { CssPulse } from "./CssPulse";
 
@@ -23,6 +24,7 @@ const SplashScene = dynamic(
  * sessionStorage 标记同一会话内（含刷新）不重复展示。
  */
 export function BootSplash() {
+  const { t } = useI18n();
   const reduced = useReducedMotion();
   const [phase, setPhase] = useState<Phase>("waiting");
 
@@ -69,7 +71,7 @@ export function BootSplash() {
   return (
     <div
       aria-busy="true"
-      aria-label="加载中"
+      aria-label={t("loading.label")}
       className={`fixed inset-0 z-[100] flex items-center justify-center bg-bg transition-opacity duration-300 ${
         phase === "fading" ? "pointer-events-none opacity-0" : "opacity-100"
       }`}

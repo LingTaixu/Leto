@@ -1,10 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n";
+import { LocaleSwitch } from "@/components/LocaleSwitch";
 
 const LINKS = [
-  { href: "/", label: "首页" },
-  { href: "/blog", label: "博客" },
-  { href: "/web3", label: "Web3" },
-  { href: "/about", label: "关于" },
+  { href: "/", key: "nav.home" },
+  { href: "/blog", key: "nav.blog" },
+  { href: "/web3", key: "nav.web3" },
+  { href: "/about", key: "nav.about" },
 ] as const;
 
 /**
@@ -12,11 +16,13 @@ const LINKS = [
  * md 以上完整展示；移动端仅保留品牌行（导航交给 Liquid Glass Tab）
  */
 export function Navigate() {
+  const { t, locale } = useI18n();
+
   return (
     <header className="sticky top-0 z-40 h-14 border-b border-border bg-bg/80 backdrop-blur-md">
       <div className="mx-auto flex h-full w-full max-w-[62.5rem] items-center justify-between px-6">
         <Link
-          href="/"
+          href={`/${locale}`}
           className="text-sm font-semibold tracking-tight text-text hover:text-accent transition-colors duration-150"
         >
           Leto
@@ -24,18 +30,20 @@ export function Navigate() {
 
         {/* 桌面导航：md+ 显示；移动端隐藏（lg 起？设计规范 md 起） */}
         <nav
-          aria-label="主导航"
+          aria-label={t("nav.main")}
           className="hidden items-center gap-6 md:flex"
         >
           {LINKS.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={`/${locale}${link.href !== "/" ? link.href : ""}`}
               className="text-sm text-muted transition-colors duration-150 hover:text-accent"
             >
-              {link.label}
+              {t(link.key)}
             </Link>
           ))}
+
+          <LocaleSwitch />
         </nav>
       </div>
     </header>

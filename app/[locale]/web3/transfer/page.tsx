@@ -10,6 +10,7 @@ import {
   useSendTransaction,
   useWaitForTransactionReceipt,
 } from "wagmi";
+import { useI18n } from "@/lib/i18n";
 
 function short(addr: string) {
   return `${addr.slice(0, 6)}…${addr.slice(-4)}`;
@@ -23,16 +24,17 @@ function fmtBalance(value: bigint | undefined, symbol?: string) {
 }
 
 export default function TransferPage() {
+  const { t } = useI18n();
   return (
     <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
       <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <p className="font-mono text-sm text-accent">{"// VALUE TRANSFER"}</p>
+          <p className="font-mono text-sm text-accent">{t("transfer.kicker")}</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-text">
-            BSC 原生币转账
+            {t("transfer.title")}
           </h1>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
-            连接钱包，查询任意地址的 BSC Testnet BNB 余额，并发起原生币转账交易。
+            {t("transfer.desc")}
           </p>
         </div>
         <ConnectButton showBalance={true} />
@@ -48,6 +50,7 @@ export default function TransferPage() {
 
 function BalanceCard() {
   const { address: connected } = useAccount();
+  const { t } = useI18n();
   const [input, setInput] = useState("");
   const [query, setQuery] = useState<`0x${string}` | undefined>();
 
@@ -57,10 +60,16 @@ function BalanceCard() {
   return (
     <div className="rounded-lg border border-border/70 bg-surface/50 p-5">
       <div className="mb-4 flex items-center justify-between">
-        <span className="font-mono text-xs text-accent">{"// 余额查询"}</span>
+        <span className="font-mono text-xs text-accent">
+          {t("transfer.balance.label")}
+        </span>
         <span
           className="size-2 rounded-full bg-success shadow-[0_0_8px_var(--color-success)]"
-          title={connected ? "已连接" : "未连接"}
+          title={
+            connected
+              ? t("common.connected")
+              : t("common.disconnected")
+          }
         />
       </div>
 
@@ -70,15 +79,23 @@ function BalanceCard() {
           if (input && isAddress(input)) setQuery(input as `0x${string}`);
         }}
       >
-        <label className="mb-2 block text-xs text-muted">钱包地址</label>
+        <label className="mb-2 block text-xs text-muted">
+          {t("transfer.balance.addressLabel")}
+        </label>
         <input
           className="w-full rounded-md border border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={connected ? connected : "0x..."}
+          placeholder={
+            connected ? connected : t("transfer.balance.placeholder")
+          }
         />
         <div className="mb-3 mt-2 flex justify-between font-mono text-xs text-faint">
-          <span>{query ? `查询: ${short(query)}` : "输入或粘贴地址"}</span>
+          <span>
+            {query
+              ? t("transfer.balance.queried").replace("{addr}", short(query))
+              : t("transfer.balance.inputHint")}
+          </span>
           {connected && (
             <button
               type="button"
@@ -88,7 +105,7 @@ function BalanceCard() {
                 setQuery(connected);
               }}
             >
-              使用当前地址
+              {t("transfer.balance.useCurrent")}
             </button>
           )}
         </div>
@@ -97,18 +114,18 @@ function BalanceCard() {
           disabled={!input || !inputValid}
           className="inline-flex h-10 w-full items-center justify-center rounded-md bg-text px-4 text-sm font-medium text-bg transition-opacity duration-150 hover:opacity-90 disabled:pointer-events-none disabled:opacity-50"
         >
-          查询余额
+          {t("transfer.balance.query")}
         </button>
       </form>
 
       {!query && (
         <p className="py-6 text-center font-mono text-sm text-faint">
-          输入地址以查询余额
+          {t("transfer.balance.prompt")}
         </p>
       )}
       {query && isLoading && (
         <p className="py-6 text-center font-mono text-sm text-faint">
-          正在查询…
+          {t("transfer.balance.querying")}
         </p>
       )}
       {query && error && (
@@ -118,7 +135,9 @@ function BalanceCard() {
       )}
       {query && data && !isLoading && (
         <div className="mt-4 rounded-md border border-border/60 bg-surface px-4 py-3">
-          <p className="font-mono text-xs text-faint">余额</p>
+          <p className="font-mono text-xs text-faint">
+            {t("transfer.balance.walletLabel")}
+          </p>
           <p className="mt-1 font-mono text-xl font-semibold text-accent">
             {fmtBalance(data.value, data.symbol)}
           </p>
@@ -130,6 +149,7 @@ function BalanceCard() {
 
 function TransferCard() {
   const { address, isConnected } = useAccount();
+  const { t } = useI18n();
   const chainId = useChainId();
   const { data: balance } = useBalance({ address });
   const [to, setTo] = useState("");
@@ -161,15 +181,15 @@ function TransferCard() {
   async function handleSend() {
     setError(null);
     if (!toValid) {
-      setError("收款地址无效");
+      setError(t("transfer.send.invalidAddress"));
       return;
     }
     if (!amountValid) {
-      setError("金额必须大于 0");
+      setError(t("transfer.send.invalidAmount"));
       return;
     }
     if (!enough) {
-      setError("余额不足");
+      setError(t("transfer.send.insufficient"));
       return;
     }
     try {
@@ -185,16 +205,18 @@ function TransferCard() {
   return (
     <div className="rounded-lg border border-border/70 bg-surface/50 p-5">
       <div className="mb-4 flex items-center justify-between">
-        <span className="font-mono text-xs text-accent">{"// 发起转账"}</span>
+        <span className="font-mono text-xs text-accent">
+          {t("transfer.send.label")}
+        </span>
       </div>
 
       {notConnected ? (
         <p className="py-8 text-center font-mono text-sm text-faint">
-          连接钱包以发起转账
+          {t("transfer.balance.connect")}
         </p>
       ) : wrongChain ? (
         <p className="rounded-md border border-warning/40 px-3 py-2 text-sm text-warning">
-          请在 RainbowKit 中切换到 BSC Testnet (#97)
+          {t("transfer.balance.switchChain")}
         </p>
       ) : (
         <form
@@ -203,31 +225,38 @@ function TransferCard() {
             handleSend();
           }}
         >
-          <label className="mb-2 block text-xs text-muted">收款地址</label>
+          <label className="mb-2 block text-xs text-muted">
+            {t("transfer.send.toLabel")}
+          </label>
           <input
             className="w-full rounded-md border border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 disabled:opacity-50"
             value={to}
             onChange={(e) => setTo(e.target.value)}
-            placeholder="0x..."
+            placeholder={t("transfer.send.toPlaceholder")}
             disabled={busy}
           />
           <label className="mb-2 mt-4 block text-xs text-muted">
-            金额（BNB）
+            {t("transfer.send.amountLabel")}
           </label>
           <input
             className="w-full rounded-md border border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 disabled:opacity-50"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            placeholder="0.01"
+            placeholder={t("transfer.send.amountPlaceholder")}
             inputMode="decimal"
             disabled={busy}
           />
           <div className="mb-3 mt-2 flex justify-between font-mono text-xs text-faint">
-            <span>当前: {fmtBalance(balance?.value, balance?.symbol)}</span>
+            <span>
+              {t("transfer.send.current").replace(
+                "{balance}",
+                fmtBalance(balance?.value, balance?.symbol),
+              )}
+            </span>
             <span>
               {amountValue !== null && amountValue > 0n
-                ? `≈ ${amount} BNB`
-                : "输入金额"}
+                ? t("transfer.send.approximate").replace("{amount}", amount)
+                : t("transfer.send.amountHint")}
             </span>
           </div>
           <button
@@ -258,7 +287,11 @@ function TransferCard() {
                 />
               </svg>
             )}
-            {busy ? (isPending ? "等待签名…" : "等待上链…") : "发送转账"}
+            {busy
+              ? isPending
+                ? t("transfer.send.signing")
+                : t("transfer.send.mining")
+              : t("transfer.send.submit")}
           </button>
         </form>
       )}
@@ -305,17 +338,19 @@ function TransferCard() {
                   strokeLinecap="round"
                 />
               </svg>
-              {isPending ? "等待钱包签名…" : "等待交易上链…"}
+              {isPending
+                ? t("transfer.send.waiting")
+                : t("transfer.send.confirming")}
             </div>
           )}
           {receipt && receipt.status === "success" && (
             <div className="mt-2 font-mono text-xs text-success">
-              ✓ 转账成功
+              {t("transfer.send.success")}
             </div>
           )}
           {txFailed && (
             <div className="mt-2 font-mono text-xs text-error">
-              ✗ 交易失败，见区块浏览器
+              {t("transfer.send.signFailed")}
             </div>
           )}
         </div>

@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { SVGProps } from "react";
+import { useI18n } from "@/lib/i18n";
 
 const TABS = [
-  { href: "/", label: "首页", Icon: HomeIcon },
-  { href: "/web3", label: "Web3", Icon: NotaryIcon },
-  { href: "/about", label: "关于", Icon: UserIcon },
+  { href: "/", key: "nav.home", Icon: HomeIcon },
+  { href: "/web3", key: "nav.web3", Icon: NotaryIcon },
+  { href: "/about", key: "nav.about", Icon: UserIcon },
 ] as const;
 
 type Tab = (typeof TABS)[number];
@@ -23,12 +24,13 @@ function isActive(tab: Tab, pathname: string): boolean {
  */
 export function TabBar() {
   const pathname = usePathname();
+  const { t, locale } = useI18n();
   const activeIndex = TABS.findIndex((tab) => isActive(tab, pathname));
   const safeIndex = activeIndex === -1 ? 0 : activeIndex;
 
   return (
     <nav
-      aria-label="主导航"
+      aria-label={t("nav.main")}
       className="fixed inset-x-0 bottom-0 z-50 flex justify-center pb-[calc(0.75rem+env(safe-area-inset-bottom))] px-4 lg:hidden"
     >
       <div className="liquid-glass relative flex h-16 w-full max-w-sm items-center rounded-full px-2">
@@ -48,12 +50,12 @@ export function TabBar() {
           return (
             <Link
               key={tab.href}
-              href={tab.href}
+              href={`/${locale}${tab.href !== "/" ? tab.href : ""}`}
               aria-current={active ? "page" : undefined}
               className="relative z-10 flex h-12 flex-1 flex-col items-center justify-center gap-0.5 rounded-full text-faint transition-colors duration-200 hover:text-muted aria-[current=page]:text-accent aria-[current=page]:font-semibold"
             >
               <Icon className="size-5" aria-hidden="true" />
-              <span className="text-[11px] leading-none">{tab.label}</span>
+              <span className="text-[11px] leading-none">{t(tab.key)}</span>
             </Link>
           );
         })}

@@ -13,15 +13,15 @@ export default function NotFound() {
       >
         404
       </p>
-      <h1 className="mt-4 text-xl font-semibold text-text">页面不存在</h1>
+      <h1 className="mt-4 text-xl font-semibold text-text">Page not found / 页面未找到</h1>
       <p className="mt-2 text-base text-muted">
-        你访问的链接可能已移动或被删除。
+        The link may have moved or been removed. / 你访问的链接可能已移动或被删除。
       </p>
       <Link
         href="/"
         className="mt-8 inline-flex h-10 items-center justify-center rounded-md bg-text px-6 text-sm font-medium text-bg transition-opacity duration-150 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
       >
-        返回首页
+        Back to home / 返回首页
       </Link>
     </main>
   );

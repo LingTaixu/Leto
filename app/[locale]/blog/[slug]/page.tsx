@@ -3,20 +3,25 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Prose } from "@/components/Prose";
 import { Tag } from "@/components/Tag";
-import { formatDate, getPostBySlug, getPosts } from "@/lib/posts";
+import { type Locale } from "@/lib/locales";
+import { SUPPORTED_LOCALES } from "@/lib/locales";
+import { resolveMessage } from "@/lib/messages";
+import { formatDate, getAllSlugs, getPostBySlug, getPosts } from "@/lib/posts";
 import type { Article } from "@/lib/posts";
 
 type PostProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 };
 
 export function generateStaticParams() {
-  return getPosts().map((post) => ({ slug: post.slug }));
+  return SUPPORTED_LOCALES.flatMap((locale) =>
+    getAllSlugs(locale).map((slug) => ({ locale, slug })),
+  );
 }
 
 export function generateMetadata({ params }: PostProps): Promise<Metadata> {
-  return params.then(({ slug }) => {
-    const post = getPostBySlug(slug);
+  return params.then(({ locale, slug }) => {
+    const post = getPostBySlug(slug, locale);
     if (!post) return {};
     return {
       title: post.title,
@@ -26,11 +31,12 @@ export function generateMetadata({ params }: PostProps): Promise<Metadata> {
 }
 
 export default async function BlogPostPage({ params }: PostProps) {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const { locale, slug } = await params;
+  const t = (key: string) => resolveMessage(locale as Locale, key);
+  const post = getPostBySlug(slug, locale);
   if (!post || !post.content) notFound();
 
-  const posts = getPosts();
+  const posts = getPosts(locale);
   const index = posts.findIndex((p) => p.slug === slug);
   const prev = index > 0 ? posts[index - 1] : undefined; // 索引按日期倒序
   const next = index < posts.length - 1 ? posts[index + 1] : undefined;
@@ -38,23 +44,23 @@ export default async function BlogPostPage({ params }: PostProps) {
   return (
     <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
       <nav
-        aria-label="面包屑"
+        aria-label="breadcrumb"
         className="mb-8 text-sm text-faint"
       >
         <Link
-          href="/"
+          href={`/${locale}`}
           className="transition-colors duration-150 hover:text-accent"
         >
-          Home
+          {t("nav.home")}
         </Link>
         <span aria-hidden="true" className="mx-2">
           /
         </span>
         <Link
-          href="/blog"
+          href={`/${locale}/blog`}
           className="transition-colors duration-150 hover:text-accent"
         >
-          Blog
+          {t("nav.blog")}
         </Link>
       </nav>
 
@@ -70,7 +76,9 @@ export default async function BlogPostPage({ params }: PostProps) {
         <p className="mt-3 flex items-center gap-2 text-sm text-faint">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           <span aria-hidden="true">·</span>
-          <span>{post.readMin} min read</span>
+          <span>
+            {post.readMin} {t("blog.readMin")}
+          </span>
         </p>
       </header>
 
@@ -80,21 +88,28 @@ export default async function BlogPostPage({ params }: PostProps) {
 
       {/* Prev / Next 导航 */}
       <nav
-        aria-label="文章导航"
+        aria-label="article-nav"
         className="mt-16 grid grid-cols-1 gap-4 border-t border-border pt-8 sm:grid-cols-2"
       >
-        <PostNavLink post={next} prefix="上一篇" />
-        <PostNavLink post={prev} prefix="下一篇" alignEnd />
+        <PostNavLink locale={locale} post={next} prefix={t("blog.next")} />
+        <PostNavLink
+          locale={locale}
+          post={prev}
+          prefix={t("blog.prev")}
+          alignEnd
+        />
       </nav>
     </main>
   );
 }
 
 function PostNavLink({
+  locale,
   post,
   prefix,
   alignEnd = false,
 }: {
+  locale: string;
   post?: Article;
   prefix: string;
   alignEnd?: boolean;
@@ -106,7 +121,7 @@ function PostNavLink({
   }
   return (
     <Link
-      href={`/blog/${post.slug}`}
+      href={`/${locale}/blog/${post.slug}`}
       className={`group rounded-lg border border-border/60 p-4 transition-colors duration-150 hover:border-accent/40 hover:bg-surface/70 ${
         alignEnd ? "sm:text-right" : ""
       }`}

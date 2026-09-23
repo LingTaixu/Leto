@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 
 /**
  * 返回顶部（design-system §3.9，仅移动端）
@@ -8,6 +9,7 @@ import { useEffect, useState } from "react";
  */
 export function BackToTop() {
   const [visible, setVisible] = useState(false);
+  const { t } = useI18n();
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > window.innerHeight);
@@ -19,7 +21,7 @@ export function BackToTop() {
   return (
     <button
       type="button"
-      aria-label="返回顶部"
+      aria-label={t("common.backToTop")}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className={[
         "fixed right-4 z-40 flex size-10 items-center justify-center rounded-full",

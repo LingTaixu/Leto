@@ -4,18 +4,20 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Records } from "@/components/notary/Records";
 import { StoreCard } from "@/components/notary/StoreCard";
 import { CONTRACT_ADDRESS } from "@/components/notary/contract";
+import { useI18n } from "@/lib/i18n";
 
 export default function NotaryPage() {
+  const { t } = useI18n();
   return (
     <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
       <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <p className="font-mono text-sm text-accent">{"// PROOF-OF-EXISTENCE"}</p>
+          <p className="font-mono text-sm text-accent">{t("notary.kicker")}</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-text">
-            DataNotary 存证台
+            {t("notary.title")}
           </h1>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
-            数据只进事件日志，不占链上存储。每笔存证对应一个 txHash，永久可查、不可篡改。
+            {t("notary.desc")}
           </p>
         </div>
         <ConnectButton showBalance={true} />
@@ -23,8 +25,10 @@ export default function NotaryPage() {
 
       <div className="mb-6">
         <span className="rounded-full border border-border px-3 py-1 font-mono text-xs text-muted">
-          合约 {CONTRACT_ADDRESS.slice(0, 6)}…
-          {CONTRACT_ADDRESS.slice(-4)} · BSC Testnet #97
+          {t("notary.contract").replace(
+            "{addr}",
+            `${CONTRACT_ADDRESS.slice(0, 6)}…${CONTRACT_ADDRESS.slice(-4)}`,
+          )}
         </span>
       </div>
 

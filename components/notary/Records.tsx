@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { parseAbiItem } from "viem";
 import { usePublicClient, useWatchContractEvent } from "wagmi";
 import { CONTRACT_ADDRESS, DEPLOY_BLOCK, abi } from "./contract";
+import { useI18n } from "@/lib/i18n";
 
 export interface StoredRecord {
   txHash: `0x${string}`;
@@ -62,6 +63,7 @@ function fmtTime(ts: bigint): string {
 }
 
 export function Records() {
+  const { t } = useI18n();
   const publicClient = usePublicClient();
   const [records, setRecords] = useState<StoredRecord[]>([]);
   const [loading, setLoading] = useState(true);
@@ -172,21 +174,25 @@ export function Records() {
   return (
     <div className="rounded-lg border border-border/70 bg-surface/50 p-5">
       <div className="mb-4 flex items-center justify-between">
-        <span className="font-mono text-xs text-accent">{"// 存证记录"}</span>
+        <span className="font-mono text-xs text-accent">
+          {t("notary.records.label")}
+        </span>
         {stats && (
           <span className="rounded-full border border-border px-2.5 py-0.5 font-mono text-xs text-muted">
-            {stats.total} 条 · 最新 #{stats.latestBlock.toString()}
+            {t("notary.records.stats")
+              .replace("{count}", String(stats.total))
+              .replace("{block}", stats.latestBlock.toString())}
           </span>
         )}
       </div>
 
       <p className="mb-3 font-mono text-[11px] leading-relaxed text-faint">
-        仅显示最近 49,000 个区块内的存证（公共 RPC 历史保留限制）
+        {t("notary.records.notice")}
       </p>
 
       {loading && (
         <p className="py-8 text-center font-mono text-sm text-faint">
-          正在扫描链上事件…
+          {t("notary.records.scanning")}
         </p>
       )}
       {error && (
@@ -196,7 +202,7 @@ export function Records() {
       )}
       {!loading && !error && records.length === 0 && (
         <p className="py-8 text-center font-mono text-sm text-faint">
-          尚无存证记录
+          {t("notary.records.empty")}
         </p>
       )}
 
@@ -206,19 +212,19 @@ export function Records() {
             <thead className="sticky top-0 bg-surface">
               <tr>
                 <th className="px-2 pb-2 text-left font-mono text-xs font-medium uppercase tracking-wider text-faint">
-                  #
+                  {t("notary.records.colIndex")}
                 </th>
                 <th className="px-2 pb-2 text-left font-mono text-xs font-medium uppercase tracking-wider text-faint">
-                  数据
+                  {t("notary.records.colData")}
                 </th>
                 <th className="px-2 pb-2 text-left font-mono text-xs font-medium uppercase tracking-wider text-faint">
-                  时间戳
+                  {t("notary.records.colTimestamp")}
                 </th>
                 <th className="px-2 pb-2 text-left font-mono text-xs font-medium uppercase tracking-wider text-faint">
-                  区块
+                  {t("notary.records.colBlock")}
                 </th>
                 <th className="px-2 pb-2 text-left font-mono text-xs font-medium uppercase tracking-wider text-faint">
-                  txHash
+                  {t("notary.records.colTxHash")}
                 </th>
               </tr>
             </thead>

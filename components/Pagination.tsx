@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n";
 
 type PaginationProps = {
   basePath: string;
@@ -32,6 +35,7 @@ function pageItems(current: number, total: number): (number | "…")[] {
  * 纯链接（No JS）。当前页反色高亮，移动端压缩为省略号
  */
 export function Pagination({ basePath, page, totalPages }: PaginationProps) {
+  const { t } = useI18n();
   if (totalPages <= 1) return null;
 
   const itemCls =
@@ -39,12 +43,13 @@ export function Pagination({ basePath, page, totalPages }: PaginationProps) {
 
   return (
     <nav
-      aria-label="分页"
+      aria-label={t("pagination.label")}
       className="mt-12 flex items-center justify-center gap-1.5"
     >
       {page > 1 ? (
         <Link
           href={pageUrl(basePath, page - 1)}
+          aria-label={t("pagination.prev")}
           className={`${itemCls} text-muted hover:text-accent`}
         >
           ←
@@ -82,6 +87,7 @@ export function Pagination({ basePath, page, totalPages }: PaginationProps) {
       {page < totalPages ? (
         <Link
           href={pageUrl(basePath, page + 1)}
+          aria-label={t("pagination.next")}
           className={`${itemCls} text-muted hover:text-accent`}
         >
           →

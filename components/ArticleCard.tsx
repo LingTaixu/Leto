@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import type { Article } from "@/lib/posts";
 import { formatDate } from "@/lib/posts";
 import { Tag } from "@/components/Tag";
+import { type Locale } from "@/lib/locales";
+import { resolveMessage } from "@/lib/messages";
 
 export type { Article };
 
@@ -14,7 +16,14 @@ export type { Article };
  * 3. 悬停微上浮、流光旋转速度加快、底部淡入霓虹氛围投影 (Ambient Halo)
  * 4. 完整的键盘 focus 支持 (focus-within)
  */
-export function ArticleCard({ article }: { article: Article }) {
+export function ArticleCard({
+  article,
+  locale,
+}: {
+  article: Article;
+  locale: string;
+}) {
+  const t = (key: string) => resolveMessage(locale as Locale, key);
   return (
     <div className="gemini-border-container group">
       {/* 1. 旋转的流光盘（只充当 Padding 1.5px 处的旋转背景） */}
@@ -31,7 +40,7 @@ export function ArticleCard({ article }: { article: Article }) {
             ))}
             {article.pinned && (
               <span className="relative z-20 rounded-full bg-accent/10 px-2.5 py-1 font-mono text-xs font-semibold text-accent">
-                置顶
+                {t("blog.pinned")}
               </span>
             )}
           </div>
@@ -39,7 +48,7 @@ export function ArticleCard({ article }: { article: Article }) {
           {/* 标题（整卡可点：after 绝对定位覆盖，z-10） */}
           <h3 className="text-lg font-bold tracking-tight text-text transition-colors duration-150 group-hover:text-accent">
             <Link
-              href={`/blog/${article.slug}`}
+              href={`/${locale}/blog/${article.slug}`}
               className="after:absolute after:inset-0 after:z-10 after:content-[''] focus-visible:rounded-xl"
             >
               {article.title}
@@ -55,7 +64,9 @@ export function ArticleCard({ article }: { article: Article }) {
           <p className="mt-5 flex items-center gap-2 text-sm text-faint">
             <time dateTime={article.date}>{formatDate(article.date)}</time>
             <span aria-hidden="true">·</span>
-            <span>{article.readMin} min read</span>
+            <span>
+              {article.readMin} {t("blog.readMin")}
+            </span>
           </p>
         </article>
       </div>
@@ -66,15 +77,17 @@ export function ArticleCard({ article }: { article: Article }) {
 /** 文章列表栅格容器 */
 export function ArticleList({
   articles,
+  locale,
   children,
 }: {
   articles: Article[];
+  locale: string;
   children?: ReactNode;
 }) {
   return (
     <div className="space-y-6 lg:grid lg:grid-cols-2 lg:gap-6 lg:space-y-0">
       {articles.map((article) => (
-        <ArticleCard key={article.slug} article={article} />
+        <ArticleCard key={article.slug} article={article} locale={locale} />
       ))}
       {children}
     </div>

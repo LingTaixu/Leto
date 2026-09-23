@@ -1,3 +1,7 @@
+"use client";
+
+import { useI18n } from "@/lib/i18n";
+
 /**
  * 列表加载骨架屏（design-system §3.8）
  * 标题条 / 摘要条 / 图片块灰块 + animate-pulse，带 aria-busy
@@ -25,7 +29,7 @@ export function ArticleCardSkeleton() {
  * 列表空状态（design-system §3.8）
  */
 export function EmptyState({
-  title = "暂无内容",
+  title,
   description,
   action,
 }: {
@@ -33,9 +37,11 @@ export function EmptyState({
   description?: string;
   action?: React.ReactNode;
 }) {
+  const { t } = useI18n();
+  const resolvedTitle = title ?? t("common.empty");
   return (
     <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border px-6 py-16 text-center">
-      <p className="text-base font-medium text-text">{title}</p>
+      <p className="text-base font-medium text-text">{resolvedTitle}</p>
       {description && (
         <p className="mt-2 text-sm text-muted">{description}</p>
       )}

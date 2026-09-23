@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
+import type { Locale } from "@/lib/locales";
 
 export type Article = {
   slug: string;
@@ -39,8 +40,14 @@ function toDateString(value: unknown): string {
   return String(value);
 }
 
+/** 文件名 "slug.zh.md" -> slug */
+function slugFromFile(fileName: string): string {
+  return fileName.replace(/\.(?:[a-z]{2}\.md|md)$/, "");
+}
+
+/** 传入文件名必须形如 "{slug}.{locale}.md" */
 function parsePost(fileName: string): Article {
-  const slug = fileName.replace(/\.md$/, "");
+  const slug = slugFromFile(fileName);
   const raw = fs.readFileSync(path.join(POSTS_DIR, fileName), "utf8");
   const { data, content } = matter(raw);
 
@@ -69,26 +76,35 @@ function parsePost(fileName: string): Article {
   };
 }
 
-let cache: Article[] | null = null;
+const cache = new Map<string, Article[]>();
 
-function allPosts(): Article[] {
-  if (cache === null) {
-    cache = fs
-      .readdirSync(POSTS_DIR)
-      .filter((name) => name.endsWith(".md"))
-      .map(parsePost);
-  }
-  return cache;
+function allPosts(locale: Locale): Article[] {
+  const cached = cache.get(locale);
+  if (cached) return cached;
+  const list = fs
+    .readdirSync(POSTS_DIR)
+    .filter((name) => name.endsWith(`.${locale}.md`))
+    .map(parsePost);
+  cache.set(locale, list);
+  return list;
 }
 
-/** 按日期倒序返回文章 */
-export function getPosts(): Article[] {
-  return [...allPosts()].sort((a, b) => (a.date < b.date ? 1 : -1));
+/** 按日期倒序返回当前 locale 的文章 */
+export function getPosts(locale: Locale): Article[] {
+  return [...allPosts(locale)].sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-/** 通过 slug 查询单篇 */
-export function getPostBySlug(slug: string): Article | undefined {
-  return allPosts().find((p) => p.slug === slug);
+/** 通过 slug 查询当前 locale 的单篇 */
+export function getPostBySlug(
+  slug: string,
+  locale: Locale,
+): Article | undefined {
+  return allPosts(locale).find((p) => p.slug === slug);
+}
+
+/** 全部 locale 组合（用于 generateStaticParams） */
+export function getAllSlugs(locale: Locale): string[] {
+  return allPosts(locale).map((p) => p.slug);
 }
 
 /** 格式化日期为中文短格式 */
