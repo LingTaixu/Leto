@@ -18,4 +18,10 @@ export const web3Features: Web3Feature[] = [
     titleKey: "web3.features.transferTitle",
     descKey: "web3.features.transferDesc",
   },
+  {
+    slug: "kline",
+    badge: "K",
+    titleKey: "web3.features.klineTitle",
+    descKey: "web3.features.klineDesc",
+  },
 ];

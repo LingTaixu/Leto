@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "main": "Main navigation",
+    "home": "Home",
+    "blog": "Blog",
+    "web3": "Web3",
+    "about": "About"
+  },
+  "common": {
+    "backToTop": "Back to top",
+    "connected": "Connected",
+    "disconnected": "Not connected",
+    "empty": "No content yet"
+  },
+  "footer": {
+    "copyright": "Built with Next.js",
+    "github": "GitHub",
+    "rss": "RSS"
+  },
+  "loading": {
+    "label": "Loading"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "desc": "The page you are looking for does not exist.",
+    "home": "Back to home"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "prev": "Previous",
+    "next": "Next"
+  }
+}

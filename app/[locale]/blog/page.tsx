@@ -1,7 +1,23 @@
+import type { Metadata } from "next";
 import { ArticleList } from "@/components/ArticleCard";
+import { localeAlternates } from "@/lib/alternates";
 import { type Locale } from "@/lib/locales";
 import { resolveMessage } from "@/lib/messages";
 import { getPosts } from "@/lib/posts";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = (key: string) => resolveMessage(locale as Locale, key);
+  return {
+    title: t("blog.seoTitle"),
+    description: t("blog.seoDescription"),
+    alternates: localeAlternates(locale, "/blog"),
+  };
+}
 
 export default async function BlogPage({
   params,

@@ -1,0 +1,12 @@
+{
+  "blog": {
+    "title": "文章",
+    "subtitle": "全部文章",
+    "pinned": "置顶",
+    "readMin": "min read",
+    "prev": "上一篇",
+    "next": "下一篇",
+    "seoTitle": "文章",
+    "seoDescription": "Web3 区块链前端项目案例与技术复盘。"
+  }
+}

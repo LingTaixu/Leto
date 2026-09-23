@@ -1,12 +1,15 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Tag } from "@/components/Tag";
+import { localeAlternates } from "@/lib/alternates";
 import { type Locale } from "@/lib/locales";
 import { resolveMessage, resolveRaw } from "@/lib/messages";
 
 const contact = {
   name: "Leto",
   email: "taixuling@gmail.com",
+  telegram: "@leto_lll",
+  gender: "男",
   age: 27,
 };
 
@@ -63,7 +66,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const name = resolveMessage(locale as Locale, "about.title");
-  return { title: `${name} · ${contact.name}` };
+  const desc = resolveMessage(locale as Locale, "about.seoDescription");
+  return {
+    title: `${name} · ${contact.name}`,
+    description: desc,
+    alternates: localeAlternates(locale, "/about"),
+  };
 }
 
 export default async function AboutPage({
@@ -117,6 +125,19 @@ export default async function AboutPage({
           <div className="flex items-center gap-2">
             <dt className="text-faint">{t("about.contact.labels.age")}</dt>
             <dd>{contact.age}</dd>
+          </div>
+          <div className="flex items-center gap-2">
+            <dt className="text-faint">{t("about.contact.labels.telegram")}</dt>
+            <dd>
+              <a
+                href={`https://t.me/${contact.telegram.slice(1)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-accent transition-colors duration-150"
+              >
+                {contact.telegram}
+              </a>
+            </dd>
           </div>
         </dl>
       </header>

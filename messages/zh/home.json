@@ -1,0 +1,12 @@
+{
+  "home": {
+    "hello": "hello, 我是 Leto",
+    "title": "Web3 区块链前端工程师",
+    "desc": "6 年前端开发经验，深耕 Web3 生态与主流 EVM。擅长构建去中心化交易所、Hyperliquid / Polymarket 跟单平台、NFT 生态与复杂 ToB 中台。",
+    "viewResume": "查看我的简历",
+    "caseStudies": "项目技术复盘",
+    "all": "全部",
+    "seoTitle": "Leto · Web3 前端工程师",
+    "seoDescription": "6 年 Web3 前端经验，深耕 Hyperliquid、Polymarket、DEX 与 EVM 生态开发。"
+  }
+}

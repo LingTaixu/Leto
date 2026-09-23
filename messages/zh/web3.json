@@ -1,0 +1,17 @@
+{
+  "web3": {
+    "kicker": "WEB3 LAB",
+    "title": "Web3 功能实验室",
+    "desc": "一系列可交互的链上功能。每个卡片对应一个独立实验，只需连接浏览器钱包即可体验。",
+    "features": {
+      "notaryTitle": "数据存证",
+      "notaryDesc": "连接钱包，将一段不超过 64 字节的数据写入 BSC Testnet 链上事件日志，哈希即证据，永久可查、不可篡改。",
+      "transferTitle": "原生币转账",
+      "transferDesc": "查询任意地址的 BSC Testnet BNB 余额，并连接钱包发起原生币转账。",
+      "klineTitle": "K 线图表",
+      "klineDesc": "查看 ETH / 1 小时周期 / 近 30 天的 Hyperliquid K 线图。"
+    },
+    "seoTitle": "Web3 功能实验室",
+    "seoDescription": "可交互的链上功能：存证、转账与 K 线图表。"
+  }
+}

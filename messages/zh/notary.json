@@ -1,0 +1,38 @@
+{
+  "notary": {
+    "kicker": "PROOF-OF-EXISTENCE",
+    "title": "DataNotary 存证台",
+    "desc": "数据只进事件日志，不占链上存储。每笔存证对应一个 txHash，永久可查、不可篡改。",
+    "contract": "合约 {addr} · BSC Testnet #97",
+    "store": {
+      "kicker": "存证写入",
+      "label": "IP / 数据（≤ 64 字节）",
+      "placeholder": "如 192.168.1.1 或 2001:db8::1",
+      "wallet": "钱包: {addr}",
+      "bytes": "{n}/{max} 字节",
+      "submit": "存证上链",
+      "signing": "等待签名…",
+      "connect": "连接钱包以发起存证交易",
+      "switchChain": "请在 RainbowKit 中切换到 BSC Testnet (#97)",
+      "empty": "输入不能为空",
+      "tooLarge": "数据超出 64 字节上限",
+      "waiting": "等待交易上链…",
+      "success": "✓ 存证成功。数据: {data}",
+      "failed": "✗ 交易失败，见区块浏览器"
+    },
+    "records": {
+      "label": "存证记录",
+      "notice": "仅显示最近 49,000 个区块内的存证（公共 RPC 历史保留限制）",
+      "scanning": "正在扫描链上事件…",
+      "empty": "尚无存证记录",
+      "stats": "{count} 条 · 最新 #{block}",
+      "colIndex": "#",
+      "colData": "数据",
+      "colTimestamp": "时间戳",
+      "colBlock": "区块",
+      "colTxHash": "txHash"
+    },
+    "seoTitle": "数据存证",
+    "seoDescription": "连接钱包将数据写入 BSC 链上事件日志，哈希即证据。"
+  }
+}

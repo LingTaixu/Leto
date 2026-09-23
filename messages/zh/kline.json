@@ -1,0 +1,13 @@
+{
+  "kline": {
+    "seoTitle": "K 线图表",
+    "seoDescription": "Hyperliquid ETH 1 小时 K 线实时走势。",
+    "intervalLabel": "周期",
+    "coinLabel": "币种",
+    "loading": "加载中…",
+    "error": "加载失败",
+    "refreshing": "刷新中…",
+    "loadingOlder": "加载更早数据…",
+    "oldest": "已到最早数据"
+  }
+}

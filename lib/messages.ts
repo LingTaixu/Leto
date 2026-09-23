@@ -1,9 +1,34 @@
 import type { Locale } from "@/lib/locales";
-import en from "@/messages/en.json";
-import zh from "@/messages/zh.json";
 
-/** en.json 定义消息树结构（zh 必须同构） */
-export type Messages = typeof en;
+// en 模块（zh 同构）
+import enCommon from "@/messages/en/common.json";
+import enHome from "@/messages/en/home.json";
+import enBlog from "@/messages/en/blog.json";
+import enWeb3 from "@/messages/en/web3.json";
+import enNotary from "@/messages/en/notary.json";
+import enTransfer from "@/messages/en/transfer.json";
+import enKline from "@/messages/en/kline.json";
+import enAbout from "@/messages/en/about.json";
+
+// zh 模块
+import zhCommon from "@/messages/zh/common.json";
+import zhHome from "@/messages/zh/home.json";
+import zhBlog from "@/messages/zh/blog.json";
+import zhWeb3 from "@/messages/zh/web3.json";
+import zhNotary from "@/messages/zh/notary.json";
+import zhTransfer from "@/messages/zh/transfer.json";
+import zhKline from "@/messages/zh/kline.json";
+import zhAbout from "@/messages/zh/about.json";
+
+/** en 模块合并定义消息树结构（zh 模块须同构） */
+export type Messages = typeof enCommon &
+  typeof enHome &
+  typeof enBlog &
+  typeof enWeb3 &
+  typeof enNotary &
+  typeof enTransfer &
+  typeof enKline &
+  typeof enAbout;
 
 export type MessageKey = DeepKeys<Messages>;
 
@@ -15,7 +40,28 @@ type DeepKeys<T> = T extends string
         : never;
     }[keyof T];
 
-const MESSAGES: Record<string, Messages> = { en, zh };
+const MESSAGES: Record<string, Messages> = {
+  en: {
+    ...enCommon,
+    ...enHome,
+    ...enBlog,
+    ...enWeb3,
+    ...enNotary,
+    ...enTransfer,
+    ...enKline,
+    ...enAbout,
+  },
+  zh: {
+    ...zhCommon,
+    ...zhHome,
+    ...zhBlog,
+    ...zhWeb3,
+    ...zhNotary,
+    ...zhTransfer,
+    ...zhKline,
+    ...zhAbout,
+  },
+};
 
 function deepLookup(dict: unknown, key: string): unknown {
   let cur: unknown = dict;

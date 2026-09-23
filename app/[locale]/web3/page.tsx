@@ -1,7 +1,23 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import { localeAlternates } from "@/lib/alternates";
 import { type Locale } from "@/lib/locales";
 import { resolveMessage } from "@/lib/messages";
 import { web3Features } from "./features";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = (key: string) => resolveMessage(locale as Locale, key);
+  return {
+    title: t("web3.seoTitle"),
+    description: t("web3.seoDescription"),
+    alternates: localeAlternates(locale, "/web3"),
+  };
+}
 
 export default async function Web3Page({
   params,

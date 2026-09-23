@@ -1,0 +1,38 @@
+{
+  "notary": {
+    "kicker": "PROOF-OF-EXISTENCE",
+    "title": "DataNotary Notary Terminal",
+    "desc": "Data only enters event logs, never on-chain storage. Every notarization maps to a txHash - permanently queryable and tamper-proof.",
+    "contract": "Contract {addr} · BSC Testnet #97",
+    "store": {
+      "kicker": "Notarize",
+      "label": "IP / data (≤ 64 bytes)",
+      "placeholder": "e.g. 192.168.1.1 or 2001:db8::1",
+      "wallet": "Wallet: {addr}",
+      "bytes": "{n}/{max} bytes",
+      "submit": "Notarize on-chain",
+      "signing": "Awaiting signature…",
+      "connect": "Connect a wallet to notarize",
+      "switchChain": "Switch to BSC Testnet (#97) in RainbowKit",
+      "empty": "Input cannot be empty",
+      "tooLarge": "Data exceeds the 64-byte limit",
+      "waiting": "Waiting for transaction…",
+      "success": "Notarized. Data: {data}",
+      "failed": "Transaction failed - see block explorer"
+    },
+    "records": {
+      "label": "Notary records",
+      "notice": "Showing entries from the latest 49,000 blocks (public RPC history retention limit)",
+      "scanning": "Scanning on-chain events…",
+      "empty": "No notary records yet",
+      "stats": "{count} entries · latest #{block}",
+      "colIndex": "#",
+      "colData": "Data",
+      "colTimestamp": "Timestamp",
+      "colBlock": "Block",
+      "colTxHash": "txHash"
+    },
+    "seoTitle": "Data Notary",
+    "seoDescription": "Connect wallet to write data into BSC event logs, hash as proof."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "blog": {
+    "title": "Articles",
+    "subtitle": "All articles",
+    "pinned": "Pinned",
+    "readMin": "min read",
+    "prev": "Previous",
+    "next": "Next",
+    "seoTitle": "Articles",
+    "seoDescription": "Web3 blockchain frontend project case studies and technical reviews."
+  }
+}

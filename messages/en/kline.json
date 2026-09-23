@@ -1,0 +1,13 @@
+{
+  "kline": {
+    "seoTitle": "K-line Chart",
+    "seoDescription": "Hyperliquid ETH 1H candlestick chart.",
+    "intervalLabel": "Interval",
+    "coinLabel": "Coin",
+    "loading": "Loading…",
+    "error": "Failed to load",
+    "refreshing": "Refreshing…",
+    "loadingOlder": "Loading earlier…",
+    "oldest": "Earliest data reached"
+  }
+}

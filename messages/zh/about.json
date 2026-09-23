@@ -1,135 +1,4 @@
 {
-  "nav": {
-    "main": "主导航",
-    "home": "首页",
-    "blog": "博客",
-    "web3": "Web3",
-    "about": "关于"
-  },
-  "common": {
-    "backToTop": "返回顶部",
-    "connected": "已连接",
-    "disconnected": "未连接",
-    "empty": "暂无内容"
-  },
-  "footer": {
-    "copyright": "Built with Next.js",
-    "github": "GitHub",
-    "rss": "RSS"
-  },
-  "loading": {
-    "label": "加载中"
-  },
-  "notFound": {
-    "title": "页面未找到",
-    "desc": "您访问的页面不存在。",
-    "home": "返回首页"
-  },
-  "home": {
-    "hello": "hello, 我是 Leto",
-    "title": "Web3 区块链前端工程师",
-    "desc": "6 年前端开发经验，深耕 Web3 生态与主流 EVM。擅长构建去中心化交易所、Hyperliquid / Polymarket 跟单平台、NFT 生态与复杂 ToB 中台。",
-    "viewResume": "查看我的简历",
-    "caseStudies": "项目技术复盘",
-    "all": "全部"
-  },
-  "blog": {
-    "title": "文章",
-    "subtitle": "全部文章",
-    "pinned": "置顶",
-    "readMin": "min read",
-    "prev": "上一篇",
-    "next": "下一篇"
-  },
-  "pagination": {
-    "label": "分页",
-    "prev": "上一页",
-    "next": "下一页"
-  },
-  "web3": {
-    "kicker": "WEB3 LAB",
-    "title": "Web3 功能实验室",
-    "desc": "一系列可交互的链上功能。每个卡片对应一个独立实验，只需连接浏览器钱包即可体验。",
-    "features": {
-      "notaryTitle": "数据存证",
-      "notaryDesc": "连接钱包，将一段不超过 64 字节的数据写入 BSC Testnet 链上事件日志，哈希即证据，永久可查、不可篡改。",
-      "transferTitle": "原生币转账",
-      "transferDesc": "查询任意地址的 BSC Testnet BNB 余额，并连接钱包发起原生币转账。"
-    }
-  },
-  "notary": {
-    "kicker": "PROOF-OF-EXISTENCE",
-    "title": "DataNotary 存证台",
-    "desc": "数据只进事件日志，不占链上存储。每笔存证对应一个 txHash，永久可查、不可篡改。",
-    "contract": "合约 {addr} · BSC Testnet #97",
-    "store": {
-      "kicker": "存证写入",
-      "label": "IP / 数据（≤ 64 字节）",
-      "placeholder": "如 192.168.1.1 或 2001:db8::1",
-      "wallet": "钱包: {addr}",
-      "bytes": "{n}/{max} 字节",
-      "submit": "存证上链",
-      "signing": "等待签名…",
-      "connect": "连接钱包以发起存证交易",
-      "switchChain": "请在 RainbowKit 中切换到 BSC Testnet (#97)",
-      "empty": "输入不能为空",
-      "tooLarge": "数据超出 64 字节上限",
-      "waiting": "等待交易上链…",
-      "success": "✓ 存证成功。数据: {data}",
-      "failed": "✗ 交易失败，见区块浏览器"
-    },
-    "records": {
-      "label": "存证记录",
-      "notice": "仅显示最近 49,000 个区块内的存证（公共 RPC 历史保留限制）",
-      "scanning": "正在扫描链上事件…",
-      "empty": "尚无存证记录",
-      "stats": "{count} 条 · 最新 #{block}",
-      "colIndex": "#",
-      "colData": "数据",
-      "colTimestamp": "时间戳",
-      "colBlock": "区块",
-      "colTxHash": "txHash"
-    }
-  },
-  "transfer": {
-    "kicker": "VALUE TRANSFER",
-    "title": "BSC 原生币转账",
-    "desc": "连接钱包，查询任意地址的 BSC Testnet BNB 余额，并发起原生币转账交易。",
-    "balance": {
-      "label": "余额查询",
-      "addressLabel": "钱包地址",
-      "placeholder": "0x...",
-      "queried": "查询: {addr}",
-      "inputHint": "输入或粘贴地址",
-      "useCurrent": "使用当前地址",
-      "query": "查询余额",
-      "querying": "正在查询…",
-      "prompt": "输入地址以查询余额",
-      "walletLabel": "余额",
-      "connect": "连接钱包以发起转账",
-      "switchChain": "请在 RainbowKit 中切换到 BSC Testnet (#97)"
-    },
-    "send": {
-      "label": "发起转账",
-      "toLabel": "收款地址",
-      "toPlaceholder": "0x...",
-      "amountLabel": "金额（BNB）",
-      "amountPlaceholder": "0.01",
-      "current": "当前: {balance}",
-      "approximate": "≈ {amount} BNB",
-      "amountHint": "输入金额",
-      "submit": "发送转账",
-      "signing": "等待签名…",
-      "mining": "等待上链…",
-      "invalidAddress": "收款地址无效",
-      "invalidAmount": "金额必须大于 0",
-      "insufficient": "余额不足",
-      "signFailed": "✗ 交易失败，见区块浏览器",
-      "success": "✓ 转账成功",
-      "waiting": "等待钱包签名…",
-      "confirming": "等待交易上链…"
-    }
-  },
   "about": {
     "subtitle": "Web3 / 区块链前端工程师",
     "title": "关于",
@@ -137,7 +6,8 @@
       "labels": {
         "email": "邮箱",
         "gender": "性别",
-        "age": "年龄"
+        "age": "年龄",
+        "telegram": "Telegram"
       },
       "genderValue": "男"
     },
@@ -338,6 +208,8 @@
           ]
         }
       ]
-    }
+    },
+    "seoTitle": "关于我",
+    "seoDescription": "Leto - Web3 区块链前端工程师的个人简历与技术栈。"
   }
 }

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { ViewTransition } from "react";
 import type { ReactNode } from "react";
 import { BackToTop } from "@/components/BackToTop";
 import { BootSplash } from "@/components/boot/BootSplash";
@@ -30,7 +31,7 @@ export default async function LocaleLayout({
     <I18nProvider locale={locale as Locale}>
       <BootSplash />
       <Navigate />
-      {children}
+      <ViewTransition>{children}</ViewTransition>
       <Footer />
       <BackToTop />
       <TabBar />

@@ -1,0 +1,43 @@
+{
+  "transfer": {
+    "kicker": "VALUE TRANSFER",
+    "title": "BSC 原生币转账",
+    "desc": "连接钱包，查询任意地址的 BSC Testnet BNB 余额，并发起原生币转账交易。",
+    "balance": {
+      "label": "余额查询",
+      "addressLabel": "钱包地址",
+      "placeholder": "0x...",
+      "queried": "查询: {addr}",
+      "inputHint": "输入或粘贴地址",
+      "useCurrent": "使用当前地址",
+      "query": "查询余额",
+      "querying": "正在查询…",
+      "prompt": "输入地址以查询余额",
+      "walletLabel": "余额",
+      "connect": "连接钱包以发起转账",
+      "switchChain": "请在 RainbowKit 中切换到 BSC Testnet (#97)"
+    },
+    "send": {
+      "label": "发起转账",
+      "toLabel": "收款地址",
+      "toPlaceholder": "0x...",
+      "amountLabel": "金额（BNB）",
+      "amountPlaceholder": "0.01",
+      "current": "当前: {balance}",
+      "approximate": "≈ {amount} BNB",
+      "amountHint": "输入金额",
+      "submit": "发送转账",
+      "signing": "等待签名…",
+      "mining": "等待上链…",
+      "invalidAddress": "收款地址无效",
+      "invalidAmount": "金额必须大于 0",
+      "insufficient": "余额不足",
+      "signFailed": "✗ 交易失败，见区块浏览器",
+      "success": "✓ 转账成功",
+      "waiting": "等待钱包签名…",
+      "confirming": "等待交易上链…"
+    },
+    "seoTitle": "原生币转账",
+    "seoDescription": "查询 BSC 余额并发起原生币转账。"
+  }
+}

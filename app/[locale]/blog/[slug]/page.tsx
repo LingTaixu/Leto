@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Prose } from "@/components/Prose";
 import { Tag } from "@/components/Tag";
+import { localeAlternates } from "@/lib/alternates";
 import { type Locale } from "@/lib/locales";
 import { SUPPORTED_LOCALES } from "@/lib/locales";
 import { resolveMessage } from "@/lib/messages";
@@ -26,6 +27,12 @@ export function generateMetadata({ params }: PostProps): Promise<Metadata> {
     return {
       title: post.title,
       description: post.summary,
+      openGraph: {
+        title: post.title,
+        description: post.summary,
+        type: "article",
+      },
+      alternates: localeAlternates(locale, `/blog/${slug}`),
     };
   });
 }

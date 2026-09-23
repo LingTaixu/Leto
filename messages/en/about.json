@@ -1,135 +1,4 @@
 {
-  "nav": {
-    "main": "Main navigation",
-    "home": "Home",
-    "blog": "Blog",
-    "web3": "Web3",
-    "about": "About"
-  },
-  "common": {
-    "backToTop": "Back to top",
-    "connected": "Connected",
-    "disconnected": "Not connected",
-    "empty": "No content yet"
-  },
-  "footer": {
-    "copyright": "Built with Next.js",
-    "github": "GitHub",
-    "rss": "RSS"
-  },
-  "loading": {
-    "label": "Loading"
-  },
-  "notFound": {
-    "title": "Page not found",
-    "desc": "The page you are looking for does not exist.",
-    "home": "Back to home"
-  },
-  "home": {
-    "hello": "hello, I'm Leto",
-    "title": "Web3 Blockchain Frontend Engineer",
-    "desc": "6 years of frontend experience, deep in the Web3 ecosystem and mainstream EVM. Skilled in building decentralized exchanges, Hyperliquid / Polymarket copy-trading platforms, NFT ecosystems, and complex B2B console products.",
-    "viewResume": "View my resume",
-    "caseStudies": "Project Reviews",
-    "all": "View all"
-  },
-  "blog": {
-    "title": "Articles",
-    "subtitle": "All articles",
-    "pinned": "Pinned",
-    "readMin": "min read",
-    "prev": "Previous",
-    "next": "Next"
-  },
-  "pagination": {
-    "label": "Pagination",
-    "prev": "Previous",
-    "next": "Next"
-  },
-  "web3": {
-    "kicker": "WEB3 LAB",
-    "title": "Web3 Feature Lab",
-    "desc": "A series of interactive on-chain features. Each card is a standalone experiment - just connect a browser wallet to try it.",
-    "features": {
-      "notaryTitle": "Data Notary",
-      "notaryDesc": "Connect a wallet to write up to 64 bytes into BSC Testnet event logs - hash as proof, permanently queryable and tamper-proof.",
-      "transferTitle": "Native Token Transfer",
-      "transferDesc": "Query the BNB balance of any address on BSC Testnet, and send native token transfers with your wallet."
-    }
-  },
-  "notary": {
-    "kicker": "PROOF-OF-EXISTENCE",
-    "title": "DataNotary Notary Terminal",
-    "desc": "Data only enters event logs, never on-chain storage. Every notarization maps to a txHash - permanently queryable and tamper-proof.",
-    "contract": "Contract {addr} · BSC Testnet #97",
-    "store": {
-      "kicker": "Notarize",
-      "label": "IP / data (≤ 64 bytes)",
-      "placeholder": "e.g. 192.168.1.1 or 2001:db8::1",
-      "wallet": "Wallet: {addr}",
-      "bytes": "{n}/{max} bytes",
-      "submit": "Notarize on-chain",
-      "signing": "Awaiting signature…",
-      "connect": "Connect a wallet to notarize",
-      "switchChain": "Switch to BSC Testnet (#97) in RainbowKit",
-      "empty": "Input cannot be empty",
-      "tooLarge": "Data exceeds the 64-byte limit",
-      "waiting": "Waiting for transaction…",
-      "success": "Notarized. Data: {data}",
-      "failed": "Transaction failed - see block explorer"
-    },
-    "records": {
-      "label": "Notary records",
-      "notice": "Showing entries from the latest 49,000 blocks (public RPC history retention limit)",
-      "scanning": "Scanning on-chain events…",
-      "empty": "No notary records yet",
-      "stats": "{count} entries · latest #{block}",
-      "colIndex": "#",
-      "colData": "Data",
-      "colTimestamp": "Timestamp",
-      "colBlock": "Block",
-      "colTxHash": "txHash"
-    }
-  },
-  "transfer": {
-    "kicker": "VALUE TRANSFER",
-    "title": "BSC Native Token Transfer",
-    "desc": "Connect a wallet to query any address's BNB balance on BSC Testnet and send native token transfers.",
-    "balance": {
-      "label": "Balance query",
-      "addressLabel": "Wallet address",
-      "placeholder": "0x...",
-      "queried": "Query: {addr}",
-      "inputHint": "Input or paste an address",
-      "useCurrent": "Use current",
-      "query": "Query balance",
-      "querying": "Querying…",
-      "prompt": "Enter an address to query",
-      "walletLabel": "Balance",
-      "connect": "Connect a wallet to send",
-      "switchChain": "Switch to BSC Testnet (#97) in RainbowKit"
-    },
-    "send": {
-      "label": "Send transfer",
-      "toLabel": "Recipient address",
-      "toPlaceholder": "0x...",
-      "amountLabel": "Amount (BNB)",
-      "amountPlaceholder": "0.01",
-      "current": "Current: {balance}",
-      "approximate": "≈ {amount} BNB",
-      "amountHint": "Enter amount",
-      "submit": "Send transfer",
-      "signing": "Awaiting signature…",
-      "mining": "Waiting on-chain…",
-      "invalidAddress": "Invalid recipient address",
-      "invalidAmount": "Amount must be greater than 0",
-      "insufficient": "Insufficient balance",
-      "signFailed": "Transaction failed - see block explorer",
-      "success": "Transfer sent",
-      "waiting": "Waiting for wallet signature…",
-      "confirming": "Waiting for transaction…"
-    }
-  },
   "about": {
     "subtitle": "Web3 / Blockchain Frontend Engineer",
     "title": "About",
@@ -137,7 +6,8 @@
       "labels": {
         "email": "Email",
         "gender": "Gender",
-        "age": "Age"
+        "age": "Age",
+        "telegram": "Telegram"
       },
       "genderValue": "Male"
     },
@@ -338,6 +208,8 @@
           ]
         }
       ]
-    }
+    },
+    "seoTitle": "About",
+    "seoDescription": "Leto - Web3 blockchain frontend engineer resume & tech stack."
   }
 }

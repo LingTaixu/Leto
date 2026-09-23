@@ -1,0 +1,17 @@
+{
+  "web3": {
+    "kicker": "WEB3 LAB",
+    "title": "Web3 Feature Lab",
+    "desc": "A series of interactive on-chain features. Each card is a standalone experiment - just connect a browser wallet to try it.",
+    "features": {
+      "notaryTitle": "Data Notary",
+      "notaryDesc": "Connect a wallet to write up to 64 bytes into BSC Testnet event logs - hash as proof, permanently queryable and tamper-proof.",
+      "transferTitle": "Native Token Transfer",
+      "transferDesc": "Query the BNB balance of any address on BSC Testnet, and send native token transfers with your wallet.",
+      "klineTitle": "K-line Chart",
+      "klineDesc": "View ETH / 1h / last 30 days Hyperliquid candlestick chart."
+    },
+    "seoTitle": "Web3 Feature Lab",
+    "seoDescription": "Interactive on-chain features: notary, transfer & K-line chart."
+  }
+}

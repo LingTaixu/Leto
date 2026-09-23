@@ -1,0 +1,43 @@
+{
+  "transfer": {
+    "kicker": "VALUE TRANSFER",
+    "title": "BSC Native Token Transfer",
+    "desc": "Connect a wallet to query any address's BNB balance on BSC Testnet and send native token transfers.",
+    "balance": {
+      "label": "Balance query",
+      "addressLabel": "Wallet address",
+      "placeholder": "0x...",
+      "queried": "Query: {addr}",
+      "inputHint": "Input or paste an address",
+      "useCurrent": "Use current",
+      "query": "Query balance",
+      "querying": "Querying…",
+      "prompt": "Enter an address to query",
+      "walletLabel": "Balance",
+      "connect": "Connect a wallet to send",
+      "switchChain": "Switch to BSC Testnet (#97) in RainbowKit"
+    },
+    "send": {
+      "label": "Send transfer",
+      "toLabel": "Recipient address",
+      "toPlaceholder": "0x...",
+      "amountLabel": "Amount (BNB)",
+      "amountPlaceholder": "0.01",
+      "current": "Current: {balance}",
+      "approximate": "≈ {amount} BNB",
+      "amountHint": "Enter amount",
+      "submit": "Send transfer",
+      "signing": "Awaiting signature…",
+      "mining": "Waiting on-chain…",
+      "invalidAddress": "Invalid recipient address",
+      "invalidAmount": "Amount must be greater than 0",
+      "insufficient": "Insufficient balance",
+      "signFailed": "Transaction failed - see block explorer",
+      "success": "Transfer sent",
+      "waiting": "Waiting for wallet signature…",
+      "confirming": "Waiting for transaction…"
+    },
+    "seoTitle": "Transfer",
+    "seoDescription": "Query BSC balance and send native token transfers."
+  }
+}

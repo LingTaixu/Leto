@@ -14,11 +14,24 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Leto · Web3 前端工程师",
-  description:
-    "6 年 Web3 / 区块链前端工程师，精通 React、Next.js、Vue3，深耕 Hyperliquid、Polymarket、DEX 与 EVM 生态开发。",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || undefined;
+  const base = siteUrl ? { metadataBase: new URL(siteUrl) } : {};
+  return {
+    ...base,
+    title: "Leto · Web3 前端工程师",
+    description:
+      "6 年 Web3 / 区块链前端工程师，精通 React、Next.js、Vue3，深耕 Hyperliquid、Polymarket、DEX 与 EVM 生态开发。",
+    openGraph: {
+      siteName: "Leto",
+      type: "website",
+      locale: "zh_CN",
+    },
+    twitter: {
+      card: "summary",
+    },
+  };
+}
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
