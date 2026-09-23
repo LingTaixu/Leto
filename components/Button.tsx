@@ -4,7 +4,7 @@ import type { AnchorHTMLAttributes, ReactNode } from "react";
 type Variant = "primary" | "secondary" | "ghost" | "link";
 
 const base =
-  "inline-flex h-10 items-center justify-center gap-2 border-[3px] border-border px-4 text-sm font-heading font-bold transition-all duration-100 focus-visible:outline-3 focus-visible:outline-accent focus-visible:outline-offset-3 disabled:pointer-events-none disabled:opacity-50";
+  "inline-flex h-10 items-center justify-center gap-2 border-[3px] border-border px-4 text-sm font-heading font-bold transition-all duration-100 focus-visible:outline-3 focus-visible:outline-[var(--border)] focus-visible:outline-offset-3 disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
   // neubrutalism 主按钮：黑底白字 + 硬阴影，悬停上浮放大阴影，点击下压消影

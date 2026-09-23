@@ -39,7 +39,7 @@ export function Pagination({ basePath, page, totalPages }: PaginationProps) {
   if (totalPages <= 1) return null;
 
   const itemCls =
-    "inline-flex h-9 min-w-9 items-center justify-center border-[3px] border-border bg-surface px-2 text-sm font-bold transition-all duration-100 focus-visible:outline-3 focus-visible:outline-accent focus-visible:outline-offset-2 hover:-translate-x-px hover:-translate-y-px hover:shadow-neu-sm active:translate-x-px active:translate-y-px active:shadow-none";
+    "inline-flex h-9 min-w-9 items-center justify-center border-[3px] border-border bg-surface px-2 text-sm font-bold transition-all duration-100 focus-visible:outline-3 focus-visible:outline-[var(--border)] focus-visible:outline-offset-2 hover:-translate-x-px hover:-translate-y-px hover:shadow-neu-sm active:translate-x-px active:translate-y-px active:shadow-none";
 
   return (
     <nav

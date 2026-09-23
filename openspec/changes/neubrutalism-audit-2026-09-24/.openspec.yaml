@@ -1,0 +1,19 @@
+schema_version: "1.0"
+id: neubrutalism-audit-2026-09-24
+change_type: optimization
+title: "Neubrutalism Style Audit - Remaining Layout/Style Optimizations"
+status: proposed
+created_at: 2026-09-24
+author: "OpenCode"
+tags:
+  - ui
+  - design
+  - styling
+  - neubrutalism
+related_changes:
+  - 2026-09-23-restyle-neubrutalism
+spec_files:
+  - specs/footer-component/spec.md
+  - specs/marquee-component/spec.md
+  - specs/tab-bar-component/spec.md
+  - specs/tag-component/spec.md

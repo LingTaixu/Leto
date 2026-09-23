@@ -53,15 +53,15 @@ export default async function Home({
       <Marquee skills={SKILLS} />
       <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
         <section className="mb-12">
-          <p className="font-mono text-sm text-accent">{t("home.hello")}</p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-text">
+          <p className="inline-block border-2 border-border bg-accent px-2 py-0.5 font-mono text-sm font-bold text-on-accent shadow-neu-sm">{t("home.hello")}</p>
+          <h1 className="mt-3 font-bold tracking-tight text-text">
             {t("home.title")}
           </h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-muted">
             {t("home.desc")}
             <Link
               href={`/${locale}/about`}
-              className="text-accent underline underline-offset-2 hover:text-accent-hover transition-colors duration-150"
+              className="text-text underline underline-offset-2 hover:bg-accent hover:text-on-accent transition-colors duration-150"
             >
               {t("home.viewResume")}
             </Link>
@@ -71,12 +71,12 @@ export default async function Home({
 
         <section>
           <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-bold tracking-tight text-text">
+            <h2 className="font-semibold tracking-tight text-text">
               {t("home.caseStudies")}
             </h2>
             <Link
               href={`/${locale}/blog`}
-              className="text-sm text-muted transition-colors duration-150 hover:text-accent"
+              className="text-sm text-muted transition-colors duration-150 hover:bg-accent hover:text-on-accent"
             >
               {t("home.all")} →
             </Link>

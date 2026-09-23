@@ -19,7 +19,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="mt-8 inline-flex h-10 items-center justify-center border-[3px] border-border bg-text px-6 text-sm font-bold text-bg shadow-neu transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu-lg active:translate-x-0.5 active:translate-y-0.5 active:shadow-none focus-visible:outline-3 focus-visible:outline-accent focus-visible:outline-offset-3"
+        className="mt-8 inline-flex h-10 items-center justify-center border-[3px] border-border bg-text px-6 text-sm font-bold text-bg shadow-neu transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu-lg active:translate-x-0.5 active:translate-y-0.5 active:shadow-none focus-visible:outline-3 focus-visible:outline-[var(--border)] focus-visible:outline-offset-3"
       >
         Back to home / 返回首页
       </Link>

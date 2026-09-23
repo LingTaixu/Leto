@@ -51,7 +51,7 @@ function Section({
 }) {
   return (
     <section id={id} className="mt-12">
-      <h2 className="mb-6 text-xl font-bold tracking-tight text-text">
+      <h2 className="mb-6 font-semibold tracking-tight text-text">
         {title}
       </h2>
       {children}
@@ -102,7 +102,7 @@ export default async function AboutPage({
     <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-32 lg:pb-10">
       {/* 个人头部 */}
       <header>
-        <h1 className="text-4xl font-bold tracking-tight text-text">
+        <h1 className="font-bold tracking-tight text-text">
           {contact.name}
         </h1>
         <p className="mt-2 text-lg text-muted">{t("about.subtitle")}</p>
@@ -112,7 +112,7 @@ export default async function AboutPage({
             <dd>
               <a
                 href={`mailto:${contact.email}`}
-                className="hover:text-accent transition-colors duration-150"
+                className="hover:bg-accent hover:text-on-accent transition-colors duration-150"
               >
                 {contact.email}
               </a>
@@ -133,7 +133,7 @@ export default async function AboutPage({
                 href={`https://t.me/${contact.telegram.slice(1)}`}
                 target="_blank"
                 rel="noreferrer"
-                className="hover:text-accent transition-colors duration-150"
+                className="hover:bg-accent hover:text-on-accent transition-colors duration-150"
               >
                 {contact.telegram}
               </a>
@@ -209,7 +209,7 @@ export default async function AboutPage({
             >
               <div className="flex items-start justify-between gap-2">
                 {projectHrefs[project.name] ? (
-                  <h3 className="text-base font-semibold text-text transition-colors duration-150 hover:text-accent">
+                  <h3 className="text-base font-semibold text-text transition-colors duration-150 hover:bg-accent hover:text-on-accent">
                     <Link href={projectHrefs[project.name]}>
                       {project.name} →
                     </Link>

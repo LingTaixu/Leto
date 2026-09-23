@@ -13,7 +13,7 @@ export type { Article };
  * 1. 3px 硬边框 + 5px 硬阴影（零模糊）+ 零圆角
  * 2. 悬停上浮 2px 并放大阴影，按下下压消影
  * 3. 黄色 accent 装饰（置顶徽章 / 标题悬停）
- * 4. 完整的键盘 focus 支持 (focus-within)
+ * 4. 键盘 focus-visible 时：3px 黑色环 + 4px 偏移，鼠标点击不显环
  */
 export function ArticleCard({
   article,
@@ -26,7 +26,7 @@ export function ArticleCard({
   return (
     <div className="group border-[3px] border-border bg-surface p-6 shadow-neu transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu-lg active:translate-x-0.5 active:translate-y-0.5 active:shadow-neu-sm">
       {/* 建立卡片级的焦点区域 */}
-      <article className="relative focus-within:outline-3 focus-within:outline-accent focus-within:outline-offset-4">
+      <article className="relative has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-[var(--border)] has-[:focus-visible]:outline-offset-4">
         {/* 标签行 */}
         <div className="mb-3 flex flex-wrap items-center gap-2">
           {article.tags.map((tag) => (
@@ -40,7 +40,7 @@ export function ArticleCard({
         </div>
 
         {/* 标题（整卡可点：after 绝对定位覆盖，z-10） */}
-        <h3 className="text-lg font-heading font-bold tracking-tight text-text transition-colors duration-100 group-hover:bg-accent group-hover:text-on-accent">
+        <h3 className="text-lg font-semibold tracking-tight text-text transition-colors duration-100 group-hover:bg-accent group-hover:text-on-accent">
           <Link
             href={`/${locale}/blog/${article.slug}`}
             className="after:absolute after:inset-0 after:z-10 after:content-[''] focus-visible:outline-none"

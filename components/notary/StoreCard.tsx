@@ -98,7 +98,7 @@ export function StoreCard() {
             {t("notary.store.label")}
           </label>
           <input
-            className="w-full border-[3px] border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:outline-3 focus:outline-accent focus:outline-offset-2"
+            className="w-full border-[3px] border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:outline-3 focus:outline-[var(--border)] focus:outline-offset-2"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={t("notary.store.placeholder")}
@@ -154,7 +154,7 @@ export function StoreCard() {
             </div>
           )}
           {receipt && receipt.status === "success" && (
-            <div className="mt-2 font-mono text-xs font-bold text-success">
+            <div className="mt-2 font-mono text-xs font-bold text-success-dark">
               {t("notary.store.success").replace(
                 "{data}",
                 publicClient
@@ -171,7 +171,7 @@ export function StoreCard() {
             </div>
           )}
           {txFailed && (
-            <div className="mt-2 font-mono text-xs font-bold text-error">
+            <div className="mt-2 font-mono text-xs font-bold text-error-dark">
               {t("notary.store.failed")}
             </div>
           )}

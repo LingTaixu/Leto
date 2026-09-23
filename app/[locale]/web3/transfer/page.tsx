@@ -29,8 +29,8 @@ export default function TransferPage() {
     <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
       <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <p className="font-mono text-sm text-accent">{t("transfer.kicker")}</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-text">
+          <p className="inline-block border-2 border-border bg-accent px-2 py-0.5 font-mono text-sm font-bold text-on-accent">{t("transfer.kicker")}</p>
+          <h1 className="mt-2 font-bold tracking-tight text-text">
             {t("transfer.title")}
           </h1>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
@@ -64,7 +64,7 @@ function BalanceCard() {
           {t("transfer.balance.label")}
         </span>
         <span
-          className="size-3 border-2 border-border bg-success"
+          className="size-3 border-[3px] border-border bg-success"
           title={
             connected
               ? t("common.connected")
@@ -83,7 +83,7 @@ function BalanceCard() {
           {t("transfer.balance.addressLabel")}
         </label>
         <input
-          className="w-full border-[3px] border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:outline-3 focus:outline-accent focus:outline-offset-2"
+          className="w-full border-[3px] border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:outline-3 focus:outline-[var(--border)] focus:outline-offset-2 disabled:opacity-50"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={
@@ -129,12 +129,12 @@ function BalanceCard() {
         </p>
       )}
       {query && error && (
-        <div className="mt-3 break-all border-2 border-border bg-error px-3 py-2 font-mono text-xs text-on-accent">
+        <div className="mt-3 break-all border-[3px] border-border bg-error px-3 py-2 font-mono text-xs text-on-accent">
           ✗ {error instanceof Error ? error.message : String(error)}
         </div>
       )}
       {query && data && !isLoading && (
-        <div className="mt-4 border-2 border-border bg-surface-2 px-4 py-3">
+        <div className="mt-4 border-[3px] border-border bg-surface-2 px-4 py-3">
           <p className="font-mono text-xs text-faint">
             {t("transfer.balance.walletLabel")}
           </p>
@@ -215,7 +215,7 @@ function TransferCard() {
           {t("transfer.balance.connect")}
         </p>
       ) : wrongChain ? (
-        <p className="border-2 border-border bg-warning px-3 py-2 text-sm font-medium text-on-accent">
+        <p className="border-[3px] border-border bg-warning px-3 py-2 text-sm font-medium text-on-accent">
           {t("transfer.balance.switchChain")}
         </p>
       ) : (
@@ -229,7 +229,7 @@ function TransferCard() {
             {t("transfer.send.toLabel")}
           </label>
           <input
-            className="w-full border-2 border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:outline-3 focus:outline-accent focus:outline-offset-2 disabled:opacity-50"
+            className="w-full border-[3px] border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:outline-3 focus:outline-[var(--border)] focus:outline-offset-2 disabled:opacity-50"
             value={to}
             onChange={(e) => setTo(e.target.value)}
             placeholder={t("transfer.send.toPlaceholder")}
@@ -239,7 +239,7 @@ function TransferCard() {
             {t("transfer.send.amountLabel")}
           </label>
           <input
-            className="w-full border-2 border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:outline-3 focus:outline-accent focus:outline-offset-2 disabled:opacity-50"
+            className="w-full border-[3px] border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:outline-3 focus:outline-[var(--border)] focus:outline-offset-2 disabled:opacity-50"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder={t("transfer.send.amountPlaceholder")}
@@ -297,7 +297,7 @@ function TransferCard() {
       )}
 
       {error && (
-        <div className="mt-3 break-all border-2 border-border bg-error px-3 py-2 font-mono text-xs text-on-accent">
+        <div className="mt-3 break-all border-[3px] border-border bg-error px-3 py-2 font-mono text-xs text-on-accent">
           ✗ {error}
         </div>
       )}
@@ -344,12 +344,12 @@ function TransferCard() {
             </div>
           )}
           {receipt && receipt.status === "success" && (
-            <div className="mt-2 font-mono text-xs font-bold text-success">
+            <div className="mt-2 font-mono text-xs font-bold text-success-dark">
               {t("transfer.send.success")}
             </div>
           )}
           {txFailed && (
-            <div className="mt-2 font-mono text-xs font-bold text-error">
+            <div className="mt-2 font-mono text-xs font-bold text-error-dark">
               {t("transfer.send.signFailed")}
             </div>
           )}

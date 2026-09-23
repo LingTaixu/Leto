@@ -55,10 +55,10 @@ export function KlineView() {
   return (
     <main className="mx-auto w-full max-w-[90rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
       <header className="mb-6">
-        <p className="font-mono text-sm text-accent">
+        <p className="inline-block border-2 border-border bg-accent px-2 py-0.5 font-mono text-sm font-bold text-on-accent">
           {"// WEB3"} {t("web3.features.klineTitle")}
         </p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-text">
+        <h1 className="mt-2 font-bold tracking-tight text-text">
           {t("web3.features.klineTitle")}
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
@@ -96,7 +96,7 @@ export function KlineView() {
           <select
             value={coin}
             onChange={(e) => navigate(e.target.value, interval)}
-            className="rounded-none border-[3px] border-border bg-surface px-3 py-1.5 font-mono text-sm text-text focus:outline-3 focus:outline-accent focus:outline-offset-2"
+            className="rounded-none border-[3px] border-border bg-surface px-3 py-1.5 font-mono text-sm text-text focus:outline-3 focus:outline-[var(--border)] focus:outline-offset-2"
           >
             {coinList.length === 0 && <option value={coin}>{coin}</option>}
             {!coinList.includes(coin) && coinList.length > 0 && (
@@ -130,7 +130,7 @@ export function KlineView() {
 
       {/* 历史分页状态 */}
       {olderLoading && (
-        <p className="mb-2 font-mono text-xs text-accent">
+        <p className="mb-2 inline-block border-2 border-border bg-accent px-2 py-0.5 font-mono text-xs font-bold text-on-accent">
           {t("kline.loadingOlder")}
         </p>
       )}

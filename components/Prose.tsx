@@ -3,7 +3,7 @@
  * 用 Tailwind `[&_el]:` 任意后代选择器排版 HTML 博客正文。
  * 不依赖 @tailwindcss/typography 插件 —— 语义化类名直接作用于正文元素。
  *
- * 正文宽度由外层容器限制（max-w-[68ch]），此处负责内部排版层级。
+ * 正文宽度由本组件限制（max-w-[68ch]），此处负责内部排版层级。
  */
 export function Prose({ html }: { html: string }) {
   return (
@@ -13,12 +13,12 @@ export function Prose({ html }: { html: string }) {
         [&_p]:text-base [&_p]:leading-[1.75] [&_p]:text-text
 
         [&_h2]:mt-12 [&_h2]:border-t [&_h2]:border-border [&_h2]:pt-8
-        [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:tracking-tight [&_h2]:text-text
-        [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-text
+        [&_h2]:tracking-tight [&_h2]:text-text
+        [&_h3]:mt-8 [&_h3]:text-text
 
-        [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-2
+        [&_a]:text-text [&_a]:underline [&_a]:underline-offset-2
         [&_a]:transition-colors [&_a]:duration-150
-        [&_a:hover]:text-accent-hover
+        [&_a:hover]:bg-accent [&_a:hover]:text-on-accent [&_a:hover]:no-underline
 
         [&_code]:border [&_code]:border-border
         [&_code]:bg-surface [&_code]:px-1.5 [&_code]:py-0.5

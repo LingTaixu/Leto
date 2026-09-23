@@ -30,7 +30,7 @@ export default async function BlogPage({
 
   return (
     <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
-      <h1 className="text-3xl font-bold tracking-tight text-text">
+      <h1 className="font-bold tracking-tight text-text">
         {t("blog.title")}
       </h1>
       <p className="mt-2 text-base text-muted">{t("blog.subtitle")}</p>

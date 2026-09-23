@@ -56,7 +56,7 @@ export default async function BlogPostPage({ params }: PostProps) {
       >
         <Link
           href={`/${locale}`}
-          className="transition-colors duration-150 hover:text-accent"
+          className="transition-colors duration-150 hover:bg-accent hover:text-on-accent"
         >
           {t("nav.home")}
         </Link>
@@ -65,7 +65,7 @@ export default async function BlogPostPage({ params }: PostProps) {
         </span>
         <Link
           href={`/${locale}/blog`}
-          className="transition-colors duration-150 hover:text-accent"
+          className="transition-colors duration-150 hover:bg-accent hover:text-on-accent"
         >
           {t("nav.blog")}
         </Link>
@@ -77,7 +77,7 @@ export default async function BlogPostPage({ params }: PostProps) {
             <Tag key={tag} name={tag} />
           ))}
         </div>
-        <h1 className="text-3xl font-bold tracking-tight text-text lg:text-4xl">
+        <h1 className="font-bold tracking-tight text-text">
           {post.title}
         </h1>
         <p className="mt-3 flex items-center gap-2 text-sm text-faint">

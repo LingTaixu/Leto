@@ -35,8 +35,10 @@
   --color-accent-hover: var(--accent-hover);
   --color-on-accent: var(--on-accent);
   --color-success: #88d498;
+  --color-success-dark: #1b5e20; /* 深绿：AA 4.5:1 文案 */
   --color-warning: #ffa552;
   --color-error: #ff4444;
+  --color-error-dark: #b71c1c; /* 深红：AA 4.5:1 文案 */
 
   --font-sans:
     var(--font-inter), system-ui, -apple-system, "Segoe UI", "PingFang SC",
@@ -126,16 +128,62 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* neubrutalism：标题统一使用 Space Grotesk */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  /* neubrutalism：标题字体/尺寸/粗细统一
+     - h1：Space Grotesk（font-heading），3rem/48px bold
+     - h2-h6：Syne（font-display），按 1.25x 递减，semibold→medium
+     尺寸（spec type-scale-system）：h1 3rem / h2 2rem / h3 1.5rem / h4 1.25rem
+     对应 Tailwind：h1 text-5xl / h2 text-[2rem] / h3 text-2xl / h4 text-xl */
+  h1 {
     font-family: var(--font-heading);
+    font-size: 3rem;      /* 48px */
+    font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 2rem;      /* 32px */
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;    /* 24px */
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  h4 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;   /* 20px */
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  /* 响应式标题缩放（spec type-scale-system：>480px 保持桌面比例，
+     更小屏幕按 1.25x 递减基线缩小） */
+  @media (max-width: 479.98px) {
+    h1 {
+      font-size: 2.5rem; /* 40px */
+    }
+    h2 {
+      font-size: 1.75rem; /* 28px */
+    }
+    h3 {
+      font-size: 1.25rem; /* 20px */
+    }
   }
 
   ::selection {

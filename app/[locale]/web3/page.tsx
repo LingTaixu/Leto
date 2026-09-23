@@ -30,8 +30,8 @@ export default async function Web3Page({
   return (
     <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
       <header className="mb-8">
-        <p className="font-mono text-sm text-accent">{"// "}{t("web3.kicker")}</p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-text">
+        <p className="inline-block border-2 border-border bg-accent px-2 py-0.5 font-mono text-sm font-bold text-on-accent">{"// "}{t("web3.kicker")}</p>
+        <h1 className="mt-2 font-bold tracking-tight text-text">
           {t("web3.title")}
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
@@ -52,12 +52,12 @@ export default async function Web3Page({
               </span>
               <span
                 aria-hidden="true"
-                className="text-faint transition-colors duration-200 group-hover:text-accent"
+                className="text-faint transition-colors duration-200 group-hover:text-text"
               >
                 →
               </span>
             </div>
-            <h2 className="mt-4 text-lg font-bold tracking-tight text-text transition-colors duration-150 group-hover:text-accent">
+            <h2 className="mt-4 text-lg font-bold tracking-tight text-text transition-colors duration-150 group-hover:bg-accent group-hover:text-on-accent">
               {t(feature.titleKey)}
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-muted">

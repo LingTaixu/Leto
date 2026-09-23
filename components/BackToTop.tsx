@@ -28,7 +28,7 @@ export function BackToTop() {
         "bg-text text-bg shadow-neu transition-opacity duration-300",
         "bottom-[calc(5.5rem+env(safe-area-inset-bottom))]",
         "lg:hidden",
-        "focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg",
+        "focus-visible:outline-3 focus-visible:outline-[var(--border)] focus-visible:outline-offset-3",
         visible ? "opacity-100" : "pointer-events-none opacity-0",
       ].join(" ")}
     >

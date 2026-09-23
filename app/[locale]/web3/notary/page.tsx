@@ -12,8 +12,8 @@ export default function NotaryPage() {
     <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
       <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <p className="font-mono text-sm text-accent">{t("notary.kicker")}</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-text">
+          <p className="inline-block border-2 border-border bg-accent px-2 py-0.5 font-mono text-sm font-bold text-on-accent">{t("notary.kicker")}</p>
+          <h1 className="mt-2 font-bold tracking-tight text-text">
             {t("notary.title")}
           </h1>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
