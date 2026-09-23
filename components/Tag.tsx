@@ -1,12 +1,12 @@
 import Link from "next/link";
 
 /**
- * 标签（design-system §3.4）
- * font-mono 小字号胶囊，hover 时 border/文字变 accent
+ * 标签（neubrutalism）
+ * 3px 硬边框 + 白底 + 小圆角，悬停变黄色 accent
  *
  * @param name  标签名（自动带 # 前缀）
  * @param href  可选链接，传了渲 《Link》 否则 <span>
- * @param className 额外类名合并（如配合流光卡片的 z-index）
+ * @param className 额外类名合并
  */
 export function Tag({
   name,
@@ -18,7 +18,7 @@ export function Tag({
   className?: string;
 }) {
   const base =
-    "inline-flex items-center rounded-full border border-border/80 bg-surface/80 px-2.5 py-1 font-mono text-xs text-muted backdrop-blur transition-colors duration-150 hover:border-accent hover:text-accent";
+    "inline-flex items-center border-[3px] border-border bg-surface px-2.5 py-1 rounded-sm font-mono text-xs font-bold text-text transition-all duration-100 hover:bg-accent hover:text-on-accent hover:shadow-neu-sm";
   const cls = `${base} ${className}`.trim();
 
   if (href) {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArticleList } from "@/components/ArticleCard";
+import { Marquee } from "@/components/Marquee";
 import { localeAlternates } from "@/lib/alternates";
 import { type Locale } from "@/lib/locales";
 import { resolveMessage } from "@/lib/messages";
@@ -20,6 +21,24 @@ export async function generateMetadata({
   };
 }
 
+/** 首页跑马灯技能列表 */
+const SKILLS = [
+  "React",
+  "Next.js",
+  "Vue 3",
+  "TypeScript",
+  "Tailwind CSS",
+  "Web3",
+  "Ethereum",
+  "Hyperliquid",
+  "Polymarket",
+  "DEX",
+  "EVM",
+  "React Query",
+  "Wagmi",
+  "Three.js",
+];
+
 export default async function Home({
   params,
 }: {
@@ -30,38 +49,41 @@ export default async function Home({
   const articles = getPosts(locale as Locale);
 
   return (
-    <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
-      <section className="mb-12">
-        <p className="font-mono text-sm text-accent">{t("home.hello")}</p>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight text-text">
-          {t("home.title")}
-        </h1>
-        <p className="mt-4 max-w-xl text-base leading-relaxed text-muted">
-          {t("home.desc")}
-          <Link
-            href={`/${locale}/about`}
-            className="text-accent underline underline-offset-2 hover:text-accent-hover transition-colors duration-150"
-          >
-            {t("home.viewResume")}
-          </Link>
-          。
-        </p>
-      </section>
+    <>
+      <Marquee skills={SKILLS} />
+      <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
+        <section className="mb-12">
+          <p className="font-mono text-sm text-accent">{t("home.hello")}</p>
+          <h1 className="mt-3 text-4xl font-bold tracking-tight text-text">
+            {t("home.title")}
+          </h1>
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-muted">
+            {t("home.desc")}
+            <Link
+              href={`/${locale}/about`}
+              className="text-accent underline underline-offset-2 hover:text-accent-hover transition-colors duration-150"
+            >
+              {t("home.viewResume")}
+            </Link>
+            。
+          </p>
+        </section>
 
-      <section>
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl font-bold tracking-tight text-text">
-            {t("home.caseStudies")}
-          </h2>
-          <Link
-            href={`/${locale}/blog`}
-            className="text-sm text-muted transition-colors duration-150 hover:text-accent"
-          >
-            {t("home.all")} →
-          </Link>
-        </div>
-        <ArticleList articles={articles} locale={locale} />
-      </section>
-    </main>
+        <section>
+          <div className="mb-6 flex items-center justify-between">
+            <h2 className="text-xl font-bold tracking-tight text-text">
+              {t("home.caseStudies")}
+            </h2>
+            <Link
+              href={`/${locale}/blog`}
+              className="text-sm text-muted transition-colors duration-150 hover:text-accent"
+            >
+              {t("home.all")} →
+            </Link>
+          </div>
+          <ArticleList articles={articles} locale={locale} />
+        </section>
+      </main>
+    </>
   );
 }

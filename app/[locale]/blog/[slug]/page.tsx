@@ -123,18 +123,18 @@ function PostNavLink({
 }) {
   if (!post) {
     return (
-      <div className="rounded-lg border border-border/60 p-4" />
+      <div className="border-[3px] border-dashed border-border p-4" />
     );
   }
   return (
     <Link
       href={`/${locale}/blog/${post.slug}`}
-      className={`group rounded-lg border border-border/60 p-4 transition-colors duration-150 hover:border-accent/40 hover:bg-surface/70 ${
+      className={`group block border-[3px] border-border bg-surface p-4 shadow-neu-sm transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-accent hover:shadow-neu ${
         alignEnd ? "sm:text-right" : ""
       }`}
     >
-      <span className="block text-xs text-faint">{prefix}</span>
-      <span className="mt-1 block text-sm font-medium text-text transition-colors duration-150 group-hover:text-accent">
+      <span className="block text-xs font-bold text-faint">{prefix}</span>
+      <span className="mt-1 block text-sm font-medium text-text transition-colors duration-150 group-hover:text-on-accent">
         {post.title}
       </span>
     </Link>

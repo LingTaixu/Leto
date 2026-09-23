@@ -1,17 +1,46 @@
 import { Providers } from "@/app/providers";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import {
+  Inter,
+  JetBrains_Mono,
+  Syne,
+  Space_Grotesk,
+  Space_Mono,
+} from "next/font/google";
 import "./globals.css";
 
+// 正文（保留原有）
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
 });
 
+// 代码块（保留原有）
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
+});
+
+// neubrutalism 展示字体（Display）
+const syne = Syne({
+  variable: "--font-syne",
+  subsets: ["latin"],
+  weight: ["700", "800"],
+});
+
+// neubrutalism 标题字体（Heading）
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-spacegrotesk",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
+
+// neubrutalism 等宽字体（Mono 标签 / kicker）
+const spaceMono = Space_Mono({
+  variable: "--font-spacemono",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -37,7 +66,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="zh-CN"
-      className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${jetbrainsMono.variable} ${syne.variable} ${spaceGrotesk.variable} ${spaceMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <Providers>{children}</Providers>

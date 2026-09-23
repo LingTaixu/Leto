@@ -5,12 +5,12 @@ export function CssPulse({ label = "Leto" }: { label?: string }) {
         {[0, 1, 2].map((i) => (
           <span
             key={i}
-            className="size-3 animate-pulse rounded-full bg-accent"
+            className="size-3 animate-pulse bg-accent"
             style={{ animationDelay: `${i * 160}ms` }}
           />
         ))}
       </div>
-      <span className="font-mono text-sm tracking-wide text-muted">
+      <span className="font-mono text-sm font-bold tracking-wide text-accent">
         {label}
       </span>
     </div>

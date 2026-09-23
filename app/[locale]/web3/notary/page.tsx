@@ -24,7 +24,7 @@ export default function NotaryPage() {
       </header>
 
       <div className="mb-6">
-        <span className="rounded-full border border-border px-3 py-1 font-mono text-xs text-muted">
+        <span className="border-[3px] border-border bg-surface px-3 py-1 font-mono text-xs font-bold text-text">
           {t("notary.contract").replace(
             "{addr}",
             `${CONTRACT_ADDRESS.slice(0, 6)}…${CONTRACT_ADDRESS.slice(-4)}`,

@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 
 /**
- * 返回顶部（design-system §3.9，仅移动端）
- * 滚动超过 1 屏出现；定位避让 Liquid Glass Tab 条
+ * 返回顶部（neubrutalism，仅移动端）
+ * 滚动超过 1 屏出现；硬边框方块 + 硬阴影，避让底部 Tab 条
  */
 export function BackToTop() {
   const [visible, setVisible] = useState(false);
@@ -24,8 +24,8 @@ export function BackToTop() {
       aria-label={t("common.backToTop")}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className={[
-        "fixed right-4 z-40 flex size-10 items-center justify-center rounded-full",
-        "bg-text text-bg shadow-md transition-opacity duration-300",
+        "fixed right-4 z-40 flex size-10 items-center justify-center border-[3px] border-border",
+        "bg-text text-bg shadow-neu transition-opacity duration-300",
         "bottom-[calc(5.5rem+env(safe-area-inset-bottom))]",
         "lg:hidden",
         "focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg",

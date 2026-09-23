@@ -20,17 +20,17 @@ export function Prose({ html }: { html: string }) {
         [&_a]:transition-colors [&_a]:duration-150
         [&_a:hover]:text-accent-hover
 
-        [&_code]:rounded [&_code]:border [&_code]:border-border
+        [&_code]:border [&_code]:border-border
         [&_code]:bg-surface [&_code]:px-1.5 [&_code]:py-0.5
         [&_code]:font-mono [&_code]:text-[0.875em]
 
-        [&_pre]:mt-6 [&_pre]:overflow-x-auto [&_pre]:rounded-lg
-        [&_pre]:border [&_pre]:border-zinc-800 [&_pre]:bg-[#0a0a0a]
+        [&_pre]:mt-6 [&_pre]:overflow-x-auto
+        [&_pre]:border-[3px] [&_pre]:border-border [&_pre]:bg-[#0a0a0a]
         [&_pre]:p-4 [&_pre]:font-mono [&_pre]:text-sm [&_pre]:leading-[1.7] [&_pre]:text-zinc-100
 
         [&_pre_code]:bg-transparent [&_pre_code]:border-0 [&_pre_code]:p-0
 
-        [&_blockquote]:mt-6 [&_blockquote]:border-l-2 [&_blockquote]:border-accent
+        [&_blockquote]:mt-6 [&_blockquote]:border-l-4 [&_blockquote]:border-accent
         [&_blockquote]:pl-4 [&_blockquote]:text-muted [&_blockquote]:italic
 
         [&_ul]:mt-6 [&_ul]:list-disc [&_ul]:pl-6
@@ -42,7 +42,7 @@ export function Prose({ html }: { html: string }) {
         [&_th]:text-left [&_th]:font-semibold [&_th]:text-text
         [&_td]:border-b [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_td]:text-muted
 
-        [&_img]:mt-6 [&_img]:w-full [&_img]:rounded-md [&_img]:border [&_img]:border-border
+        [&_img]:mt-6 [&_img]:w-full [&_img]:border-[3px] [&_img]:border-border
 
         [&_hr]:mt-12 [&_hr]:border-border
       "

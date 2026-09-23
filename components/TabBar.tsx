@@ -26,8 +26,8 @@ function isActive(tab: Tab, pathname: string, locale: string): boolean {
 }
 
 /**
- * Liquid Glass 胶囊导航（design-system §3.1.1）
- * 玻璃三层合成 + 液体滑动指示条 + aria-current 激活态
+ * neubrutalism 硬边框胶囊导航
+ * 白底 + 3px 黑边框 + 硬阴影 + 黄色滑动指示条 + aria-current 激活态
  */
 export function TabBar() {
   const pathname = usePathname();
@@ -41,11 +41,11 @@ export function TabBar() {
       aria-label={t("nav.main")}
       className="fixed inset-x-0 bottom-0 z-50 flex justify-center pb-[calc(0.75rem+env(safe-area-inset-bottom))] px-4 lg:hidden"
     >
-      <div className="liquid-glass relative flex h-16 w-full max-w-sm items-center rounded-full px-2">
-        {/* 液体滑动指示条：激活时滑动，无匹配 tab 时淡出 */}
+      <div className="relative flex h-16 w-full max-w-sm items-center rounded-full border-[3px] border-border bg-surface px-2 shadow-neu">
+        {/* 黄色滑动指示条：激活时滑动，无匹配 tab 时淡出 */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-2 left-2 rounded-full bg-white/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] backdrop-blur-xl transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] dark:bg-white/15 dark:shadow-none"
+          className="pointer-events-none absolute inset-y-2 left-2 rounded-full border-2 border-border bg-accent transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
           style={{
             width: "calc((100% - 1rem) / 3)",
             transform: `translateX(${indicatorIndex * 100}%)`,
@@ -63,8 +63,8 @@ export function TabBar() {
               aria-current={active ? "page" : undefined}
               className={`relative z-10 flex h-12 flex-1 flex-col items-center justify-center gap-0.5 rounded-full transition-[color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-95 ${
                 active
-                  ? "font-semibold text-accent"
-                  : "text-faint hover:text-muted"
+                  ? "font-bold text-on-accent"
+                  : "text-faint hover:text-text"
               }`}
             >
               <Icon

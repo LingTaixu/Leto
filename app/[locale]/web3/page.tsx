@@ -44,10 +44,10 @@ export default async function Web3Page({
           <Link
             key={feature.slug}
             href={`/${locale}/web3/${feature.slug}`}
-            className="group flex flex-col rounded-lg border border-border/70 bg-surface/50 p-5 transition-shadow duration-200 hover:shadow-glow-sm"
+            className="group flex flex-col border-[3px] border-border bg-surface p-5 shadow-neu transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu-lg"
           >
             <div className="flex items-start justify-between">
-              <span className="rounded-md border border-accent/40 bg-accent/10 px-2 py-0.5 font-mono text-xs font-semibold text-accent">
+              <span className="border-[3px] border-border bg-accent px-2 py-0.5 font-mono text-xs font-bold text-on-accent">
                 {feature.badge}
               </span>
               <span

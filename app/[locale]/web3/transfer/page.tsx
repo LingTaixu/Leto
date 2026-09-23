@@ -58,13 +58,13 @@ function BalanceCard() {
   const inputValid = input === "" || isAddress(input);
 
   return (
-    <div className="rounded-lg border border-border/70 bg-surface/50 p-5">
+    <div className="border-[3px] border-border bg-surface p-5 shadow-neu">
       <div className="mb-4 flex items-center justify-between">
-        <span className="font-mono text-xs text-accent">
+        <span className="font-mono text-xs font-bold text-text">
           {t("transfer.balance.label")}
         </span>
         <span
-          className="size-2 rounded-full bg-success shadow-[0_0_8px_var(--color-success)]"
+          className="size-3 border-2 border-border bg-success"
           title={
             connected
               ? t("common.connected")
@@ -79,11 +79,11 @@ function BalanceCard() {
           if (input && isAddress(input)) setQuery(input as `0x${string}`);
         }}
       >
-        <label className="mb-2 block text-xs text-muted">
+        <label className="mb-2 block text-xs font-bold text-text">
           {t("transfer.balance.addressLabel")}
         </label>
         <input
-          className="w-full rounded-md border border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+          className="w-full border-[3px] border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:outline-3 focus:outline-accent focus:outline-offset-2"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={
@@ -99,7 +99,7 @@ function BalanceCard() {
           {connected && (
             <button
               type="button"
-              className="text-accent hover:underline"
+              className="font-bold text-text underline decoration-2 underline-offset-2 hover:bg-accent hover:text-on-accent"
               onClick={() => {
                 setInput(connected);
                 setQuery(connected);
@@ -112,7 +112,7 @@ function BalanceCard() {
         <button
           type="submit"
           disabled={!input || !inputValid}
-          className="inline-flex h-10 w-full items-center justify-center rounded-md bg-text px-4 text-sm font-medium text-bg transition-opacity duration-150 hover:opacity-90 disabled:pointer-events-none disabled:opacity-50"
+          className="inline-flex h-10 w-full items-center justify-center border-[3px] border-border bg-text px-4 text-sm font-bold text-bg shadow-neu-sm transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:pointer-events-none disabled:opacity-50"
         >
           {t("transfer.balance.query")}
         </button>
@@ -129,16 +129,16 @@ function BalanceCard() {
         </p>
       )}
       {query && error && (
-        <div className="mt-3 break-all rounded-md border border-error/40 px-3 py-2 font-mono text-xs text-error">
+        <div className="mt-3 break-all border-2 border-border bg-error px-3 py-2 font-mono text-xs text-on-accent">
           ✗ {error instanceof Error ? error.message : String(error)}
         </div>
       )}
       {query && data && !isLoading && (
-        <div className="mt-4 rounded-md border border-border/60 bg-surface px-4 py-3">
+        <div className="mt-4 border-2 border-border bg-surface-2 px-4 py-3">
           <p className="font-mono text-xs text-faint">
             {t("transfer.balance.walletLabel")}
           </p>
-          <p className="mt-1 font-mono text-xl font-semibold text-accent">
+          <p className="mt-1 font-mono text-xl font-bold text-text">
             {fmtBalance(data.value, data.symbol)}
           </p>
         </div>
@@ -203,9 +203,9 @@ function TransferCard() {
   }
 
   return (
-    <div className="rounded-lg border border-border/70 bg-surface/50 p-5">
+    <div className="border-[3px] border-border bg-surface p-5 shadow-neu">
       <div className="mb-4 flex items-center justify-between">
-        <span className="font-mono text-xs text-accent">
+        <span className="font-mono text-xs font-bold text-text">
           {t("transfer.send.label")}
         </span>
       </div>
@@ -215,7 +215,7 @@ function TransferCard() {
           {t("transfer.balance.connect")}
         </p>
       ) : wrongChain ? (
-        <p className="rounded-md border border-warning/40 px-3 py-2 text-sm text-warning">
+        <p className="border-2 border-border bg-warning px-3 py-2 text-sm font-medium text-on-accent">
           {t("transfer.balance.switchChain")}
         </p>
       ) : (
@@ -225,21 +225,21 @@ function TransferCard() {
             handleSend();
           }}
         >
-          <label className="mb-2 block text-xs text-muted">
+          <label className="mb-2 block text-xs font-bold text-text">
             {t("transfer.send.toLabel")}
           </label>
           <input
-            className="w-full rounded-md border border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 disabled:opacity-50"
+            className="w-full border-2 border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:outline-3 focus:outline-accent focus:outline-offset-2 disabled:opacity-50"
             value={to}
             onChange={(e) => setTo(e.target.value)}
             placeholder={t("transfer.send.toPlaceholder")}
             disabled={busy}
           />
-          <label className="mb-2 mt-4 block text-xs text-muted">
+          <label className="mb-2 mt-4 block text-xs font-bold text-text">
             {t("transfer.send.amountLabel")}
           </label>
           <input
-            className="w-full rounded-md border border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 disabled:opacity-50"
+            className="w-full border-2 border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:outline-3 focus:outline-accent focus:outline-offset-2 disabled:opacity-50"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder={t("transfer.send.amountPlaceholder")}
@@ -262,7 +262,7 @@ function TransferCard() {
           <button
             type="submit"
             disabled={busy || !toValid || !amountValid || !enough}
-            className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-text px-4 text-sm font-medium text-bg transition-opacity duration-150 hover:opacity-90 disabled:pointer-events-none disabled:opacity-50"
+            className="inline-flex h-10 w-full items-center justify-center gap-2 border-[3px] border-border bg-text px-4 text-sm font-bold text-bg shadow-neu-sm transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:pointer-events-none disabled:opacity-50"
           >
             {busy && (
               <svg
@@ -297,26 +297,26 @@ function TransferCard() {
       )}
 
       {error && (
-        <div className="mt-3 break-all rounded-md border border-error/40 px-3 py-2 font-mono text-xs text-error">
+        <div className="mt-3 break-all border-2 border-border bg-error px-3 py-2 font-mono text-xs text-on-accent">
           ✗ {error}
         </div>
       )}
 
       {txHash && (
-        <div className="mt-3 border-t border-dashed border-border pt-3">
+        <div className="mt-3 border-t-2 border-dashed border-border pt-3">
           <div className="flex justify-between font-mono text-xs">
             <span className="text-faint">txHash</span>
             <a
               href={`https://testnet.bscscan.com/tx/${txHash}`}
               target="_blank"
               rel="noreferrer"
-              className="text-accent hover:underline"
+              className="font-bold text-text underline decoration-2 underline-offset-2 hover:bg-accent hover:text-on-accent"
             >
               {txHash.slice(0, 10)}…{txHash.slice(-8)}
             </a>
           </div>
           {busy && (
-            <div className="mt-2 flex items-center gap-2 font-mono text-xs text-warning">
+            <div className="mt-2 flex items-center gap-2 font-mono text-xs font-bold text-text">
               <svg
                 className="size-3 animate-spin"
                 viewBox="0 0 24 24"
@@ -344,12 +344,12 @@ function TransferCard() {
             </div>
           )}
           {receipt && receipt.status === "success" && (
-            <div className="mt-2 font-mono text-xs text-success">
+            <div className="mt-2 font-mono text-xs font-bold text-success">
               {t("transfer.send.success")}
             </div>
           )}
           {txFailed && (
-            <div className="mt-2 font-mono text-xs text-error">
+            <div className="mt-2 font-mono text-xs font-bold text-error">
               {t("transfer.send.signFailed")}
             </div>
           )}

@@ -31,15 +31,15 @@ function pageItems(current: number, total: number): (number | "…")[] {
 }
 
 /**
- * 分页（design-system §3.6）
- * 纯链接（No JS）。当前页反色高亮，移动端压缩为省略号
+ * 分页（neubrutalism）
+ * 纯链接（No JS）。硬边框方块，当前页反色高亮，移动端压缩为省略号
  */
 export function Pagination({ basePath, page, totalPages }: PaginationProps) {
   const { t } = useI18n();
   if (totalPages <= 1) return null;
 
   const itemCls =
-    "inline-flex h-9 min-w-9 items-center justify-center rounded-md px-2 text-sm transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg";
+    "inline-flex h-9 min-w-9 items-center justify-center border-[3px] border-border bg-surface px-2 text-sm font-bold transition-all duration-100 focus-visible:outline-3 focus-visible:outline-accent focus-visible:outline-offset-2 hover:-translate-x-px hover:-translate-y-px hover:shadow-neu-sm active:translate-x-px active:translate-y-px active:shadow-none";
 
   return (
     <nav
@@ -50,7 +50,7 @@ export function Pagination({ basePath, page, totalPages }: PaginationProps) {
         <Link
           href={pageUrl(basePath, page - 1)}
           aria-label={t("pagination.prev")}
-          className={`${itemCls} text-muted hover:text-accent`}
+          className={`${itemCls} text-text hover:bg-accent hover:text-on-accent`}
         >
           ←
         </Link>
@@ -69,7 +69,7 @@ export function Pagination({ basePath, page, totalPages }: PaginationProps) {
           <span
             key={item}
             aria-current="page"
-            className={`${itemCls} bg-text text-bg`}
+            className={`${itemCls} bg-text text-bg shadow-neu-sm`}
           >
             {item}
           </span>
@@ -77,7 +77,7 @@ export function Pagination({ basePath, page, totalPages }: PaginationProps) {
           <Link
             key={item}
             href={pageUrl(basePath, item)}
-            className={`${itemCls} text-muted hover:text-accent`}
+            className={`${itemCls} text-text hover:bg-accent hover:text-on-accent`}
           >
             {item}
           </Link>
@@ -88,7 +88,7 @@ export function Pagination({ basePath, page, totalPages }: PaginationProps) {
         <Link
           href={pageUrl(basePath, page + 1)}
           aria-label={t("pagination.next")}
-          className={`${itemCls} text-muted hover:text-accent`}
+          className={`${itemCls} text-text hover:bg-accent hover:text-on-accent`}
         >
           →
         </Link>

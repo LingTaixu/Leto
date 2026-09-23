@@ -3,9 +3,9 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-/** 设计令牌取色（暗色 gemini + accent） */
-const PARTICLE_COLORS = ["#00f2fe", "#4facfe", "#e94057"];
-const ACCENT = "#60a5fa";
+/** neubrutalism 配色：黄 / 珊瑚粉 / 天蓝硬色，accent 为点缀黄 */
+const PARTICLE_COLORS = ["#FFD23F", "#FF6B6B", "#74B9FF"];
+const ACCENT = "#FFD23F";
 
 const MODE_CONFIG = {
   splash: { count: 3000, cycleSec: 2 },
@@ -16,23 +16,35 @@ export interface ThreeSceneProps {
   mode: "splash" | "loading";
 }
 
-/** 生成 "Leto" 文字贴图（带发光） */
+/** 生成 "Leto" 文字贴图：黑字 + 黄描边 + 8px 硬阴影（Space Mono 800） */
 function createLetoTexture(): THREE.CanvasTexture {
   const canvas = document.createElement("canvas");
   canvas.width = 512;
   canvas.height = 256;
   const ctx = canvas.getContext("2d")!;
+  // next/font 自托管的 family 名（哈希名）挂在 CSS 变量上，canvas 直接读取
+  const monoFamily =
+    getComputedStyle(document.documentElement)
+      .getPropertyValue("--font-spacemono")
+      .trim() || "monospace";
   ctx.clearRect(0, 0, 512, 256);
-  ctx.font = "700 120px Inter, system-ui, sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.shadowColor = ACCENT;
-  ctx.shadowBlur = 48;
-  ctx.fillStyle = "#e2e8f0";
-  ctx.fillText("Leto", 256, 128);
+  ctx.font = `800 96px ${monoFamily}`;
+  // 硬阴影：8px 偏移、零模糊（spec: 阴影从模糊光晕改为硬阴影）
+  ctx.shadowColor = "#000000";
+  ctx.shadowOffsetX = 8;
+  ctx.shadowOffsetY = 8;
   ctx.shadowBlur = 0;
-  ctx.strokeStyle = ACCENT;
-  ctx.lineWidth = 3;
+  // 黑字（纯黑底上由黄描边勾勒轮廓）
+  ctx.fillStyle = "#000000";
+  ctx.fillText("Leto", 256, 128);
+  // 黄描边，无阴影
+  ctx.shadowColor = "transparent";
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 0;
+  ctx.strokeStyle = "#FFD23F";
+  ctx.lineWidth = 6;
   ctx.strokeText("Leto", 256, 128);
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
@@ -83,12 +95,11 @@ export function ThreeScene({ mode }: ThreeSceneProps) {
     pointsGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     pointsGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
     const pointsMat = new THREE.PointsMaterial({
-      size: 0.045,
+      size: 0.05,
       vertexColors: true,
-      transparent: true,
-      opacity: 0.9,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
+      // 硬朗风格：实心方块粒子（PointsMaterial 默认方形），无发光叠加
+      blending: THREE.NormalBlending,
+      depthWrite: true,
     });
     const points = new THREE.Points(pointsGeo, pointsMat);
     scene.add(points);
@@ -111,7 +122,8 @@ export function ThreeScene({ mode }: ThreeSceneProps) {
       transparent: true,
       opacity: 0.6,
       side: THREE.DoubleSide,
-      blending: THREE.AdditiveBlending,
+      // 硬朗风格：普通混合，不发光
+      blending: THREE.NormalBlending,
       depthWrite: false,
     });
     const ring = new THREE.Mesh(ringGeo, ringMat);

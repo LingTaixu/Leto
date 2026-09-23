@@ -12,8 +12,8 @@ export default function Loading() {
       className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10"
     >
       <div className="mb-10">
-        <span className="block h-9 w-56 animate-pulse rounded-md bg-border/70" />
-        <span className="mt-3 block h-4 w-72 animate-pulse rounded-md bg-border/50" />
+        <span className="block h-9 w-56 animate-pulse border border-border bg-surface-2" />
+        <span className="mt-3 block h-4 w-72 animate-pulse border border-border bg-surface-2" />
       </div>
       <div className="space-y-6">
         <ArticleCardSkeleton />

@@ -72,7 +72,7 @@ export function BootSplash() {
     <div
       aria-busy="true"
       aria-label={t("loading.label")}
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-bg transition-opacity duration-300 ${
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-black transition-opacity duration-300 ${
         phase === "fading" ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >

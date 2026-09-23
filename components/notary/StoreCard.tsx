@@ -64,13 +64,13 @@ export function StoreCard() {
   const wrongChain = isConnected && chainId !== 97;
 
   return (
-    <div className="rounded-lg border border-border/70 bg-surface/50 p-5">
+    <div className="border-[3px] border-border bg-surface p-5 shadow-neu">
       <div className="mb-4 flex items-center justify-between">
-        <span className="font-mono text-xs text-accent">
+        <span className="font-mono text-xs font-bold text-text">
           {t("notary.store.kicker")}
         </span>
         <span
-          className="size-2 rounded-full bg-success shadow-[0_0_8px_var(--color-success)]"
+          className="size-3 border-2 border-border bg-success"
           title={
             isConnected
               ? t("common.connected")
@@ -84,7 +84,7 @@ export function StoreCard() {
           {t("notary.store.connect")}
         </p>
       ) : wrongChain ? (
-        <p className="rounded-md border border-warning/40 px-3 py-2 text-sm text-warning">
+        <p className="border-2 border-border bg-warning px-3 py-2 text-sm font-medium text-on-accent">
           {t("notary.store.switchChain")}
         </p>
       ) : (
@@ -94,11 +94,11 @@ export function StoreCard() {
             handleStore();
           }}
         >
-          <label className="mb-2 block text-xs text-muted">
+          <label className="mb-2 block text-xs font-bold text-text">
             {t("notary.store.label")}
           </label>
           <input
-            className="w-full rounded-md border border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+            className="w-full border-[3px] border-border bg-surface px-3 py-2 font-mono text-sm text-text placeholder:text-faint focus:outline-3 focus:outline-accent focus:outline-offset-2"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={t("notary.store.placeholder")}
@@ -122,7 +122,7 @@ export function StoreCard() {
           <button
             type="submit"
             disabled={isPending || byteLength === 0}
-            className="inline-flex h-10 w-full items-center justify-center rounded-md bg-text px-4 text-sm font-medium text-bg transition-opacity duration-150 hover:opacity-90 disabled:pointer-events-none disabled:opacity-50"
+            className="inline-flex h-10 w-full items-center justify-center border-[3px] border-border bg-text px-4 text-sm font-bold text-bg shadow-neu-sm transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:pointer-events-none disabled:opacity-50"
           >
             {isPending ? t("notary.store.signing") : t("notary.store.submit")}
           </button>
@@ -130,31 +130,31 @@ export function StoreCard() {
       )}
 
       {error && (
-        <div className="mt-3 break-all rounded-md border border-error/40 px-3 py-2 font-mono text-xs text-error">
+        <div className="mt-3 break-all border-2 border-border bg-error px-3 py-2 font-mono text-xs text-on-accent">
           ✗ {error}
         </div>
       )}
 
       {txHash && (
-        <div className="mt-3 border-t border-dashed border-border pt-3">
+        <div className="mt-3 border-t-2 border-dashed border-border pt-3">
           <div className="flex justify-between font-mono text-xs">
             <span className="text-faint">txHash</span>
             <a
               href={`https://testnet.bscscan.com/tx/${txHash}`}
               target="_blank"
               rel="noreferrer"
-              className="text-accent hover:underline"
+              className="font-bold text-text underline decoration-2 underline-offset-2 hover:bg-accent hover:text-on-accent"
             >
               {txHash.slice(0, 10)}…{txHash.slice(-8)}
             </a>
           </div>
           {isPending && (
-            <div className="mt-2 animate-pulse font-mono text-xs text-warning">
+            <div className="mt-2 animate-pulse font-mono text-xs font-bold text-text">
               {t("notary.store.waiting")}
             </div>
           )}
           {receipt && receipt.status === "success" && (
-            <div className="mt-2 font-mono text-xs text-success">
+            <div className="mt-2 font-mono text-xs font-bold text-success">
               {t("notary.store.success").replace(
                 "{data}",
                 publicClient
@@ -171,7 +171,7 @@ export function StoreCard() {
             </div>
           )}
           {txFailed && (
-            <div className="mt-2 font-mono text-xs text-error">
+            <div className="mt-2 font-mono text-xs font-bold text-error">
               {t("notary.store.failed")}
             </div>
           )}

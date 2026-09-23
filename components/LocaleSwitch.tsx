@@ -15,7 +15,7 @@ export function LocaleSwitch() {
       onClick={() => setLocale(next)}
       aria-label={next === "zh" ? "切换到中文" : "Switch to English"}
       title={locale === "zh" ? "English" : "中文"}
-      className="inline-flex h-8 items-center justify-center rounded-full border border-border/80 bg-surface px-3 font-mono text-xs text-muted transition-colors duration-150 hover:border-accent hover:text-accent"
+      className="inline-flex h-8 items-center justify-center border-[3px] border-border bg-surface px-3 font-mono text-xs font-bold text-muted transition-colors duration-150 hover:bg-accent hover:text-on-accent"
     >
       {locale === "zh" ? "EN" : "中文"}
     </button>

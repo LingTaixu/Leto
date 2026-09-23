@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore, type RefObject } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 import {
   CandlestickData,
   CandlestickSeries,
@@ -26,11 +26,11 @@ const RIGHT_OFFSET_BARS = 3;
 /** 成交量副窗格高度（px） */
 const VOLUME_PANE_HEIGHT = 120;
 
-/** 交易所风格配色：红涨绿跌 */
-const UP = "#ef5350";
-const DOWN = "#26a69a";
-const UP_VOLUME = "rgba(239, 83, 80, 0.55)";
-const DOWN_VOLUME = "rgba(38, 166, 154, 0.55)";
+/** 交易所风格配色：绿涨红跌 */
+const UP = "#26a69a";
+const DOWN = "#ef5350";
+const UP_VOLUME = "rgba(38, 166, 154, 0.55)";
+const DOWN_VOLUME = "rgba(239, 83, 80, 0.55)";
 
 const LIGHT = {
   textColor: "#18181b",
@@ -40,28 +40,6 @@ const LIGHT = {
   border: "#d4d4d8",
   muted: "#71717a",
 };
-const DARK = {
-  textColor: "#fafafa",
-  bg: "#09090b",
-  grid: "#27272a",
-  crosshair: "#52525b",
-  border: "#3f3f46",
-  muted: "#a1a1aa",
-};
-
-function subscribe(cb: () => void) {
-  const mq = window.matchMedia("(prefers-color-scheme: dark)");
-  mq.addEventListener("change", cb);
-  return () => mq.removeEventListener("change", cb);
-}
-
-function getSnapshot() {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches;
-}
-
-function getServerSnapshot() {
-  return false;
-}
 
 type LegendData = {
   time?: number | Time;
@@ -114,8 +92,8 @@ export function TradingView({
   /** 可见范围滚到历史边缘时回调（触发分页加载） */
   onNeedOlder?: (from: number) => void;
 }) {
-  const isDark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-  const theme = isDark ? DARK : LIGHT;
+  // 站点为固定浅色主题：图表不响应 prefers-color-scheme（spec: 纯色主题不做暗黑模式切换）
+  const theme = LIGHT;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const legendRef = useRef<HTMLDivElement>(null);
@@ -290,7 +268,7 @@ export function TradingView({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- 仅随容器创建一次
   }, []);
 
-  // 主题变化 → applyOptions（不销毁图表，缩放位置保留）
+  // 主题变化 → applyOptions（不销毁图表，缩放位置保留）—— 主题固定浅色，仅挂载时应用一次
   useEffect(() => {
     if (!chartRef.current) return;
     chartRef.current.applyOptions({

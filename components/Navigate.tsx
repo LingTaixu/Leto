@@ -12,23 +12,23 @@ const LINKS = [
 ] as const;
 
 /**
- * 桌面端 Header（design-system §3.1）
- * md 以上完整展示；移动端仅保留品牌行（导航交给 Liquid Glass Tab）
+ * 桌面端 Header（neubrutalism）
+ * 白底 + 4px 黑色底边框；md 以上完整展示；移动端仅保留品牌行（导航交给 Tab 条）
  */
 export function Navigate() {
   const { t, locale } = useI18n();
 
   return (
-    <header className="sticky top-0 z-40 h-14 border-b border-border bg-bg/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 h-14 border-b-[4px] border-border bg-surface">
       <div className="mx-auto flex h-full w-full max-w-[62.5rem] items-center justify-between px-6">
         <Link
           href={`/${locale}`}
-          className="text-sm font-semibold tracking-tight text-text hover:text-accent transition-colors duration-150"
+          className="font-display text-lg font-extrabold tracking-tight text-text hover:bg-accent hover:text-on-accent"
         >
           Leto
         </Link>
 
-        {/* 桌面导航：md+ 显示；移动端隐藏（lg 起？设计规范 md 起） */}
+        {/* 桌面导航：md+ 显示；移动端隐藏（设计规范 md 起） */}
         <nav
           aria-label={t("nav.main")}
           className="hidden items-center gap-6 md:flex"
@@ -37,7 +37,7 @@ export function Navigate() {
             <Link
               key={link.href}
               href={`/${locale}${link.href !== "/" ? link.href : ""}`}
-              className="text-sm text-muted transition-colors duration-150 hover:text-accent"
+              className="text-sm font-medium text-text transition-colors duration-100 hover:bg-accent hover:text-on-accent"
             >
               {t(link.key)}
             </Link>

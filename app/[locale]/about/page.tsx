@@ -157,7 +157,7 @@ export default async function AboutPage({
           {advantages.map((adv) => (
             <div
               key={adv.title}
-              className="rounded-lg border border-border/70 bg-surface/50 p-4"
+              className="border-[3px] border-border bg-surface p-4 shadow-neu-sm"
             >
               <h3 className="text-sm font-semibold text-text">{adv.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">
@@ -173,7 +173,7 @@ export default async function AboutPage({
         <ol className="relative space-y-8 border-l border-border pl-6">
           {jobs.map((job) => (
             <li key={job.company} className="relative">
-              <span className="absolute -left-[1.805rem] top-1 size-2.5 rounded-full bg-accent" />
+              <span className="absolute -left-[1.805rem] top-1 size-2.5 bg-accent" />
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <h3 className="text-base font-semibold text-text">
                   {job.company}
@@ -189,7 +189,7 @@ export default async function AboutPage({
                     key={i}
                     className="flex gap-2 text-sm leading-relaxed text-muted"
                   >
-                    <span className="mt-1.5 size-1 shrink-0 rounded-full bg-border" />
+                    <span className="mt-1.5 size-1 shrink-0 bg-border" />
                     {point}
                   </li>
                 ))}
@@ -205,7 +205,7 @@ export default async function AboutPage({
           {projects.map((project) => (
             <article
               key={project.name}
-              className="flex flex-col rounded-lg border border-border/70 bg-surface/50 p-5 transition-shadow duration-200 hover:shadow-glow-sm"
+              className="flex flex-col border-[3px] border-border bg-surface p-5 shadow-neu transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu-lg"
             >
               <div className="flex items-start justify-between gap-2">
                 {projectHrefs[project.name] ? (
@@ -229,7 +229,7 @@ export default async function AboutPage({
                     key={i}
                     className="flex gap-2 text-sm leading-relaxed text-muted"
                   >
-                    <span className="mt-1.5 size-1 shrink-0 rounded-full bg-accent/60" />
+                    <span className="mt-1.5 size-1 shrink-0 bg-accent" />
                     {point}
                   </li>
                 ))}

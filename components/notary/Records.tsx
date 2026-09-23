@@ -172,13 +172,13 @@ export function Records() {
   }, [records]);
 
   return (
-    <div className="rounded-lg border border-border/70 bg-surface/50 p-5">
+    <div className="border-[3px] border-border bg-surface p-5 shadow-neu">
       <div className="mb-4 flex items-center justify-between">
-        <span className="font-mono text-xs text-accent">
+        <span className="font-mono text-xs font-bold text-text">
           {t("notary.records.label")}
         </span>
         {stats && (
-          <span className="rounded-full border border-border px-2.5 py-0.5 font-mono text-xs text-muted">
+          <span className="border-2 border-border bg-accent px-2.5 py-0.5 font-mono text-xs font-bold text-on-accent shadow-neu-sm">
             {t("notary.records.stats")
               .replace("{count}", String(stats.total))
               .replace("{block}", stats.latestBlock.toString())}
@@ -196,7 +196,7 @@ export function Records() {
         </p>
       )}
       {error && (
-        <div className="break-all rounded-md border border-error/40 px-3 py-2 font-mono text-xs text-error">
+        <div className="break-all border-2 border-border bg-error px-3 py-2 font-mono text-xs text-on-accent">
           ✗ {error}
         </div>
       )}
@@ -207,32 +207,32 @@ export function Records() {
       )}
 
       {records.length > 0 && (
-        <div className="max-h-96 overflow-auto">
+        <div className="max-h-96 overflow-auto border-[3px] border-border">
           <table className="w-full text-sm">
-            <thead className="sticky top-0 bg-surface">
+            <thead className="sticky top-0 bg-black">
               <tr>
-                <th className="px-2 pb-2 text-left font-mono text-xs font-medium uppercase tracking-wider text-faint">
+                <th className="px-2 pb-2 pt-2 text-left font-mono text-xs font-bold uppercase tracking-wider text-white">
                   {t("notary.records.colIndex")}
                 </th>
-                <th className="px-2 pb-2 text-left font-mono text-xs font-medium uppercase tracking-wider text-faint">
+                <th className="px-2 pb-2 pt-2 text-left font-mono text-xs font-bold uppercase tracking-wider text-white">
                   {t("notary.records.colData")}
                 </th>
-                <th className="px-2 pb-2 text-left font-mono text-xs font-medium uppercase tracking-wider text-faint">
+                <th className="px-2 pb-2 pt-2 text-left font-mono text-xs font-bold uppercase tracking-wider text-white">
                   {t("notary.records.colTimestamp")}
                 </th>
-                <th className="px-2 pb-2 text-left font-mono text-xs font-medium uppercase tracking-wider text-faint">
+                <th className="px-2 pb-2 pt-2 text-left font-mono text-xs font-bold uppercase tracking-wider text-white">
                   {t("notary.records.colBlock")}
                 </th>
-                <th className="px-2 pb-2 text-left font-mono text-xs font-medium uppercase tracking-wider text-faint">
+                <th className="px-2 pb-2 pt-2 text-left font-mono text-xs font-bold uppercase tracking-wider text-white">
                   {t("notary.records.colTxHash")}
                 </th>
               </tr>
             </thead>
             <tbody>
               {records.map((r, i) => (
-                <tr key={r.txHash} className="border-t border-border/70">
+                <tr key={r.txHash} className="border-t-2 border-border">
                   <td className="px-2 py-2 text-faint">{records.length - i}</td>
-                  <td className="px-2 py-2 font-mono font-semibold text-accent">
+                  <td className="px-2 py-2 font-mono font-bold text-text">
                     {r.data}
                   </td>
                   <td className="px-2 py-2 text-faint">{fmtTime(r.timestamp)}</td>
@@ -244,7 +244,7 @@ export function Records() {
                       href={`https://testnet.bscscan.com/tx/${r.txHash}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="font-mono text-accent hover:underline"
+                      className="font-mono text-text underline decoration-2 underline-offset-2 hover:bg-accent hover:text-on-accent"
                     >
                       {short(r.txHash)}
                     </a>

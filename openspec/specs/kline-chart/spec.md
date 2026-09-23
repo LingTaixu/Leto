@@ -27,7 +27,7 @@
 
 ### Requirement: K 线渲染
 
-系统 SHALL 使用 lightweight-charts 渲染蜡烛图，以交易所风格展示 K 线并支持滚动、缩放与周期切换；蜡烛颜色 SHALL 为红涨绿跌（`#ef5350` / `#26a69a`）；图表 SHALL 提供成交量副窗格（pane）与十字线报价图例（hover 显示该根 opens 当根，离开图表恢复最新根）；渲染与数据解耦：历史快照用 `series.setData`、实时单根用 `series.update`（只更新最新末根，弃早于已加载最新根的历史根）、主题变化用 `chart.applyOptions`，SHALL NOT 因数据/主题变化销毁重建图表（容器卸载除外）。
+系统 SHALL 使用 lightweight-charts 渲染蜡烛图，以交易所风格展示 K 线并支持滚动、缩放与周期切换；蜡烛颜色 SHALL 为绿涨红跌（`#26a69a` / `#ef5350`）；图表 SHALL 提供成交量副窗格（pane）与十字线报价图例（hover 显示该根 opens 当根，离开图表恢复最新根）；渲染与数据解耦：历史快照用 `series.setData`、实时单根用 `series.update`（只更新最新末根，弃早于已加载最新根的历史根）、主题变化用 `chart.applyOptions`，SHALL NOT 因数据/主题变化销毁重建图表（容器卸载除外）。
 
 #### Scenario: 渲染蜡烛图
 

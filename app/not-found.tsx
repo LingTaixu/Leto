@@ -19,7 +19,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="mt-8 inline-flex h-10 items-center justify-center rounded-md bg-text px-6 text-sm font-medium text-bg transition-opacity duration-150 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+        className="mt-8 inline-flex h-10 items-center justify-center border-[3px] border-border bg-text px-6 text-sm font-bold text-bg shadow-neu transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu-lg active:translate-x-0.5 active:translate-y-0.5 active:shadow-none focus-visible:outline-3 focus-visible:outline-accent focus-visible:outline-offset-3"
       >
         Back to home / 返回首页
       </Link>

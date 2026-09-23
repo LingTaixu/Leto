@@ -78,10 +78,10 @@ export function KlineView() {
               type="button"
               onClick={() => navigate(coin, iv)}
               aria-pressed={iv === interval}
-              className={`rounded-md border px-2.5 py-1 font-mono text-xs transition-colors duration-150 ${
+              className={`border-[3px] border-border px-2.5 py-1 font-mono text-xs font-bold transition-all duration-100 ${
                 iv === interval
-                  ? "border-accent/50 bg-accent/10 text-accent"
-                  : "border-border text-muted hover:border-accent/40 hover:text-text"
+                  ? "bg-text text-bg shadow-neu-sm"
+                  : "bg-surface text-muted hover:-translate-x-px hover:-translate-y-px hover:bg-accent hover:text-on-accent hover:shadow-neu-sm active:translate-x-px active:translate-y-px active:shadow-none"
               }`}
             >
               {iv}
@@ -96,7 +96,7 @@ export function KlineView() {
           <select
             value={coin}
             onChange={(e) => navigate(e.target.value, interval)}
-            className="rounded-md border border-border bg-surface px-3 py-1.5 font-mono text-sm text-text focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+            className="rounded-none border-[3px] border-border bg-surface px-3 py-1.5 font-mono text-sm text-text focus:outline-3 focus:outline-accent focus:outline-offset-2"
           >
             {coinList.length === 0 && <option value={coin}>{coin}</option>}
             {!coinList.includes(coin) && coinList.length > 0 && (
@@ -117,13 +117,13 @@ export function KlineView() {
         </p>
       )}
       {loading && candles.length > 0 && (
-        <div className="mb-2 inline-flex items-center gap-2 rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-xs text-accent">
-          <span className="inline-block size-3 animate-spin rounded-full border-2 border-accent/30 border-t-accent" />
+        <div className="mb-2 inline-flex items-center gap-2 border-[3px] border-border bg-accent px-3 py-1.5 font-mono text-xs font-bold text-on-accent">
+          <span className="inline-block size-3 animate-spin border-2 border-on-accent/30 border-t-on-accent" />
           {t("kline.refreshing")}
         </div>
       )}
       {error && (
-        <div className="mb-3 break-all rounded-md border border-error/40 bg-error/5 px-3 py-2 font-mono text-xs text-error">
+        <div className="mb-3 break-all border-[3px] border-border bg-error px-3 py-2 font-mono text-xs text-on-accent">
           ✗ {error}
         </div>
       )}

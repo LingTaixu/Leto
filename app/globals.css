@@ -2,72 +2,23 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Design Tokens (design-system §2.1)
-   Base layer: light theme; dark theme via prefers-color-scheme
+   Neubrutalism Design Tokens
+   硬边框 / 硬阴影 / 零圆角 / 纯色搭配。
+   浅色主题为唯一主题（不再响应 prefers-color-scheme）。
    ============================================================ */
 
 :root {
-  /* light */
-  --bg: #fafafa;
-  --surface: #ffffff;
-  --border: #e4e4e7;
-  --text: #18181b;
-  --text-muted: #52525b;
-  --text-faint: #a1a1aa;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --on-accent: #ffffff;
-  --glow: rgb(37 99 235 / 0.18);
-
-  /* Liquid Glass (design-system §2.7) */
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-blur: saturate(180%) blur(28px);
-  --glass-highlight: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.55),
-    transparent
-  );
-  --glass-border: rgba(255, 255, 255, 0.28);
-  --glass-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  --glass-indicator: rgba(255, 255, 255, 0.85);
-
-  /* Gemini Animated Border Colors */
-  --gemini-1: #00f2fe;
-  --gemini-2: #4facfe;
-  --gemini-3: #8a2387;
-  --gemini-4: #e94057;
-  --gemini-5: #f27121;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* dark */
-    --bg: #09090b;
-    --surface: #18181b;
-    --border: #27272a;
-    --text: #fafafa;
-    --text-muted: #a1a1aa;
-    --text-faint: #71717a;
-    --accent: #60a5fa;
-    --accent-hover: #93c5fd;
-    --on-accent: #0f172a;
-    --glow: rgb(96 165 250 / 0.3);
-
-    /* Liquid Glass dark: keep translucency, dim edges */
-    --glass-bg: rgba(24, 24, 27, 0.55);
-    --glass-border: rgba(255, 255, 255, 0.14);
-    --glass-shadow:
-      0 12px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    --glass-indicator: rgba(255, 255, 255, 0.15);
-
-    /* Gemini Colors in Dark Mode (slightly more vibrant neon) */
-    --gemini-1: #38ef7d;
-    --gemini-2: #11998e;
-    --gemini-3: #f77062;
-    --gemini-4: #fe5196;
-    --gemini-5: #8a2387;
-  }
+  /* 结构色（neubrutalism 规范配色） */
+  --bg: #fffdf5;       /* Off-White 底色 */
+  --surface: #ffffff;  /* 卡片 / 面板 */
+  --surface-2: #f5f0e8; /* 次级面板（暖灰） */
+  --border: #000000;   /* 结构黑（border-* 工具类颜色） */
+  --text: #000000;     /* 正文 */
+  --text-muted: #333333; /* 次级文字 */
+  --text-faint: #666666; /* 弱化文字 */
+  --accent: #ffd23f;   /* Bold Yellow */
+  --accent-hover: #eab308; /* 悬停略深黄 */
+  --on-accent: #000000; /* 黄底黑字 */
 }
 
 /* Map CSS vars to Tailwind v4 utilities:
@@ -75,6 +26,7 @@
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-text: var(--text);
   --color-muted: var(--text-muted);
   --color-faint: var(--text-faint);
@@ -82,137 +34,79 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-on-accent: var(--on-accent);
-  --color-success: #16a34a;
-  --color-warning: #d97706;
-  --color-error: #dc2626;
+  --color-success: #88d498;
+  --color-warning: #ffa552;
+  --color-error: #ff4444;
 
   --font-sans:
     var(--font-inter), system-ui, -apple-system, "Segoe UI", "PingFang SC",
     "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --font-mono:
-    var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, Consolas,
-    monospace;
+    var(--font-spacemono), var(--font-jetbrains), ui-monospace, "SFMono-Regular",
+    Menlo, Consolas, monospace;
+  --font-code:
+    var(--font-jetbrains), var(--font-spacemono), ui-monospace, "SFMono-Regular",
+    Menlo, Consolas, monospace;
+  --font-heading:
+    var(--font-spacegrotesk), var(--font-inter), system-ui, sans-serif;
+  --font-display:
+    var(--font-syne), var(--font-spacegrotesk), sans-serif;
 
-  --shadow-glow-sm: 0 12px 40px -12px var(--glow);
-  --shadow-glow-lg: 0 20px 56px -16px var(--glow);
+  /* neubrutalism 硬阴影（零模糊偏移阴影） */
+  --shadow-neu-sm: 3px 3px 0 0 #000;
+  --shadow-neu: 5px 5px 0 0 #000;
+  --shadow-neu-lg: 8px 8px 0 0 #000;
+  --shadow-neu-xl: 12px 12px 0 0 #000;
 }
 
 /* ============================================================
-   Gemini Animated Gradient Border (Border-Only Spec)
+   Marquee 跑马灯（首页技能展示）
    ============================================================ */
-@keyframes gemini-border-spin {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-/* 最外层：裁剪、边框厚度、卡片定位 */
-.gemini-border-container {
-  position: relative;
-  border-radius: 1rem;
-  padding: 1.5px; /* 这就是 1.5px 的精细边框粗细！ */
+.marquee {
+  background: #000000;
+  color: #ffffff;
+  border-bottom: 4px solid #000000;
+  padding: 0.75rem 0;
   overflow: hidden;
-  background: var(--border); /* 静态兜底边框 */
-  isolation: isolate; /* 建立层叠，保护内盒 */
-  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+  white-space: nowrap;
 }
 
-/* 中间旋转流光盘：隐藏在内盒之下，只有 1.5px 外边缘可见 */
-.gemini-border-orbit {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300%; /* 足够大，旋转时不露四个空白角 */
-  height: 300%;
-  background: conic-gradient(
-    from 0deg at 50% 50%,
-    transparent 0deg,
-    var(--gemini-1) 45deg,
-    var(--gemini-2) 90deg,
-    transparent 135deg,
-    var(--gemini-3) 180deg,
-    var(--gemini-4) 225deg,
-    transparent 270deg,
-    var(--gemini-5) 315deg,
-    transparent 360deg
-  );
-  transform: translate(-50%, -50%) rotate(0deg);
-  animation: gemini-border-spin 8s linear infinite;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.65;
-  transition: opacity 0.3s ease;
+.marquee-track {
+  display: inline-flex;
+  animation: marquee 25s linear infinite;
 }
 
-/* 内层：不透明纯色静止盒，承载所有内容，防止漏光 */
-.gemini-border-content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: var(--surface); /* 纯色不透明覆盖板 */
-  border-radius: calc(1rem - 1.5px); /* 完美的圆角补偿公式 */
-  z-index: 2;
-  transition: background-color 0.3s ease;
+/* 悬停跑马灯任意区域 → 暂停动画（spec: 暂停效果） */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
 }
 
-/* 4. hover 底层彩色氛围灯 (::after) */
-.gemini-border-container::after {
-  content: "";
-  position: absolute;
-  inset: -8px;
-  border-radius: calc(1rem + 8px);
-  background: linear-gradient(
-    135deg,
-    var(--gemini-1),
-    var(--gemini-3),
-    var(--gemini-5)
-  );
-  filter: blur(20px);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.4s ease;
+.marquee-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  padding-right: 2rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-/* Hover 物理响应：微上浮、流速加快、背光氛围灯亮起 */
-.gemini-border-container:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-glow-sm);
+.marquee-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  flex-shrink: 0;
 }
 
-.gemini-border-container:hover .gemini-border-orbit {
-  animation-duration: 4s; /* 旋转加快 */
-  opacity: 1;
-}
-
-.gemini-border-container:hover::after {
-  opacity: 0.35; /* 氛围灯亮起 */
-}
-
-/* ============================================================
-   Liquid Glass panel (design-system §3.1.1)
-   Reusable glass capsule: translucent bg + blur + top highlight edge
-   ============================================================ */
-.liquid-glass {
-  position: relative;
-  border: 1px solid color-mix(in srgb, var(--glass-border) 60%, transparent);
-  background: var(--glass-bg);
-  box-shadow: var(--glass-shadow);
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-}
-
-/* specular top edge (refraction light) */
-.liquid-glass::before {
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 2px;
-  border-radius: 9999px;
-  background: var(--glass-highlight);
-  pointer-events: none;
-  z-index: 1;
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* ============================================================
@@ -220,7 +114,7 @@
    ============================================================ */
 @layer base {
   html {
-    color-scheme: light dark;
+    color-scheme: light;
     scroll-behavior: smooth;
   }
 
@@ -232,6 +126,18 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* neubrutalism：标题统一使用 Space Grotesk */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
   ::selection {
     background: var(--accent);
     color: var(--on-accent);
@@ -239,7 +145,7 @@
 }
 
 /* ============================================================
-   Motion safety (design-system §2.6 / §5)
+   Motion safety
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   *,
