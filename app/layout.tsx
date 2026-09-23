@@ -1,15 +1,15 @@
 import { Providers } from "@/app/providers";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import {
   Inter,
   JetBrains_Mono,
-  Syne,
   Space_Grotesk,
   Space_Mono,
+  Syne,
 } from "next/font/google";
+import type { ReactNode } from "react";
 import "./globals.css";
-
 // 正文（保留原有）
 const inter = Inter({
   variable: "--font-inter",
@@ -69,7 +69,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${inter.variable} ${jetbrainsMono.variable} ${syne.variable} ${spaceGrotesk.variable} ${spaceMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <Analytics />
+        </Providers>
       </body>
     </html>
   );
