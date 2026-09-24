@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, type RefObject } from "react";
 import {
   CandlestickData,
   CandlestickSeries,
@@ -11,8 +10,9 @@ import {
   type IChartApi,
   type Time,
 } from "lightweight-charts";
-import { LOAD_THRESHOLD } from "./intervalConfig";
+import { useEffect, useRef, type RefObject } from "react";
 import type { candlestickData } from "./formatKline";
+import { LOAD_THRESHOLD } from "./intervalConfig";
 
 /** 图表 imperative 操作器：WSS 实时更新直通 series.update，不触发 React 渲染 */
 export interface KlineChartApi {
@@ -56,7 +56,9 @@ function formatLegend(d: LegendData, mutedColor: string): string {
   const color = up ? UP : DOWN;
   const chg = d.open !== 0 ? ((d.close - d.open) / d.open) * 100 : 0;
   const fmt = (n?: number) =>
-    n === undefined ? "—" : n.toLocaleString(undefined, { maximumFractionDigits: 4 });
+    n === undefined
+      ? "—"
+      : n.toLocaleString(undefined, { maximumFractionDigits: 4 });
   const vol =
     d.volume === undefined
       ? "—"
@@ -98,8 +100,12 @@ export function TradingView({
   const containerRef = useRef<HTMLDivElement>(null);
   const legendRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
-  const candleSeriesRef = useRef<ReturnType<IChartApi["addSeries"]> | null>(null);
-  const volumeSeriesRef = useRef<ReturnType<IChartApi["addSeries"]> | null>(null);
+  const candleSeriesRef = useRef<ReturnType<IChartApi["addSeries"]> | null>(
+    null,
+  );
+  const volumeSeriesRef = useRef<ReturnType<IChartApi["addSeries"]> | null>(
+    null,
+  );
 
   // 十字线是否在图内（离开 → 图例回退最新根）
   const crosshairActiveRef = useRef(false);
@@ -345,10 +351,7 @@ export function TradingView({
         ref={legendRef}
         className="pointer-events-none absolute left-3 top-2 z-10 flex flex-wrap gap-x-3 font-mono text-xs"
       />
-      <div
-        style={{ width: "100%", height: "77vh" }}
-        ref={containerRef}
-      />
+      <div style={{ width: "100%", height: "55vh" }} ref={containerRef} />
     </div>
   );
 }
