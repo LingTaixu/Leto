@@ -15,7 +15,9 @@ type Phase = "waiting" | "holding" | "fading" | "done";
 
 const SplashScene = dynamic(
   () => import("./ThreeScene").then((m) => m.ThreeScene),
-  { ssr: false, loading: () => null },
+  // 等待 three.js 大 chunk 加载期直接亮起 CSS loading（避免纯黑空屏），
+  // 就绪后无缝切到粒子场景。
+  { ssr: false, loading: () => <CssPulse /> },
 );
 
 /**
