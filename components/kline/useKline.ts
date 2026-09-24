@@ -117,17 +117,18 @@ export function useKline(
     };
   }, [coin, interval]);
 
-  // 币种列表：allMids 一次（失败不阻塞主流程）
+  // 币种列表：meta().universe 一次（纯 perp 合约，剔除 @spot 指数与 #预测市场键；失败不阻塞）
   useEffect(() => {
     let cancelled = false;
     const client = new InfoClient({ transport: new HttpTransport() });
 
     client
-      .allMids()
+      .meta()
       .then((res) => {
         if (cancelled) return;
-        const list = Object.keys(res.mids)
-          .filter((k) => !k.startsWith("@"))
+        const list = res.universe
+          .map((u) => u.name)
+          .filter((n) => !n.startsWith("@") && !n.startsWith("#"))
           .sort();
         setCoinList(list);
       })
