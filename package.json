@@ -12,7 +12,6 @@
     "@nktkas/hyperliquid": "^0.33.3",
     "@rainbow-me/rainbowkit": "^2.2.11",
     "@tanstack/react-query": "^5.103.1",
-    "@types/three": "^0.186.0",
     "@vercel/analytics": "^2.0.1",
     "gray-matter": "^4.0.3",
     "lightweight-charts": "^5.2.1",
@@ -23,7 +22,6 @@
     "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
-    "three": "^0.186.0",
     "unified": "^11.0.5",
     "viem": "2.x",
     "wagmi": "^3.7.7"
