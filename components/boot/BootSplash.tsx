@@ -1,9 +1,7 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useI18n } from "@/lib/i18n";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { CssPulse } from "./CssPulse";
 
 const SESSION_KEY = "leto-boot-splash";
@@ -13,21 +11,13 @@ const MIN_TOTAL = HOLD_MS + FADE_MS;
 
 type Phase = "waiting" | "holding" | "fading" | "done";
 
-const SplashScene = dynamic(
-  () => import("./ThreeScene").then((m) => m.ThreeScene),
-  // 等待 three.js 大 chunk 加载期直接亮起 CSS loading（避免纯黑空屏），
-  // 就绪后无缝切到粒子场景。
-  { ssr: false, loading: () => <CssPulse /> },
-);
-
 /**
- * 全站首屏 splash 覆盖层
- * 状态机：waiting → hold(≥1s) → fading(300ms) → done(卸载)
+ * 全站首屏 splash 覆盖层（纯 CSS loading，无 three.js）
+ * 状态机：waiting → hold(≥2s) → fading(300ms) → done(卸载)
  * sessionStorage 标记同一会话内（含刷新）不重复展示。
  */
 export function BootSplash() {
   const { t } = useI18n();
-  const reduced = useReducedMotion();
   const [phase, setPhase] = useState<Phase>("waiting");
 
   useEffect(() => {
@@ -78,7 +68,7 @@ export function BootSplash() {
         phase === "fading" ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      {reduced ? <CssPulse /> : <SplashScene mode="splash" />}
+      <CssPulse />
     </div>
   );
 }
