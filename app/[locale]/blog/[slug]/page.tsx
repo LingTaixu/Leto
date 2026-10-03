@@ -50,6 +50,7 @@ export default async function BlogPostPage({ params }: PostProps) {
 
   return (
     <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
+      <div className="article-progress" aria-hidden="true" />
       <nav
         aria-label="breadcrumb"
         className="mb-8 text-sm text-faint"

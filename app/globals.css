@@ -102,6 +102,80 @@
   flex-shrink: 0;
 }
 
+/* ============================================================
+   Scroll-driven content effects
+   ============================================================ */
+.article-progress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 60;
+  height: 4px;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: var(--accent);
+}
+
+@supports (animation-timeline: scroll()) {
+  .article-progress {
+    animation: article-progress linear both;
+    animation-timeline: scroll(root);
+  }
+
+  @keyframes article-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .article-card-reveal {
+    animation: article-card-reveal linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% entry 28%;
+  }
+
+  @keyframes article-card-reveal {
+    from {
+      opacity: 0.35;
+      transform: translateY(18px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (max-width: 639.98px) {
+  .about-project-card {
+    position: sticky;
+    top: calc(4.5rem + var(--stack-index, 0) * 0.75rem);
+  }
+
+  .about-project-card:nth-child(1) {
+    --stack-index: 0;
+    z-index: 1;
+  }
+
+  .about-project-card:nth-child(2) {
+    --stack-index: 1;
+    z-index: 2;
+  }
+
+  .about-project-card:nth-child(3) {
+    --stack-index: 2;
+    z-index: 3;
+  }
+
+  .about-project-card:nth-child(4) {
+    --stack-index: 3;
+    z-index: 4;
+  }
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -203,5 +277,14 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .article-progress {
+    display: none;
+  }
+
+  .article-card-reveal {
+    opacity: 1;
+    transform: none;
   }
 }

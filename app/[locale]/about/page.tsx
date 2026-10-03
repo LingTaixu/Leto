@@ -205,7 +205,7 @@ export default async function AboutPage({
           {projects.map((project) => (
             <article
               key={project.name}
-              className="flex flex-col border-[3px] border-border bg-surface p-5 shadow-neu transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu-lg"
+              className="about-project-card flex flex-col border-[3px] border-border bg-surface p-5 shadow-neu transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu-lg"
             >
               <div className="flex items-start justify-between gap-2">
                 {projectHrefs[project.name] ? (

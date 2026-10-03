@@ -24,7 +24,7 @@ export function ArticleCard({
 }) {
   const t = (key: string) => resolveMessage(locale as Locale, key);
   return (
-    <div className="group border-[3px] border-border bg-surface p-6 shadow-neu transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu-lg active:translate-x-0.5 active:translate-y-0.5 active:shadow-neu-sm">
+    <div className="article-card-reveal group border-[3px] border-border bg-surface p-6 shadow-neu transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu-lg active:translate-x-0.5 active:translate-y-0.5 active:shadow-neu-sm">
       {/* 建立卡片级的焦点区域 */}
       <article className="relative has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-[var(--border)] has-[:focus-visible]:outline-offset-4">
         {/* 标签行 */}
