@@ -27,7 +27,9 @@ const REQUIRED_FIELDS = ["title", "summary", "date", "tags"] as const;
 
 const processor = unified()
   .use(remarkParse)
-  .use(remarkGfm)
+  // singleTilde: false —— 与 GitHub 一致，仅 `~~text~~` 是删除线；
+  // 否则「3~5」「50~70」这类区间写法会被误解析成删除线并吞掉波浪号
+  .use(remarkGfm, { singleTilde: false })
   .use(remarkRehype)
   .use(rehypeStringify);
 
