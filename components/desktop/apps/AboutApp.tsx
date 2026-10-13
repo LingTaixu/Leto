@@ -1,24 +1,23 @@
-import Link from "next/link";
-import type { Metadata } from "next";
+"use client";
+
 import { Tag } from "@/components/Tag";
-import { localeAlternates } from "@/lib/alternates";
-import { type Locale } from "@/lib/locales";
+import { useI18n } from "@/lib/i18n";
 import { resolveMessage, resolveRaw } from "@/lib/messages";
+import { useWindowManager } from "../WindowManager";
 
 const contact = {
   name: "Leto",
   email: "taixuling@gmail.com",
   telegram: "@leto_lll",
-  gender: "男",
   age: 27,
 };
 
-/** 项目关联博客文章链接（内容由 lib/posts 按 locale 提供，链接本身不翻译） */
-const projectHrefs: Record<string, string> = {
-  "IP Strategy Web": "/blog/ip-strategy-web-tanstack-router",
-  "Cooking.City": "/blog/cooking-city-solana-fair-launch",
-  "IP Strategy Base Service": "/blog/ip-strategy-base-service",
-  ECHOSYNC: "/blog/echosync-hyperliquid-exchange",
+/** 项目关联博客文章（点击打开博客窗口深链） */
+const projectSlugs: Record<string, string> = {
+  "IP Strategy Web": "ip-strategy-web-tanstack-router",
+  "Cooking.City": "cooking-city-solana-fair-launch",
+  "IP Strategy Base Service": "ip-strategy-base-service",
+  ECHOSYNC: "echosync-hyperliquid-exchange",
 };
 
 interface Advantage {
@@ -50,69 +49,42 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="mt-12">
-      <h2 className="mb-6 font-semibold tracking-tight text-text">
-        {title}
-      </h2>
+    <section id={id} className="mt-10">
+      <h3 className="mb-5 font-semibold tracking-tight text-text">{title}</h3>
       {children}
     </section>
   );
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-  const name = resolveMessage(locale as Locale, "about.title");
-  const desc = resolveMessage(locale as Locale, "about.seoDescription");
-  return {
-    title: `${name} · ${contact.name}`,
-    description: desc,
-    alternates: localeAlternates(locale, "/about"),
-  };
-}
-
-export default async function AboutPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  const t = (key: string) => resolveMessage(locale as Locale, key);
+/**
+ * 关于窗口：原 /about 页面内容窗口化
+ * 项目卡片点击 → 打开博客窗口对应文章（跨窗口导航）
+ */
+export function AboutApp() {
+  const { locale } = useI18n();
+  const t = (key: string) => resolveMessage(locale, key);
+  const wm = useWindowManager();
 
   const skills = (
-    resolveRaw(locale as Locale, "about.skills.list") as string[]
+    resolveRaw(locale, "about.skills.list") as string[]
   ).filter((s): s is string => typeof s === "string");
-  const advantages = resolveRaw(
-    locale as Locale,
-    "about.advantages.list",
-  ) as Advantage[];
-  const jobs = resolveRaw(
-    locale as Locale,
-    "about.experience.jobs",
-  ) as JobItem[];
-  const projects = resolveRaw(
-    locale as Locale,
-    "about.projects.list",
-  ) as ProjectItem[];
+  const advantages = resolveRaw(locale, "about.advantages.list") as Advantage[];
+  const jobs = resolveRaw(locale, "about.experience.jobs") as JobItem[];
+  const projects = resolveRaw(locale, "about.projects.list") as ProjectItem[];
 
   return (
-    <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-32 lg:pb-10">
+    <div className="p-4 lg:p-8">
       {/* 个人头部 */}
       <header>
-        <h1 className="font-bold tracking-tight text-text">
-          {contact.name}
-        </h1>
-        <p className="mt-2 text-lg text-muted">{t("about.subtitle")}</p>
-        <dl className="mt-4 grid grid-cols-1 gap-2 text-sm text-muted sm:grid-cols-3">
+        <h2 className="font-bold tracking-tight text-text">{contact.name}</h2>
+        <p className="mt-2 text-base text-muted">{t("about.subtitle")}</p>
+        <dl className="mt-4 grid grid-cols-1 gap-2 text-sm text-muted sm:grid-cols-2">
           <div className="flex items-center gap-2">
             <dt className="text-faint">{t("about.contact.labels.email")}</dt>
             <dd>
               <a
                 href={`mailto:${contact.email}`}
-                className="hover:bg-accent hover:text-on-accent transition-colors duration-150"
+                className="transition-colors duration-150 hover:bg-accent hover:text-on-accent"
               >
                 {contact.email}
               </a>
@@ -127,13 +99,15 @@ export default async function AboutPage({
             <dd>{contact.age}</dd>
           </div>
           <div className="flex items-center gap-2">
-            <dt className="text-faint">{t("about.contact.labels.telegram")}</dt>
+            <dt className="text-faint">
+              {t("about.contact.labels.telegram")}
+            </dt>
             <dd>
               <a
                 href={`https://t.me/${contact.telegram.slice(1)}`}
                 target="_blank"
                 rel="noreferrer"
-                className="hover:bg-accent hover:text-on-accent transition-colors duration-150"
+                className="transition-colors duration-150 hover:bg-accent hover:text-on-accent"
               >
                 {contact.telegram}
               </a>
@@ -159,7 +133,7 @@ export default async function AboutPage({
               key={adv.title}
               className="border-[3px] border-border bg-surface p-4 shadow-neu-sm"
             >
-              <h3 className="text-sm font-semibold text-text">{adv.title}</h3>
+              <h4 className="text-sm font-semibold text-text">{adv.title}</h4>
               <p className="mt-2 text-sm leading-relaxed text-muted">
                 {adv.desc}
               </p>
@@ -175,9 +149,9 @@ export default async function AboutPage({
             <li key={job.company} className="relative">
               <span className="absolute -left-[1.805rem] top-1 size-2.5 bg-accent" />
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="text-base font-semibold text-text">
+                <h4 className="text-base font-semibold text-text">
                   {job.company}
-                </h3>
+                </h4>
                 <span className="font-mono text-xs text-faint">
                   {job.range}
                 </span>
@@ -199,7 +173,7 @@ export default async function AboutPage({
         </ol>
       </Section>
 
-      {/* 项目经历（多张 Card） */}
+      {/* 项目经历 */}
       <Section id="projects" title={t("about.projects.title")}>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {projects.map((project) => (
@@ -208,16 +182,22 @@ export default async function AboutPage({
               className="flex flex-col border-[3px] border-border bg-surface p-5 shadow-neu transition-all duration-100 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neu-lg"
             >
               <div className="flex items-start justify-between gap-2">
-                {projectHrefs[project.name] ? (
-                  <h3 className="text-base font-semibold text-text transition-colors duration-150 hover:bg-accent hover:text-on-accent">
-                    <Link href={projectHrefs[project.name]}>
+                {projectSlugs[project.name] ? (
+                  <h4 className="text-base font-semibold text-text transition-colors duration-150 hover:bg-accent hover:text-on-accent">
+                    <button
+                      type="button"
+                      className="cursor-pointer"
+                      onClick={() =>
+                        wm.open("blog", { slug: projectSlugs[project.name] })
+                      }
+                    >
                       {project.name} →
-                    </Link>
-                  </h3>
+                    </button>
+                  </h4>
                 ) : (
-                  <h3 className="text-base font-semibold text-text">
+                  <h4 className="text-base font-semibold text-text">
                     {project.name}
-                  </h3>
+                  </h4>
                 )}
                 <span className="shrink-0 font-mono text-xs text-faint">
                   {project.range}
@@ -238,6 +218,6 @@ export default async function AboutPage({
           ))}
         </div>
       </Section>
-    </main>
+    </div>
   );
 }

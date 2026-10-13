@@ -109,12 +109,5 @@ export function getAllSlugs(locale: Locale): string[] {
   return allPosts(locale).map((p) => p.slug);
 }
 
-/** 格式化日期为中文短格式 */
-export function formatDate(iso: string): string {
-  const d = new Date(iso);
-  return d.toLocaleDateString("zh-CN", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
-}
+/** 格式化日期为中文短格式（实现移至 client-safe 的 lib/format-date） */
+export { formatDate } from "@/lib/format-date";

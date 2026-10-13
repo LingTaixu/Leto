@@ -34,7 +34,10 @@ export function I18nProvider({
         document.cookie = `locale=${next};path=/;SameSite=Lax`;
         const segments = pathname.split("/");
         segments[1] = next;
-        router.replace(segments.join("/") || `/${next}`);
+        // 桌面深链（?app=&slug= 等）跨 locale 保留
+        const search =
+          typeof window === "undefined" ? "" : window.location.search;
+        router.replace(`${segments.join("/") || `/${next}`}${search}`);
       },
     }),
     [locale, pathname, router],

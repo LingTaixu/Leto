@@ -9,6 +9,7 @@ import enNotary from "@/messages/en/notary.json";
 import enTransfer from "@/messages/en/transfer.json";
 import enKline from "@/messages/en/kline.json";
 import enAbout from "@/messages/en/about.json";
+import enDesktop from "@/messages/en/desktop.json";
 
 // zh 模块
 import zhCommon from "@/messages/zh/common.json";
@@ -19,6 +20,7 @@ import zhNotary from "@/messages/zh/notary.json";
 import zhTransfer from "@/messages/zh/transfer.json";
 import zhKline from "@/messages/zh/kline.json";
 import zhAbout from "@/messages/zh/about.json";
+import zhDesktop from "@/messages/zh/desktop.json";
 
 /** en 模块合并定义消息树结构（zh 模块须同构） */
 export type Messages = typeof enCommon &
@@ -28,7 +30,8 @@ export type Messages = typeof enCommon &
   typeof enNotary &
   typeof enTransfer &
   typeof enKline &
-  typeof enAbout;
+  typeof enAbout &
+  typeof enDesktop;
 
 export type MessageKey = DeepKeys<Messages>;
 
@@ -50,6 +53,7 @@ const MESSAGES: Record<string, Messages> = {
     ...enTransfer,
     ...enKline,
     ...enAbout,
+    ...enDesktop,
   },
   zh: {
     ...zhCommon,
@@ -60,6 +64,7 @@ const MESSAGES: Record<string, Messages> = {
     ...zhTransfer,
     ...zhKline,
     ...zhAbout,
+    ...zhDesktop,
   },
 };
 

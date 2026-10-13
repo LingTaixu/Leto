@@ -6,16 +6,21 @@ import { StoreCard } from "@/components/notary/StoreCard";
 import { CONTRACT_ADDRESS } from "@/components/notary/contract";
 import { useI18n } from "@/lib/i18n";
 
-export default function NotaryPage() {
+/**
+ * 数据存证窗口：原 /web3/notary 页面内容窗口化
+ */
+export function NotaryApp() {
   const { t } = useI18n();
   return (
-    <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
-      <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
+    <div className="p-4 lg:p-6">
+      <header className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <p className="inline-block border-2 border-border bg-accent px-2 py-0.5 font-mono text-sm font-bold text-on-accent">{t("notary.kicker")}</p>
-          <h1 className="mt-2 font-bold tracking-tight text-text">
+          <p className="inline-block border-2 border-border bg-accent px-2 py-0.5 font-mono text-sm font-bold text-on-accent">
+            {t("notary.kicker")}
+          </p>
+          <h2 className="mt-2 font-bold tracking-tight text-text">
             {t("notary.title")}
-          </h1>
+          </h2>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
             {t("notary.desc")}
           </p>
@@ -36,6 +41,6 @@ export default function NotaryPage() {
         <StoreCard />
         <Records />
       </div>
-    </main>
+    </div>
   );
 }

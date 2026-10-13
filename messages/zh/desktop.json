@@ -1,0 +1,18 @@
+{
+  "desktop": {
+    "iconGrid": "应用图标",
+    "taskbar": "任务栏",
+    "clock": "时钟",
+    "apps": {
+      "kline": "K 线图表",
+      "notary": "数据存证",
+      "transfer": "原生币转账"
+    },
+    "window": {
+      "minimize": "最小化",
+      "maximize": "最大化",
+      "restore": "还原",
+      "close": "关闭"
+    }
+  }
+}

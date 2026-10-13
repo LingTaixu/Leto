@@ -55,7 +55,8 @@ export function KlineView() {
   const trade = useKlineTrade(coin);
 
   const navigate = (nextCoin: string, nextInterval: string) => {
-    const params = new URLSearchParams();
+    // 合并现有参数，保留桌面深链（?app=kline）
+    const params = new URLSearchParams(searchParams.toString());
     params.set("coin", nextCoin);
     params.set("interval", nextInterval);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });

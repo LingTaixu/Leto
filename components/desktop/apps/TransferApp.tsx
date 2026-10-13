@@ -23,16 +23,19 @@ function fmtBalance(value: bigint | undefined, symbol?: string) {
   return `${trimmed} ${symbol ?? ""}`.trim();
 }
 
-export default function TransferPage() {
+/**
+ * 原生币转账窗口：原 /web3/transfer 页面内容窗口化
+ */
+export function TransferApp() {
   const { t } = useI18n();
   return (
-    <main className="mx-auto w-full max-w-[62.5rem] flex-1 px-6 py-10 pb-28 lg:pb-10">
+    <div className="p-4 lg:p-6">
       <header className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <div>
           <p className="inline-block border-2 border-border bg-accent px-2 py-0.5 font-mono text-sm font-bold text-on-accent">{t("transfer.kicker")}</p>
-          <h1 className="mt-2 font-bold tracking-tight text-text">
+          <h2 className="mt-2 font-bold tracking-tight text-text">
             {t("transfer.title")}
-          </h1>
+          </h2>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
             {t("transfer.desc")}
           </p>
@@ -44,7 +47,7 @@ export default function TransferPage() {
         <BalanceCard />
         <TransferCard />
       </div>
-    </main>
+    </div>
   );
 }
 

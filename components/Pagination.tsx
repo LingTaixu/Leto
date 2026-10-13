@@ -1,20 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
 
 type PaginationProps = {
-  basePath: string;
   /** 当前页码（1 起） */
   page: number;
   /** 总页数 */
   totalPages: number;
+  /** 页码回调（桌面窗口内状态切换，不再走路由） */
+  onPage: (page: number) => void;
 };
-
-function pageUrl(basePath: string, page: number) {
-  // 首页省略 /1，其余带页码
-  return page <= 1 ? basePath : `${basePath}/page/${page}`;
-}
 
 function pageItems(current: number, total: number): (number | "…")[] {
   if (total <= 7) {
@@ -31,29 +26,30 @@ function pageItems(current: number, total: number): (number | "…")[] {
 }
 
 /**
- * 分页（neubrutalism）
- * 纯链接（No JS）。硬边框方块，当前页反色高亮，移动端压缩为省略号
+ * 分页（neubrutalism，桌面窗口版）
+ * 硬边框方块按钮，当前页反色高亮，多页时省略号压缩
  */
-export function Pagination({ basePath, page, totalPages }: PaginationProps) {
+export function Pagination({ page, totalPages, onPage }: PaginationProps) {
   const { t } = useI18n();
   if (totalPages <= 1) return null;
 
   const itemCls =
-    "inline-flex h-9 min-w-9 items-center justify-center border-[3px] border-border bg-surface px-2 text-sm font-bold transition-all duration-100 focus-visible:outline-3 focus-visible:outline-[var(--border)] focus-visible:outline-offset-2 hover:-translate-x-px hover:-translate-y-px hover:shadow-neu-sm active:translate-x-px active:translate-y-px active:shadow-none";
+    "inline-flex h-9 min-w-9 cursor-pointer items-center justify-center border-[3px] border-border bg-surface px-2 text-sm font-bold transition-all duration-100 focus-visible:outline-3 focus-visible:outline-[var(--border)] focus-visible:outline-offset-2 hover:-translate-x-px hover:-translate-y-px hover:shadow-neu-sm active:translate-x-px active:translate-y-px active:shadow-none";
 
   return (
     <nav
       aria-label={t("pagination.label")}
-      className="mt-12 flex items-center justify-center gap-1.5"
+      className="mt-6 flex items-center justify-center gap-1.5"
     >
       {page > 1 ? (
-        <Link
-          href={pageUrl(basePath, page - 1)}
+        <button
+          type="button"
+          onClick={() => onPage(page - 1)}
           aria-label={t("pagination.prev")}
           className={`${itemCls} text-text hover:bg-accent hover:text-on-accent`}
         >
           ←
-        </Link>
+        </button>
       ) : null}
 
       {pageItems(page, totalPages).map((item, i) =>
@@ -69,29 +65,31 @@ export function Pagination({ basePath, page, totalPages }: PaginationProps) {
           <span
             key={item}
             aria-current="page"
-            className={`${itemCls} bg-text text-bg shadow-neu-sm`}
+            className={`${itemCls} cursor-default bg-text text-bg shadow-neu-sm`}
           >
             {item}
           </span>
         ) : (
-          <Link
+          <button
             key={item}
-            href={pageUrl(basePath, item)}
+            type="button"
+            onClick={() => onPage(item)}
             className={`${itemCls} text-text hover:bg-accent hover:text-on-accent`}
           >
             {item}
-          </Link>
-        )
+          </button>
+        ),
       )}
 
       {page < totalPages ? (
-        <Link
-          href={pageUrl(basePath, page + 1)}
+        <button
+          type="button"
+          onClick={() => onPage(page + 1)}
           aria-label={t("pagination.next")}
           className={`${itemCls} text-text hover:bg-accent hover:text-on-accent`}
         >
           →
-        </Link>
+        </button>
       ) : null}
     </nav>
   );

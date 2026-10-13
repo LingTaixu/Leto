@@ -1,0 +1,18 @@
+{
+  "desktop": {
+    "iconGrid": "App icons",
+    "taskbar": "Taskbar",
+    "clock": "Clock",
+    "apps": {
+      "kline": "Kline Charts",
+      "notary": "Data Notary",
+      "transfer": "Transfer"
+    },
+    "window": {
+      "minimize": "Minimize",
+      "maximize": "Maximize",
+      "restore": "Restore",
+      "close": "Close"
+    }
+  }
+}
