@@ -142,7 +142,7 @@ export function Window({ win, focused, mobile, area, wm }: WindowProps) {
       </div>
 
       {/* 内容区 */}
-      <div ref={contentRef} className="min-h-0 flex-1 overflow-y-auto bg-bg">
+      <div ref={contentRef} className="flex min-h-0 flex-1 flex-col overflow-y-auto bg-bg">
         <Suspense fallback={<WindowSkeleton label={t("loading.label")} />}>
           <Content params={win.params} setParams={setParams} />
         </Suspense>

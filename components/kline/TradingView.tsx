@@ -141,6 +141,8 @@ export function TradingView({
     if (!containerRef.current) return;
 
     const chart = createChart(containerRef.current, {
+      // 自动跟随容器尺寸（窗口缩放/拖拽调整大小时图表重绘，缩放位置保留）
+      autoSize: true,
       layout: {
         textColor: themeRef.current.textColor,
         background: { type: ColorType.Solid, color: themeRef.current.bg },
@@ -345,13 +347,16 @@ export function TradingView({
   }, [candles, resetKey]);
 
   return (
-    <div className="relative">
+    <div className="relative flex min-h-0 flex-1 flex-col">
       {/* OHLC 图例（交易所风格左上角报价） */}
       <div
         ref={legendRef}
         className="pointer-events-none absolute left-3 top-2 z-10 flex flex-wrap gap-x-3 font-mono text-xs"
       />
-      <div style={{ width: "100%", height: "55vh" }} ref={containerRef} />
+      <div
+        className="min-h-[200px] w-full flex-1"
+        ref={containerRef}
+      />
     </div>
   );
 }

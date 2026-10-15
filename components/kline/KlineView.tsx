@@ -63,7 +63,7 @@ export function KlineView() {
   };
 
   const chartPanel = (
-    <div className="flex min-w-0 flex-1 flex-col">
+    <div className="flex min-w-0 flex-1 flex-col min-h-0">
       {loading && candles.length === 0 && (
         <p className="py-6 text-center font-mono text-sm text-faint">
           {t("kline.loading")}
@@ -109,7 +109,7 @@ export function KlineView() {
   );
 
   return (
-    <main className="mx-auto w-full max-w-[90rem] flex-1 px-4 py-6 lg:px-6 lg:py-10">
+    <main className="mx-auto flex w-full max-w-[90rem] min-h-0 flex-1 flex-col px-4 py-6 lg:px-6 lg:py-10">
       {/* 标题区 */}
       <header className="mb-4">
         <p className="inline-block border-2 border-border bg-accent px-2 py-0.5 font-mono text-sm font-bold text-on-accent">
@@ -183,13 +183,13 @@ export function KlineView() {
       </div>
 
       {/* 主体区域 */}
-      <div className="flex flex-col lg:flex-row">
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
         {/* 移动端隐藏 */}
-        <div className={`lg:hidden ${mobileTab === "Chart" ? "block" : "hidden"}`}>
+        <div className={`min-h-0 flex-1 flex-col lg:hidden ${mobileTab === "Chart" ? "flex" : "hidden"}`}>
           {chartPanel}
         </div>
         {/* 桌面端：左侧 chart flex-1 + 右侧面板 */}
-        <div className="hidden lg:flex lg:flex-1">{chartPanel}</div>
+        <div className="hidden lg:flex lg:min-h-0 lg:flex-1">{chartPanel}</div>
 
         {/* 右侧 OrderBook + RecentTrades */}
         <div className={`lg:w-[280px] lg:shrink-0 ${mobileTab !== "Chart" ? "block" : "hidden"} lg:block`}>
